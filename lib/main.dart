@@ -630,7 +630,7 @@ class TopicDetailPage extends StatelessWidget {
           }),
 
           const SizedBox(height: 4),
-          infoCard('DIAGNÓSTICO EN ATENCIÓN PRIMARIA', Icons.stethoscope, const Color(0xFF0C56A0), topic.diagnosis),
+          infoCard('DIAGNÓSTICO EN ATENCIÓN PRIMARIA', Icons.medical_services_outlined, const Color(0xFF0C56A0), topic.diagnosis),
           const SizedBox(height: 12),
 
           Container(

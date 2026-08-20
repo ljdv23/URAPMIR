@@ -1,725 +1,249 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const UrapMirApp());
-}
+void main() => runApp(const UrapMirApp());
 
 class UrapMirApp extends StatelessWidget {
   const UrapMirApp({super.key});
-
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'URAPMIR',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0B6E69)),
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF6F8FA),
-      ),
-      home: const HomePage(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'URAPMIR',
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0B6E69)),
+      useMaterial3: true,
+    ),
+    home: const HomePage(),
+  );
 }
+
+class ClinicalTopic {
+  final String title, diagnosis, conduct, treatment, referral, safety;
+  const ClinicalTopic(this.title, this.diagnosis, this.conduct, this.treatment, this.referral, this.safety);
+}
+
+const topics = <ClinicalTopic>[
+  ClinicalTopic(
+    'Hipertensión arterial',
+    'Confirmar cifras elevadas con medidas repetidas y, cuando sea posible, AMPA o MAPA. Revisar técnica, adherencia, fármacos que elevan la PA y riesgo cardiovascular.',
+    'En AP: descartar daño agudo de órgano diana si la PA es muy elevada. Valorar función renal, iones, glucemia/HbA1c, perfil lipídico, albuminuria y ECG según contexto.',
+    'Opciones habituales de primera línea: IECA o ARA-II, calcioantagonista dihidropiridínico y diurético tiazídico/tiazida-like. Con frecuencia se usan combinaciones a dosis bajas. Ajustar siempre a función renal, potasio, comorbilidad y ficha técnica.',
+    'Urgencias ante déficit neurológico, dolor torácico, edema agudo de pulmón, disección aórtica, lesión renal aguda u otra disfunción aguda de órgano diana.',
+    'No reducir de forma brusca una elevación asintomática sin daño agudo de órgano diana.'
+  ),
+  ClinicalTopic(
+    'Diabetes mellitus tipo 2',
+    'Confirmar con criterios bioquímicos aceptados salvo hiperglucemia inequívoca con síntomas. Valorar riesgo cardiovascular, renal, peso y riesgo de hipoglucemia.',
+    'Educación, alimentación, ejercicio, peso, PA, pies, función renal y albuminuria. Individualizar objetivos.',
+    'Metformina es una opción basal frecuente si no hay contraindicación. En enfermedad cardiovascular, insuficiencia cardiaca o ERC, priorizar fármacos con beneficio cardiorrenal cuando estén indicados, como iSGLT2 y/o agonistas GLP-1. Ajustar por filtrado y ficha técnica.',
+    'Urgencias ante cetoacidosis, estado hiperosmolar, hipoglucemia grave o deterioro agudo.',
+    'No modificar insulina sin un plan claro de autocontroles, prevención de hipoglucemia y seguimiento.'
+  ),
+  ClinicalTopic(
+    'Dislipemia y prevención cardiovascular',
+    'Calcular riesgo cardiovascular global y detectar enfermedad cardiovascular establecida, diabetes, ERC y otros modificadores de riesgo.',
+    'Revisar dieta, ejercicio, tabaquismo, PA, peso y adherencia.',
+    'Las estatinas son la base. Intensificar según riesgo y objetivo de LDL; si no se alcanza, valorar ezetimiba y terapias adicionales en pacientes seleccionados.',
+    'Valorar derivación en sospecha de hipercolesterolemia familiar, intolerancia compleja o hipertrigliceridemia grave.',
+    'La intensidad terapéutica depende del riesgo basal, no solo de un valor aislado de LDL.'
+  ),
+  ClinicalTopic(
+    'Insuficiencia cardiaca',
+    'Sospechar ante disnea, ortopnea, edemas, crepitantes, ingurgitación yugular o intolerancia al esfuerzo. ECG, analítica, péptidos natriuréticos y ecocardiografía ayudan a definir el cuadro.',
+    'Distinguir estabilidad de descompensación. Controlar peso, PA, frecuencia, función renal, potasio y congestión.',
+    'En IC con FE reducida, el tratamiento modificador pronóstico suele combinar ARNI/IECA/ARA-II, betabloqueante, antagonista mineralocorticoide e iSGLT2 si están indicados. Diuréticos para congestión.',
+    'Urgencias si disnea en reposo, hipoxemia, hipotensión, dolor torácico, síncope, edema agudo de pulmón o hipoperfusión.',
+    'Evitar AINE cuando sea posible por retención hidrosalina y deterioro renal.'
+  ),
+  ClinicalTopic(
+    'Fibrilación auricular',
+    'Confirmar con ECG. Valorar síntomas, frecuencia ventricular, desencadenantes y riesgo tromboembólico/hemorrágico.',
+    'En paciente estable, plantear control de frecuencia o ritmo según contexto y valorar anticoagulación con una escala validada.',
+    'Los anticoagulantes orales directos son preferidos en muchos pacientes con FA no valvular cuando están indicados. Ajustar dosis a función renal, edad, peso e interacciones.',
+    'Urgencias ante inestabilidad hemodinámica, dolor isquémico, insuficiencia cardiaca aguda, síncope o deterioro con respuesta ventricular rápida.',
+    'No iniciar o suspender anticoagulación automáticamente sin revisar indicación, sangrado, función renal e interacciones.'
+  ),
+  ClinicalTopic(
+    'Asma',
+    'Clínica compatible más demostración de variabilidad del flujo aéreo cuando sea posible. La espirometría con broncodilatación es fundamental.',
+    'Valorar control, exacerbaciones, técnica inhalatoria, adherencia, tabaquismo y comorbilidades.',
+    'El tratamiento controlador debe incluir corticoide inhalado. GEMA recomienda escalado según control y riesgo; las combinaciones con formoterol permiten estrategias de mantenimiento y rescate en determinados escalones.',
+    'Urgencias ante dificultad respiratoria intensa, habla entrecortada, agotamiento, alteración de conciencia, silencio auscultatorio, hipoxemia o mala respuesta inicial.',
+    'Revisar siempre la técnica del inhalador antes de escalar.'
+  ),
+  ClinicalTopic(
+    'EPOC',
+    'Confirmar obstrucción persistente con espirometría posbroncodilatador en paciente con exposición y clínica compatible.',
+    'Valorar disnea, exacerbaciones, tabaquismo, vacunación, comorbilidades, técnica inhalatoria y actividad física.',
+    'Broncodilatadores de larga duración son la base. LAMA/LABA y el uso de corticoide inhalado dependen de síntomas, exacerbaciones, eosinófilos y fenotipo clínico según GesEPOC.',
+    'Urgencias ante disnea grave, cianosis, confusión, uso intenso de musculatura accesoria, hipoxemia o fracaso del manejo inicial.',
+    'El abandono del tabaco es una intervención fundamental.'
+  ),
+  ClinicalTopic(
+    'Infección urinaria',
+    'Distinguir cistitis no complicada de pielonefritis, prostatitis, infección complicada y bacteriuria asintomática.',
+    'Solicitar cultivo cuando haya complicación, recurrencia, embarazo, varón, sospecha de pielonefritis o fracaso terapéutico.',
+    'Elegir antibiótico según resistencias locales, alergias, embarazo, función renal y guía antimicrobiana del área. Evitar amplio espectro si hay alternativa adecuada.',
+    'Urgencias si sepsis, vómitos persistentes, dolor intenso, obstrucción sospechada o incapacidad para tratamiento oral.',
+    'No tratar bacteriuria asintomática de rutina salvo indicaciones específicas.'
+  ),
+  ClinicalTopic(
+    'Neumonía adquirida en la comunidad',
+    'Sospechar con fiebre, tos, expectoración, disnea, dolor pleurítico o focalidad auscultatoria. Confirmar con imagen cuando proceda.',
+    'Valorar saturación, frecuencia respiratoria, PA, estado mental, comorbilidades y posibilidad de manejo domiciliario.',
+    'El antibiótico depende de edad, comorbilidad, gravedad, alergias y resistencias locales. Seguir guía antimicrobiana del área y revisar respuesta clínica.',
+    'Urgencias si hipoxemia, hipotensión, confusión, taquipnea marcada, sepsis, incapacidad para vía oral o deterioro rápido.',
+    'Evitar antibióticos en infecciones virales sin datos de neumonía bacteriana.'
+  ),
+  ClinicalTopic(
+    'Enfermedad renal crónica',
+    'Definir por alteraciones estructurales o funcionales persistentes, incluyendo filtrado reducido y/o albuminuria.',
+    'Controlar PA, diabetes, albuminuria, potasio, función renal y medicación nefrotóxica. Ajustar dosis al filtrado.',
+    'IECA/ARA-II son especialmente útiles en albuminuria cuando están indicados. Los iSGLT2 aportan beneficio renal y cardiovascular en grupos amplios de pacientes con ERC según indicación.',
+    'Derivar según progresión rápida, FG muy reducido, albuminuria marcada, hematuria persistente, alteraciones electrolíticas complejas o etiología incierta.',
+    'Tras iniciar o intensificar bloqueo del sistema renina-angiotensina, controlar creatinina y potasio.'
+  ),
+];
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('URAPMIR'),
-        centerTitle: true,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(18),
-        children: [
-          const Text(
-            'Estudio clínico y preparación MIR',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 6),
-          const Text(
-            'Versión funcional 1.0 · navegación, preguntas demo y módulos clínicos.',
-          ),
-          const SizedBox(height: 20),
-          _HomeCard(
-            icon: Icons.quiz_outlined,
-            title: 'EXAMEN MIR',
-            subtitle: 'Preguntas aleatorias, simulacro y especialidades',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const MirHomePage()),
-            ),
-          ),
-          _HomeCard(
-            icon: Icons.local_hospital_outlined,
-            title: 'ATENCIÓN PRIMARIA',
-            subtitle: '30 temas prioritarios para consulta y urgencias AP',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const PrimaryCarePage()),
-            ),
-          ),
-          _HomeCard(
-            icon: Icons.emergency_outlined,
-            title: 'URGENCIAS MÉDICAS',
-            subtitle: 'SCA · Ictus · Sepsis · Politraumatizado',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const EmergencyPage()),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Icon(Icons.info_outline),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      'Esta versión demuestra el funcionamiento de la app. '
-                      'El banco MIR es de ejemplo y el contenido clínico detallado '
-                      'se irá incorporando únicamente tras validar las fuentes.',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HomeCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  const _HomeCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
+  Widget module(BuildContext c, IconData i, String t, String s, Widget p) => Card(
+    margin: const EdgeInsets.only(bottom: 14),
+    child: ListTile(
+      contentPadding: const EdgeInsets.all(18),
+      leading: CircleAvatar(radius: 26, child: Icon(i)),
+      title: Text(t, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      subtitle: Text(s),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () => Navigator.push(c, MaterialPageRoute(builder: (_) => p)),
+    ),
+  );
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 14),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(18),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 26,
-                child: Icon(icon, size: 28),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 4),
-                    Text(subtitle),
-                  ],
-                ),
-              ),
-              const Icon(Icons.chevron_right),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('URAPMIR'), centerTitle: true),
+    body: ListView(
+      padding: const EdgeInsets.all(18),
+      children: [
+        const Text('Estudio clínico y preparación MIR', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        const Text('Versión 1.1 · Atención Primaria ampliada'),
+        const SizedBox(height: 18),
+        module(context, Icons.quiz_outlined, 'EXAMEN MIR', 'Módulo en expansión', const PlaceholderPage()),
+        module(context, Icons.local_hospital_outlined, 'ATENCIÓN PRIMARIA', '10 fichas clínicas desarrolladas', const PrimaryCarePage()),
+        module(context, Icons.emergency_outlined, 'URGENCIAS MÉDICAS', 'SCA · Ictus · Sepsis · Politrauma', const EmergencyPage()),
+        const Card(child: Padding(
+          padding: EdgeInsets.all(14),
+          child: Text('Uso educativo. Verifica siempre dosis, presentaciones, contraindicaciones, ficha técnica y protocolos locales antes de prescribir o actuar.'),
+        )),
+      ],
+    ),
+  );
 }
-
-// -------------------- MIR --------------------
-
-class MirQuestion {
-  final String specialty;
-  final String question;
-  final List<String> options;
-  final int correctIndex;
-  final String explanation;
-
-  const MirQuestion({
-    required this.specialty,
-    required this.question,
-    required this.options,
-    required this.correctIndex,
-    required this.explanation,
-  });
-}
-
-const demoQuestions = <MirQuestion>[
-  MirQuestion(
-    specialty: 'Cardiología',
-    question: 'Paciente con dolor torácico opresivo y elevación persistente del ST. ¿Cuál es la prioridad inicial?',
-    options: [
-      'Esperar marcadores seriados antes de actuar',
-      'Activar estrategia de reperfusión urgente',
-      'Solicitar prueba de esfuerzo',
-      'Dar el alta si el dolor cede',
-    ],
-    correctIndex: 1,
-    explanation: 'La elevación persistente del ST con clínica compatible requiere una estrategia de reperfusión urgente.',
-  ),
-  MirQuestion(
-    specialty: 'Neurología',
-    question: 'En sospecha de ictus agudo, ¿qué dato debe conocerse cuanto antes?',
-    options: [
-      'La última vez que el paciente fue visto bien',
-      'El grupo sanguíneo',
-      'El perímetro abdominal',
-      'La densitometría previa',
-    ],
-    correctIndex: 0,
-    explanation: 'La hora de inicio o “última vez visto bien” condiciona las opciones de reperfusión.',
-  ),
-  MirQuestion(
-    specialty: 'Infecciosas',
-    question: 'En un paciente con sospecha de sepsis, ¿qué elemento es esencial en la valoración inicial?',
-    options: [
-      'Buscar disfunción orgánica y foco infeccioso',
-      'Esperar 24 horas antes de reevaluar',
-      'Evitar constantes seriadas',
-      'Priorizar solo la temperatura',
-    ],
-    correctIndex: 0,
-    explanation: 'La sepsis implica infección con disfunción orgánica; hay que valorar gravedad y foco de forma precoz.',
-  ),
-  MirQuestion(
-    specialty: 'Neumología',
-    question: 'En una exacerbación de asma, ¿qué parámetro ayuda a objetivar gravedad si está disponible?',
-    options: [
-      'Flujo espiratorio máximo',
-      'Colesterol LDL',
-      'Índice tobillo-brazo',
-      'Calcemia',
-    ],
-    correctIndex: 0,
-    explanation: 'El PEF/flujo espiratorio máximo puede ayudar a objetivar la limitación al flujo aéreo.',
-  ),
-  MirQuestion(
-    specialty: 'Endocrinología',
-    question: 'En un paciente con diabetes y síntomas neuroglucopénicos, ¿qué debe comprobarse de inmediato?',
-    options: [
-      'Glucemia capilar',
-      'Ácido úrico',
-      'TSH',
-      'Vitamina D',
-    ],
-    correctIndex: 0,
-    explanation: 'La glucemia capilar permite confirmar rápidamente una hipoglucemia.',
-  ),
-  MirQuestion(
-    specialty: 'Traumatología',
-    question: 'En un politraumatizado, el enfoque inicial sistemático se organiza clásicamente como:',
-    options: [
-      'ABCDE',
-      'SOAP',
-      'APGAR',
-      'CHA2DS2-VASc',
-    ],
-    correctIndex: 0,
-    explanation: 'ABCDE prioriza amenazas vitales: vía aérea, respiración, circulación, neurología y exposición.',
-  ),
-];
-
-class MirHomePage extends StatelessWidget {
-  const MirHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final specialties = demoQuestions.map((e) => e.specialty).toSet().toList()..sort();
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('Examen MIR')),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _MenuTile(
-            icon: Icons.shuffle,
-            title: 'Preguntas aleatorias',
-            subtitle: 'Modo continuo con preguntas mezcladas',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => QuizPage(
-                  title: 'Preguntas aleatorias',
-                  questions: List<MirQuestion>.from(demoQuestions)..shuffle(),
-                ),
-              ),
-            ),
-          ),
-          _MenuTile(
-            icon: Icons.timer_outlined,
-            title: 'Simulacro',
-            subtitle: 'Modo simulacro con el banco disponible',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => QuizPage(
-                  title: 'Simulacro',
-                  questions: List<MirQuestion>.from(demoQuestions)..shuffle(),
-                ),
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 14, bottom: 8),
-            child: Text('Por especialidad',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          ),
-          ...specialties.map(
-            (s) => _MenuTile(
-              icon: Icons.menu_book_outlined,
-              title: s,
-              subtitle: '${demoQuestions.where((q) => q.specialty == s).length} pregunta(s) demo',
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => QuizPage(
-                    title: s,
-                    questions: demoQuestions.where((q) => q.specialty == s).toList(),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class QuizPage extends StatefulWidget {
-  final String title;
-  final List<MirQuestion> questions;
-
-  const QuizPage({
-    super.key,
-    required this.title,
-    required this.questions,
-  });
-
-  @override
-  State<QuizPage> createState() => _QuizPageState();
-}
-
-class _QuizPageState extends State<QuizPage> {
-  int index = 0;
-  int? selected;
-  int correct = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    if (widget.questions.isEmpty) {
-      return Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
-        body: const Center(child: Text('No hay preguntas disponibles.')),
-      );
-    }
-
-    if (index >= widget.questions.length) {
-      return Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.emoji_events_outlined, size: 64),
-                    const SizedBox(height: 12),
-                    const Text('Resultado',
-                        style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 12),
-                    Text('$correct / ${widget.questions.length}',
-                        style: const TextStyle(fontSize: 24)),
-                    const SizedBox(height: 18),
-                    FilledButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Volver'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    final q = widget.questions[index];
-
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          LinearProgressIndicator(value: (index + 1) / widget.questions.length),
-          const SizedBox(height: 12),
-          Text('Pregunta ${index + 1} de ${widget.questions.length}',
-              style: const TextStyle(fontWeight: FontWeight.w600)),
-          const SizedBox(height: 6),
-          Chip(label: Text(q.specialty)),
-          const SizedBox(height: 12),
-          Text(q.question,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 16),
-          for (int i = 0; i < q.options.length; i++)
-            Card(
-              child: RadioListTile<int>(
-                value: i,
-                groupValue: selected,
-                onChanged: selected == null
-                    ? (v) => setState(() {
-                          selected = v;
-                          if (v == q.correctIndex) correct++;
-                        })
-                    : null,
-                title: Text(q.options[i]),
-              ),
-            ),
-          if (selected != null) ...[
-            const SizedBox(height: 10),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      selected == q.correctIndex ? 'Correcta' : 'Incorrecta',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: selected == q.correctIndex
-                            ? Colors.green.shade700
-                            : Colors.red.shade700,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(q.explanation),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            FilledButton(
-              onPressed: () => setState(() {
-                index++;
-                selected = null;
-              }),
-              child: Text(index + 1 == widget.questions.length
-                  ? 'Ver resultado'
-                  : 'Siguiente'),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-// -------------------- ATENCIÓN PRIMARIA --------------------
-
-const primaryCareTopics = <String>[
-  'Hipertensión arterial',
-  'Diabetes mellitus tipo 2',
-  'Dislipemia y prevención cardiovascular',
-  'Insuficiencia cardiaca',
-  'Fibrilación auricular',
-  'Cardiopatía isquémica estable',
-  'Asma',
-  'EPOC',
-  'Infecciones respiratorias',
-  'Neumonía adquirida en la comunidad',
-  'Infección urinaria',
-  'Enfermedad renal crónica',
-  'Hipotiroidismo',
-  'Obesidad',
-  'Anemia',
-  'Dolor lumbar',
-  'Cervicalgia',
-  'Artrosis',
-  'Osteoporosis',
-  'Cefalea',
-  'Mareo y vértigo',
-  'Ansiedad',
-  'Depresión',
-  'Insomnio',
-  'ERGE y dispepsia',
-  'Diarrea y estreñimiento',
-  'Dermatitis y eccema',
-  'Anticoagulación en AP',
-  'Vacunación del adulto',
-  'Tabaquismo',
-];
 
 class PrimaryCarePage extends StatefulWidget {
   const PrimaryCarePage({super.key});
-
   @override
   State<PrimaryCarePage> createState() => _PrimaryCarePageState();
 }
 
 class _PrimaryCarePageState extends State<PrimaryCarePage> {
   String query = '';
-
   @override
   Widget build(BuildContext context) {
-    final filtered = primaryCareTopics
-        .where((t) => t.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-
+    final f = topics.where((x) => x.title.toLowerCase().contains(query.toLowerCase())).toList();
     return Scaffold(
       appBar: AppBar(title: const Text('Atención Primaria')),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(14),
-            child: TextField(
-              onChanged: (v) => setState(() => query = v),
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Buscar tema',
-                border: OutlineInputBorder(),
-              ),
-            ),
+      body: Column(children: [
+        Padding(
+          padding: const EdgeInsets.all(14),
+          child: TextField(
+            onChanged: (v) => setState(() => query = v),
+            decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Buscar tema', border: OutlineInputBorder()),
           ),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
-              itemCount: filtered.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 6),
-              itemBuilder: (_, i) {
-                final topic = filtered[i];
-                return Card(
-                  child: ListTile(
-                    leading: const Icon(Icons.medical_information_outlined),
-                    title: Text(topic),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => TopicDetailPage(
-                          title: topic,
-                          body:
-                              'Contenido clínico estructurado pendiente de incorporar y validar con fuentes actualizadas. '
-                              'La ficha final incluirá: diagnóstico, actuación en consulta, tratamiento, dosis, duración, '
-                              'efectos adversos, contraindicaciones, interacciones y criterios de derivación.',
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+        ),
+        Expanded(child: ListView.builder(
+          padding: const EdgeInsets.fromLTRB(14,0,14,14),
+          itemCount: f.length,
+          itemBuilder: (_, i) => Card(child: ListTile(
+            leading: const Icon(Icons.medical_information_outlined),
+            title: Text(f[i].title),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ClinicalDetailPage(f[i]))),
+          )),
+        )),
+      ]),
     );
   }
 }
 
-// -------------------- URGENCIAS --------------------
+class ClinicalDetailPage extends StatelessWidget {
+  final ClinicalTopic topic;
+  const ClinicalDetailPage(this.topic, {super.key});
 
-class EmergencyTopic {
-  final String title;
-  final String summary;
-  final List<String> steps;
+  Widget section(String t, String v) => Card(
+    margin: const EdgeInsets.only(bottom: 12),
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(t, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        Text(v, style: const TextStyle(fontSize: 16, height: 1.45)),
+      ]),
+    ),
+  );
 
-  const EmergencyTopic(this.title, this.summary, this.steps);
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: Text(topic.title)),
+    body: ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        section('Diagnóstico / claves', topic.diagnosis),
+        section('Conducta en Atención Primaria', topic.conduct),
+        section('Tratamiento', topic.treatment),
+        section('Cuándo derivar / urgencias', topic.referral),
+        section('Puntos de seguridad', topic.safety),
+        const Card(child: Padding(
+          padding: EdgeInsets.all(14),
+          child: Text('Fuentes base: semFYC, Guía Terapéutica semFYC 9.ª ed. 2025, GEMA para asma, GesEPOC para EPOC y guías clínicas vigentes.'),
+        )),
+      ],
+    ),
+  );
 }
-
-const emergencyTopics = <EmergencyTopic>[
-  EmergencyTopic(
-    'Síndrome coronario agudo',
-    'Reconocimiento rápido del dolor torácico de posible origen isquémico y activación de la red asistencial.',
-    [
-      'ABCDE y constantes; monitorización si está disponible.',
-      'ECG de 12 derivaciones lo antes posible.',
-      'Identificar inestabilidad hemodinámica, arritmias o insuficiencia cardiaca.',
-      'Si existe sospecha de SCA, coordinar traslado urgente según circuito local.',
-    ],
-  ),
-  EmergencyTopic(
-    'Ictus',
-    'El tiempo es crítico: identificar déficit neurológico focal y la hora de inicio o última vez visto bien.',
-    [
-      'ABCDE y glucemia capilar.',
-      'Registrar hora de inicio/última vez visto bien.',
-      'Valorar déficit neurológico y signos de alarma.',
-      'Activar código ictus/traslado urgente según protocolo local.',
-    ],
-  ),
-  EmergencyTopic(
-    'Sepsis',
-    'Sospechar infección con deterioro sistémico o disfunción orgánica.',
-    [
-      'ABCDE, constantes y reevaluación frecuente.',
-      'Buscar foco infeccioso y signos de hipoperfusión.',
-      'Valorar gravedad y necesidad de soporte inmediato.',
-      'Traslado urgente si existe inestabilidad o sospecha de sepsis grave.',
-    ],
-  ),
-  EmergencyTopic(
-    'Paciente politraumatizado',
-    'Priorizar lesiones que amenazan la vida mediante un enfoque ABCDE.',
-    [
-      'A: vía aérea con protección cervical.',
-      'B: respiración y lesiones torácicas vitales.',
-      'C: circulación y control de hemorragias.',
-      'D/E: valoración neurológica, exposición y prevención de hipotermia.',
-    ],
-  ),
-];
 
 class EmergencyPage extends StatelessWidget {
   const EmergencyPage({super.key});
+  static const items = [
+    ['Síndrome coronario agudo', 'ABCDE, ECG precoz, identificar inestabilidad y activar traslado/reperfusión según red local.'],
+    ['Ictus', 'ABCDE, glucemia, hora de inicio/última vez visto bien y activación precoz del código ictus.'],
+    ['Sepsis', 'ABCDE, constantes seriadas, foco, perfusión y traslado urgente si deterioro o disfunción orgánica.'],
+    ['Paciente politraumatizado', 'ABCDE, protección cervical, control de hemorragia y prevención de hipotermia.'],
+  ];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Urgencias Médicas')),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: emergencyTopics.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 8),
-        itemBuilder: (_, i) {
-          final t = emergencyTopics[i];
-          return Card(
-            child: ListTile(
-              leading: const Icon(Icons.warning_amber_rounded),
-              title: Text(t.title,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(t.summary),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => EmergencyDetailPage(topic: t),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Urgencias Médicas')),
+    body: ListView(
+      padding: const EdgeInsets.all(16),
+      children: items.map((e) => Card(child: ListTile(
+        leading: const Icon(Icons.warning_amber_rounded),
+        title: Text(e[0], style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(e[1]),
+      ))).toList(),
+    ),
+  );
 }
 
-class EmergencyDetailPage extends StatelessWidget {
-  final EmergencyTopic topic;
-  const EmergencyDetailPage({super.key, required this.topic});
-
+class PlaceholderPage extends StatelessWidget {
+  const PlaceholderPage({super.key});
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(topic.title)),
-      body: ListView(
-        padding: const EdgeInsets.all(18),
-        children: [
-          Text(topic.summary,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-          const SizedBox(height: 18),
-          const Text('Actuación inicial',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 10),
-          for (int i = 0; i < topic.steps.length; i++)
-            Card(
-              child: ListTile(
-                leading: CircleAvatar(child: Text('${i + 1}')),
-                title: Text(topic.steps[i]),
-              ),
-            ),
-          const SizedBox(height: 14),
-          const Card(
-            child: Padding(
-              padding: EdgeInsets.all(14),
-              child: Text(
-                'Material educativo. En una urgencia real deben seguirse los protocolos '
-                'del centro, la red de emergencias y las guías clínicas vigentes.',
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// -------------------- COMUNES --------------------
-
-class TopicDetailPage extends StatelessWidget {
-  final String title;
-  final String body;
-
-  const TopicDetailPage({
-    super.key,
-    required this.title,
-    required this.body,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: ListView(
-        padding: const EdgeInsets.all(18),
-        children: [
-          Text(title,
-              style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 16),
-          Text(body, style: const TextStyle(fontSize: 17, height: 1.5)),
-        ],
-      ),
-    );
-  }
-}
-
-class _MenuTile extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-
-  const _MenuTile({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: onTap,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Examen MIR')),
+    body: const Center(child: Padding(
+      padding: EdgeInsets.all(24),
+      child: Text('Este módulo seguirá ampliándose en las próximas versiones.', textAlign: TextAlign.center),
+    )),
+  );
 }

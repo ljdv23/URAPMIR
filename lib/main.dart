@@ -465,7 +465,7 @@ class MainModulesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('URAPMIR'), centerTitle: true),
+      appBar: AppBar(title: const Text('URAPMIR · v1.5'), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.all(18),
         children: [
@@ -609,7 +609,9 @@ class EmergencyModulePage extends StatelessWidget {
             subtitle: Text(
               i == 0
                   ? 'Actuación rápida · ECG · medicación · traslado'
-                  : 'Algoritmo de actuación en Atención Primaria',
+                  : i == 1
+                      ? 'Código ictus · neurológico · TC · tratamiento · traslado'
+                      : 'Algoritmo de actuación en Atención Primaria',
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
@@ -1349,7 +1351,7 @@ class _AcsEmergencyPageState extends State<AcsEmergencyPage>
           children: [
             Text('Síndrome coronario agudo',
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('URGENCIAS · ATENCIÓN PRIMARIA',
+            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.5',
                 style: TextStyle(fontSize: 11)),
           ],
         ),
@@ -1379,34 +1381,25 @@ class _AcsEmergencyPageState extends State<AcsEmergencyPage>
   }
 }
 
-enum StrokeCtPattern {
-  earlyIschemia,
-  establishedIschemia,
-  hyperdenseMca,
-  intraparenchymalHemorrhage,
-  subarachnoidHemorrhage,
-}
 
-class StrokeCtIllustration extends StatelessWidget {
+enum StrokeCtPattern { ischemic, hemorrhagic }
+
+class StrokeCtDiagram extends StatelessWidget {
   final StrokeCtPattern pattern;
-  const StrokeCtIllustration({super.key, required this.pattern});
+  const StrokeCtDiagram({super.key, required this.pattern});
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.28,
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF05070A),
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFBFC6CE)),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(13),
-          child: CustomPaint(
-            painter: _StrokeCtPainter(pattern),
-          ),
-        ),
+    return Container(
+      height: 220,
+      decoration: BoxDecoration(
+        color: const Color(0xFF111317),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.black54),
+      ),
+      child: CustomPaint(
+        painter: _StrokeCtPainter(pattern),
+        child: const SizedBox.expand(),
       ),
     );
   }
@@ -1418,166 +1411,103 @@ class _StrokeCtPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final c = Offset(size.width / 2, size.height / 2);
-    final r = size.shortestSide * 0.41;
+    final center = Offset(size.width / 2, size.height / 2);
+    final skullRect = Rect.fromCenter(
+      center: center,
+      width: size.width * .72,
+      height: size.height * .88,
+    );
 
     final skull = Paint()
-      ..color = const Color(0xFFE6E8EB)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 7;
-    final brain = Paint()..color = const Color(0xFF7A7F86);
-    final ventricle = Paint()..color = const Color(0xFF252A30);
-    final sulcus = Paint()
-      ..color = const Color(0xFF50555C)
-      ..style = PaintingStyle.stroke
+      ..color = const Color(0xFFE7E7E7)
+      ..style = PaintingStyle.fill;
+    final brain = Paint()
+      ..color = const Color(0xFF8F9398)
+      ..style = PaintingStyle.fill;
+    final ventricle = Paint()
+      ..color = const Color(0xFF4E5359)
+      ..style = PaintingStyle.fill;
+
+    canvas.drawOval(skullRect, skull);
+    final brainRect = Rect.fromCenter(
+      center: center,
+      width: size.width * .64,
+      height: size.height * .80,
+    );
+    canvas.drawOval(brainRect, brain);
+
+    // Falx / midline
+    final mid = Paint()
+      ..color = const Color(0xFFD7D7D7)
       ..strokeWidth = 2;
-
-    canvas.drawOval(
-      Rect.fromCenter(center: c, width: r * 2.03, height: r * 1.72),
-      brain,
-    );
-    canvas.drawOval(
-      Rect.fromCenter(center: c, width: r * 2.10, height: r * 1.80),
-      skull,
+    canvas.drawLine(
+      Offset(center.dx, brainRect.top + 12),
+      Offset(center.dx, brainRect.bottom - 12),
+      mid,
     );
 
+    // Ventricles
     final leftV = Path()
-      ..moveTo(c.dx - 8, c.dy - 5)
-      ..quadraticBezierTo(c.dx - 34, c.dy - 18, c.dx - 43, c.dy + 4)
-      ..quadraticBezierTo(c.dx - 27, c.dy + 14, c.dx - 8, c.dy + 6)
-      ..close();
+      ..moveTo(center.dx - 8, center.dy - 18)
+      ..quadraticBezierTo(center.dx - 35, center.dy - 10, center.dx - 15, center.dy + 10)
+      ..quadraticBezierTo(center.dx - 5, center.dy + 2, center.dx - 8, center.dy - 18);
     final rightV = Path()
-      ..moveTo(c.dx + 8, c.dy - 5)
-      ..quadraticBezierTo(c.dx + 34, c.dy - 18, c.dx + 43, c.dy + 4)
-      ..quadraticBezierTo(c.dx + 27, c.dy + 14, c.dx + 8, c.dy + 6)
-      ..close();
+      ..moveTo(center.dx + 8, center.dy - 18)
+      ..quadraticBezierTo(center.dx + 35, center.dy - 10, center.dx + 15, center.dy + 10)
+      ..quadraticBezierTo(center.dx + 5, center.dy + 2, center.dx + 8, center.dy - 18);
     canvas.drawPath(leftV, ventricle);
     canvas.drawPath(rightV, ventricle);
 
-    for (int i = -2; i <= 2; i++) {
-      final y = c.dy + i * r * .22;
-      canvas.drawArc(
+    if (pattern == StrokeCtPattern.hemorrhagic) {
+      // Hyperdense acute hemorrhage
+      final bleed = Paint()
+        ..color = const Color(0xFFF4F4F4)
+        ..style = PaintingStyle.fill;
+      canvas.drawOval(
         Rect.fromCenter(
-          center: Offset(c.dx - r * .48, y),
-          width: r * .63,
-          height: r * .23,
+          center: Offset(center.dx - size.width * .13, center.dy + 4),
+          width: size.width * .19,
+          height: size.height * .24,
         ),
-        3.4,
-        2.1,
-        false,
-        sulcus,
+        bleed,
       );
-      canvas.drawArc(
+      final edema = Paint()
+        ..color = const Color(0xFF757A80)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 10;
+      canvas.drawOval(
         Rect.fromCenter(
-          center: Offset(c.dx + r * .48, y),
-          width: r * .63,
-          height: r * .23,
+          center: Offset(center.dx - size.width * .13, center.dy + 4),
+          width: size.width * .25,
+          height: size.height * .31,
         ),
-        -2.3,
-        2.1,
-        false,
-        sulcus,
+        edema,
+      );
+    } else {
+      // Early ischemic hypodensity / loss of gray-white differentiation
+      final ischemia = Paint()
+        ..color = const Color(0xFF6C7177)
+        ..style = PaintingStyle.fill;
+      final p = Path()
+        ..moveTo(center.dx + 10, brainRect.top + 30)
+        ..quadraticBezierTo(
+            brainRect.right - 8, center.dy - 28, brainRect.right - 18, center.dy + 48)
+        ..quadraticBezierTo(
+            center.dx + 55, brainRect.bottom - 18, center.dx + 20, center.dy + 25)
+        ..close();
+      canvas.drawPath(p, ischemia);
+
+      // Hyperdense MCA dot/segment schematic
+      final artery = Paint()
+        ..color = const Color(0xFFD6D6D6)
+        ..strokeWidth = 5
+        ..strokeCap = StrokeCap.round;
+      canvas.drawLine(
+        Offset(center.dx + 10, center.dy - 3),
+        Offset(center.dx + 45, center.dy + 7),
+        artery,
       );
     }
-
-    switch (pattern) {
-      case StrokeCtPattern.earlyIschemia:
-        final lesion = Paint()..color = const Color(0xFF676B70).withOpacity(.82);
-        final p = Path()
-          ..moveTo(c.dx - r * .92, c.dy - r * .18)
-          ..quadraticBezierTo(
-              c.dx - r * .56, c.dy - r * .58, c.dx - r * .20, c.dy - r * .30)
-          ..quadraticBezierTo(
-              c.dx - r * .35, c.dy + r * .05, c.dx - r * .82, c.dy + r * .24)
-          ..close();
-        canvas.drawPath(p, lesion);
-        break;
-
-      case StrokeCtPattern.establishedIschemia:
-        final lesion = Paint()..color = const Color(0xFF363A3F);
-        final p = Path()
-          ..moveTo(c.dx - r * .96, c.dy - r * .30)
-          ..quadraticBezierTo(
-              c.dx - r * .57, c.dy - r * .69, c.dx - r * .08, c.dy - r * .33)
-          ..quadraticBezierTo(
-              c.dx - r * .25, c.dy + r * .31, c.dx - r * .88, c.dy + r * .45)
-          ..close();
-        canvas.drawPath(p, lesion);
-        break;
-
-      case StrokeCtPattern.hyperdenseMca:
-        final vessel = Paint()
-          ..color = const Color(0xFFF1F3F5)
-          ..strokeWidth = 6
-          ..strokeCap = StrokeCap.round;
-        canvas.drawLine(
-          Offset(c.dx - r * .18, c.dy + r * .02),
-          Offset(c.dx - r * .62, c.dy + r * .22),
-          vessel,
-        );
-        break;
-
-      case StrokeCtPattern.intraparenchymalHemorrhage:
-        final blood = Paint()..color = const Color(0xFFF5F6F7);
-        final edema = Paint()..color = const Color(0xFF4B4F55).withOpacity(.85);
-        canvas.drawOval(
-          Rect.fromCenter(
-              center: Offset(c.dx + r * .43, c.dy + r * .08),
-              width: r * .60,
-              height: r * .48),
-          edema,
-        );
-        canvas.drawOval(
-          Rect.fromCenter(
-              center: Offset(c.dx + r * .43, c.dy + r * .08),
-              width: r * .43,
-              height: r * .34),
-          blood,
-        );
-        break;
-
-      case StrokeCtPattern.subarachnoidHemorrhage:
-        final blood = Paint()
-          ..color = const Color(0xFFF3F5F6)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 5
-          ..strokeCap = StrokeCap.round;
-        canvas.drawLine(
-          Offset(c.dx, c.dy - r * .05),
-          Offset(c.dx, c.dy - r * .55),
-          blood,
-        );
-        canvas.drawLine(
-          Offset(c.dx, c.dy - r * .05),
-          Offset(c.dx - r * .42, c.dy + r * .22),
-          blood,
-        );
-        canvas.drawLine(
-          Offset(c.dx, c.dy - r * .05),
-          Offset(c.dx + r * .42, c.dy + r * .22),
-          blood,
-        );
-        canvas.drawArc(
-          Rect.fromCenter(center: c, width: r * .72, height: r * .34),
-          3.35,
-          2.75,
-          false,
-          blood,
-        );
-        break;
-    }
-
-    final marker = Paint()..color = Colors.white.withOpacity(.85);
-    final textPainter = TextPainter(
-      text: const TextSpan(
-        text: 'R',
-        style: TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    textPainter.paint(canvas, Offset(size.width - 24, 8));
-    canvas.drawCircle(Offset(12, 12), 2.5, marker);
   }
 
   @override
@@ -1606,7 +1536,7 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
   @override
   void initState() {
     super.initState();
-    _tabs = TabController(length: 6, vsync: this);
+    _tabs = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -1615,11 +1545,8 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
     super.dispose();
   }
 
-  Widget bullet(
-    String text, {
-    Color color = navy,
-    IconData icon = Icons.circle,
-  }) =>
+  Widget bullet(String text,
+          {Color color = navy, IconData icon = Icons.circle}) =>
       Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: Row(
@@ -1642,7 +1569,8 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
             children: [
               TextSpan(
                 text: '$label: ',
-                style: TextStyle(fontWeight: FontWeight.bold, color: color),
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: color),
               ),
               TextSpan(text: text),
             ],
@@ -1689,11 +1617,11 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
         ),
       );
 
-  Widget header(String title, String subtitle, {Color color = red}) => Container(
+  Widget header(String title, String subtitle) => Container(
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
-          color: color,
+          color: red,
           borderRadius: BorderRadius.circular(18),
         ),
         child: Column(
@@ -1703,8 +1631,8 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
               title,
               style: const TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
                 fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 5),
@@ -1716,47 +1644,33 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
         ),
       );
 
-  Widget examCard({
-    required String title,
-    required String how,
-    required String abnormal,
-    required IconData icon,
+  Widget drug({
+    required String name,
+    required String dose,
+    required String when,
+    required String warning,
+    Color color = green,
   }) =>
-      section(
-        title: title,
-        icon: icon,
-        color: blue,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            rich('Cómo explorarlo', how, color: blue),
-            rich('Qué buscar', abnormal, color: orange),
-          ],
+      Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: color.withOpacity(.05),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: color.withOpacity(.42)),
         ),
-      );
-
-  Widget ctCard({
-    required String title,
-    required StrokeCtPattern pattern,
-    required String findings,
-    required String key,
-    Color color = blue,
-  }) =>
-      section(
-        title: title,
-        icon: Icons.image_search_outlined,
-        color: color,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            StrokeCtIllustration(pattern: pattern),
-            const SizedBox(height: 10),
-            rich('Qué buscar', findings, color: color),
-            rich('Clave', key, color: red),
-            const Text(
-              'Esquema educativo de TC sin contraste. No sustituye la interpretación de una TC real por Radiología/Neurología.',
-              style: TextStyle(fontSize: 12, color: Colors.black54),
-            ),
+            Text(name,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: color)),
+            const Divider(height: 20),
+            rich('Dosis', dose, color: color),
+            rich('Cuándo', when, color: color),
+            rich('Precaución', warning, color: color),
           ],
         ),
       );
@@ -1765,109 +1679,50 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
         padding: const EdgeInsets.all(14),
         children: [
           header(
-            'ICTUS · PRIMEROS 10 MIN EN AP',
-            'Reconocer → hora de última vez bien → glucemia → ABCDE → Código Ictus/112 → traslado sin demoras evitables.',
+            'ICTUS · ACTUACIÓN RÁPIDA EN AP',
+            'Tiempo = cerebro. Reconocer déficit focal, conocer la última vez visto bien y activar Código Ictus sin demoras.',
           ),
           section(
-            title: '1. Sospecha clínica: BE-FAST',
-            icon: Icons.bolt_outlined,
+            title: 'Primeros minutos',
+            icon: Icons.timer_outlined,
             color: red,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                rich('B · Balance', 'pérdida brusca de equilibrio o coordinación.', color: red),
-                rich('E · Eyes', 'pérdida visual, diplopía o defecto campimétrico súbito.', color: red),
-                rich('F · Face', 'asimetría facial o caída de una comisura.', color: red),
-                rich('A · Arm', 'debilidad o pérdida sensitiva unilateral.', color: red),
-                rich('S · Speech', 'afasia, lenguaje extraño o disartria.', color: red),
-                rich('T · Time', 'anotar la última vez que estaba normal y activar el circuito.', color: red),
+                bullet('ABCDE y constantes: TA, FC, FR, SatO₂, temperatura y nivel de conciencia.', color: red),
+                bullet('Glucemia capilar inmediata: la hipoglucemia puede simular un ictus.', color: red),
+                bullet('Determinar hora exacta de inicio o “última vez visto bien”.', color: red),
+                bullet('Exploración focal rápida: cara, brazos, lenguaje + mirada, campos visuales, sensibilidad, coordinación y marcha si es seguro.', color: red),
+                bullet('Activar 112/Código Ictus precozmente. No retrasar el traslado para completar pruebas no imprescindibles en AP.', color: red),
+                bullet('Nada por vía oral hasta valorar deglución.', color: red),
               ],
             ),
           ),
           section(
-            title: '2. Lo primero que tienes que preguntar',
-            icon: Icons.schedule_outlined,
-            color: orange,
+            title: 'FAST / Cincinnati',
+            icon: Icons.psychology_outlined,
+            color: blue,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('Hora exacta de inicio si fue presenciado.'),
-                bullet('Si no se conoce: ¿a qué hora fue visto normal por última vez? (last known well).'),
-                bullet('Tratamiento anticoagulante/antiagregante y hora de última dosis.'),
-                bullet('Situación funcional previa y antecedentes relevantes.'),
-                bullet('Convulsión al inicio, traumatismo, cirugía reciente o sangrado reciente.'),
+                rich('Face', 'asimetría facial al sonreír.', color: blue),
+                rich('Arm', 'caída o debilidad de un brazo al mantener ambos elevados.', color: blue),
+                rich('Speech', 'habla alterada, disartria, afasia o incapacidad para repetir una frase.', color: blue),
+                rich('Time', 'si aparece cualquiera: anotar hora y activar Código Ictus.', color: blue),
               ],
             ),
           ),
           section(
-            title: '3. ABCDE + constantes + glucemia',
-            icon: Icons.monitor_heart_outlined,
-            color: red,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                rich('A', 'vía aérea. Aspirar secreciones si precisa; si no protege vía aérea, pedir SVA y ventilar con bolsa-mascarilla si fuera necesario.', color: red),
-                rich('B', 'SatO₂. Oxígeno si existe hipoxemia; no administrarlo rutinariamente al paciente normoxémico.', color: red),
-                rich('C', 'TA, FC, ritmo, perfusión. Canalizar vía IV sin retrasar traslado. Evitar soluciones hipotónicas.', color: red),
-                rich('D', 'Glasgow + focalidad neurológica + glucemia capilar inmediata.', color: red),
-                rich('E', 'temperatura, traumatismos, signos de infección y revisión rápida general.', color: red),
-                bullet('La hipoglucemia puede simular un ictus: corregirla de inmediato y reevaluar focalidad.', color: orange),
-              ],
-            ),
-          ),
-          section(
-            title: '4. Activar Código Ictus / 112',
-            icon: Icons.phone_in_talk_outlined,
-            color: red,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                bullet('No esperar analítica ni pruebas no disponibles en AP para solicitar traslado.', color: red),
-                bullet('Comunicar: edad, última vez bien, déficit, Glasgow, TA, glucemia, SatO₂, anticoagulantes y situación funcional previa.', color: red),
-                bullet('Un ictus del despertar o de varias horas de evolución también requiere traslado urgente: algunos pacientes pueden beneficiarse de neuroimagen avanzada/trombectomía.', color: red),
-              ],
-            ),
-          ),
-          section(
-            title: '5. TA: no normalizarla bruscamente',
-            icon: Icons.speed_outlined,
-            color: orange,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                bullet('La PA elevada es frecuente en el ictus agudo. Evita descensos rápidos y no administres captopril/nifedipino de forma automática.', color: orange),
-                bullet('Si va a recibir trombólisis IV, el objetivo hospitalario previo es <185/110 mmHg; el manejo concreto debe coordinarse con Código Ictus.', color: orange),
-                bullet('Trata hipotensión/hipovolemia y otras emergencias concomitantes. Individualiza si existe disección aórtica, edema pulmonar u otra emergencia hipertensiva.', color: orange),
-              ],
-            ),
-          ),
-          section(
-            title: '6. Antes de la TC: NO hacer',
+            title: 'No hacer',
             icon: Icons.block_outlined,
             color: red,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('NO administrar AAS ni clopidogrel antes de excluir hemorragia intracraneal.', color: red),
-                bullet('NO administrar heparina/anticoagulación empírica.', color: red),
-                bullet('NO bajar agresivamente la TA solo por estar elevada.', color: red),
-                bullet('NO dar comida, bebida ni medicación oral si existe riesgo de disfagia.', color: red),
-                bullet('NO retrasar el traslado para completar una NIHSS perfecta.', color: red),
-              ],
-            ),
-          ),
-          section(
-            title: 'Stroke mimics que debes recordar',
-            icon: Icons.alt_route_outlined,
-            color: purple,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                bullet('Hipoglucemia/alteraciones metabólicas.'),
-                bullet('Crisis epiléptica con parálisis de Todd.'),
-                bullet('Migraña con aura.'),
-                bullet('Parálisis facial periférica.'),
-                bullet('Intoxicación/fármacos, síncope, infección/sepsis, trastorno funcional y encefalopatía hipertensiva.'),
+                bullet('No dar AAS ni anticoagulantes antes de excluir hemorragia intracraneal con neuroimagen.', color: red),
+                bullet('No bajar agresivamente la PA de forma rutinaria en el centro de salud.', color: red),
+                bullet('No retrasar el traslado por hacer analíticas extensas, radiografías u otras pruebas no esenciales.', color: red),
+                bullet('No dar comida, agua ni medicación oral hasta descartar disfagia.', color: red),
               ],
             ),
           ),
@@ -1878,119 +1733,76 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
         padding: const EdgeInsets.all(14),
         children: [
           header(
-            'EXAMEN NEUROLÓGICO RÁPIDO',
-            'Exploración estructurada para detectar focalidad y comunicarla. No debe retrasar la activación del Código Ictus.',
-            color: blue,
-          ),
-          examCard(
-            title: '1. Conciencia y Glasgow',
-            icon: Icons.psychology_outlined,
-            how: '¿Está alerta? Pregunta nombre, lugar/mes y observa respuesta a voz y órdenes. Si hay alteración, completa Glasgow.',
-            abnormal: 'Somnolencia, desorientación o disminución de conciencia. Puede aparecer en ictus extenso, tronco/basilar, hemorragia o edema.',
-          ),
-          examCard(
-            title: '2. Pupilas',
-            icon: Icons.remove_red_eye_outlined,
-            how: 'Compara tamaño y simetría; valora respuesta directa/consensual a la luz.',
-            abnormal: 'Anisocoria nueva o pupila poco reactiva, especialmente con deterioro de conciencia, es signo de alarma.',
-          ),
-          examCard(
-            title: '3. Mirada y motilidad ocular',
-            icon: Icons.visibility_outlined,
-            how: 'Pide seguir tu dedo horizontal y verticalmente sin mover la cabeza.',
-            abnormal: 'Desviación conjugada, oftalmoparesia, diplopía o nistagmo. Una desviación conjugada puede indicar lesión hemisférica extensa.',
-          ),
-          examCard(
-            title: '4. Campos visuales',
-            icon: Icons.center_focus_strong_outlined,
-            how: 'Confrontación: paciente fija tu nariz y comparas detección de dedos/movimiento en cuadrantes de ambos hemicampos.',
-            abnormal: 'Hemianopsia o cuadrantanopsia. Pérdida visual monocular súbita también puede ser vascular.',
-          ),
-          examCard(
-            title: '5. Cara',
-            icon: Icons.face_outlined,
-            how: 'Pide sonreír/mostrar dientes, cerrar fuerte los ojos y elevar cejas.',
-            abnormal: 'Paresia facial central: debilidad predominante en mitad inferior contralateral con frente relativamente conservada. Si se afecta toda la hemicara, considerar lesión periférica, aunque el contexto manda.',
-          ),
-          examCard(
-            title: '6. Fuerza de brazos',
-            icon: Icons.front_hand_outlined,
-            how: 'Brazos extendidos al frente, palmas arriba, 10 segundos. Observa pronación o caída. Después fuerza contra resistencia.',
-            abnormal: 'Pronación, claudicación, paresia o plejía. Registra 0/5 a 5/5.',
-          ),
-          examCard(
-            title: '7. Fuerza de piernas',
-            icon: Icons.accessibility_new_outlined,
-            how: 'En decúbito, eleva cada pierna y pide mantenerla. Compara ambos lados y completa fuerza contra resistencia.',
-            abnormal: 'Caída precoz, paresia o plejía. Describe lado y grado (0/5–5/5).',
-          ),
-          examCard(
-            title: '8. Sensibilidad',
-            icon: Icons.touch_app_outlined,
-            how: 'Tacto ligero simétrico en cara, brazos y piernas; compara ambos lados.',
-            abnormal: 'Hipoestesia/anestesia hemicorporal. Realiza estímulo bilateral simultáneo si sospechas extinción.',
-          ),
-          examCard(
-            title: '9. Lenguaje (afasia)',
-            icon: Icons.record_voice_over_outlined,
-            how: 'Conversación espontánea + denominar un objeto + cumplir una orden de dos pasos.',
-            abnormal: 'Afasia expresiva, receptiva o global. Afasia ≠ disartria: en la afasia se altera el lenguaje.',
-          ),
-          examCard(
-            title: '10. Disartria',
-            icon: Icons.chat_bubble_outline,
-            how: 'Pide repetir una frase sencilla y escucha articulación/claridad.',
-            abnormal: 'El paciente sabe qué quiere decir pero articula mal. Puede coexistir con paresia facial o bulbar.',
-          ),
-          examCard(
-            title: '11. Negligencia / extinción',
-            icon: Icons.compare_arrows_outlined,
-            how: 'Toca ambos lados por separado y luego simultáneamente; también observa si ignora personas/objetos de un hemiespacio.',
-            abnormal: 'Percibe cada lado aislado pero extingue uno cuando estimulas ambos; sugiere inatención hemisférica.',
-          ),
-          examCard(
-            title: '12. Coordinación',
-            icon: Icons.control_camera_outlined,
-            how: 'Dedo-nariz y talón-rodilla si la fuerza lo permite.',
-            abnormal: 'Dismetría/ataxia. No interpretes como ataxia una mala prueba explicable por paresia intensa.',
+            'EXAMEN NEUROLÓGICO',
+            'Exploración estructurada que pueda repetirse y comunicarse al equipo de ictus.',
           ),
           section(
-            title: 'Marcha y signos meníngeos',
-            icon: Icons.directions_walk_outlined,
+            title: '1. Estado mental y lenguaje',
+            icon: Icons.record_voice_over_outlined,
             color: purple,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('Marcha solo si es seguro. Busca ataxia, lateropulsión o base aumentada. No fuerces la marcha en hemiparesia/inestabilidad.'),
-                bullet('Rigidez de nuca no se busca de rutina en todo ictus. Cefalea en trueno + vómitos/fotofobia/rigidez cervical → sospechar HSA.', color: red),
+                bullet('Nivel de conciencia: alerta, somnoliento, estuporoso o coma. Glasgow si procede.'),
+                bullet('Orientación en persona, lugar y tiempo.'),
+                bullet('Lenguaje: fluencia, comprensión, denominación y repetición. Diferenciar afasia de disartria.'),
               ],
             ),
           ),
           section(
-            title: 'Ejemplo de reporte NORMAL',
-            icon: Icons.description_outlined,
+            title: '2. Pares craneales',
+            icon: Icons.visibility_outlined,
+            color: blue,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('Pupilas: tamaño, simetría y reactividad.'),
+                bullet('Mirada conjugada y movimientos oculares; buscar desviación forzada de la mirada.'),
+                bullet('Campos visuales por confrontación si es posible.'),
+                bullet('Facial: pedir mostrar dientes/sonreír y elevar cejas; valorar asimetría.'),
+              ],
+            ),
+          ),
+          section(
+            title: '3. Fuerza y sensibilidad',
+            icon: Icons.accessibility_new_outlined,
             color: green,
-            child: const SelectableText(
-              'Neurológico: consciente, alerta y orientado en persona, lugar y tiempo. Glasgow 15/15. Pupilas isocóricas y normorreactivas. Movimientos oculares extrínsecos conservados, sin desviación conjugada. Campos visuales por confrontación sin alteraciones groseras. Facies simétrica. Lenguaje fluido y coherente, comprensión conservada, sin afasia ni disartria. Fuerza 5/5 en cuatro extremidades, sin pronación ni claudicación. Sensibilidad superficial conservada y simétrica. Coordinación dedo-nariz y talón-rodilla normal. Sin negligencia. Marcha estable si procede.',
-              style: TextStyle(height: 1.48),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('Brazos: elevar 90° sentado o 45° en decúbito durante ~10 s; observar caída/pronación.'),
+                bullet('Piernas: elevar ~30° en decúbito y comparar ambos lados.'),
+                bullet('Graduar fuerza 0–5 cuando sea posible y describir hemiparesia/hemiplejia.'),
+                bullet('Comparar sensibilidad táctil en cara, brazos y piernas; buscar extinción/inatención.'),
+              ],
             ),
           ),
           section(
-            title: 'Ejemplo de reporte PATOLÓGICO',
-            icon: Icons.description_outlined,
-            color: red,
-            child: const SelectableText(
-              'Neurológico: consciente, Glasgow 14/15, parcialmente desorientado en tiempo. Pupilas isocóricas y normorreactivas. Desviación conjugada de la mirada hacia la derecha. Hemianopsia homónima izquierda por confrontación. Paresia facial central izquierda. Disartria leve, sin afasia evidente. Fuerza MSD 5/5, MID 5/5, MSI 2/5, MII 3/5. Hipoestesia hemicorporal izquierda. Extinción sensitiva izquierda a estímulo bilateral simultáneo. Coordinación no valorable adecuadamente en extremidades izquierdas por paresia. Focalidad neurológica aguda compatible con lesión hemisférica derecha. Se activa Código Ictus.',
-              style: TextStyle(height: 1.48),
-            ),
-          ),
-          section(
-            title: 'Reporte corto para AP',
-            icon: Icons.edit_note_outlined,
+            title: '4. Coordinación, marcha y signos corticales',
+            icon: Icons.directions_walk_outlined,
             color: orange,
-            child: const SelectableText(
-              'Neurológico: Glasgow 15. Pupilas isocóricas reactivas. Paresia facial central izquierda. Afasia motora. Hemiparesia derecha 3/5 braquiocrural, sensibilidad disminuida derecha. Sin rigidez de nuca. Inicio súbito 09:20 h. Glucemia 112 mg/dL. Se activa Código Ictus y traslado medicalizado.',
-              style: TextStyle(height: 1.48),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('Dedo-nariz y talón-rodilla si el déficit lo permite.'),
+                bullet('Buscar ataxia, dismetría o inestabilidad marcada.'),
+                bullet('Valorar negligencia, apraxia y alteraciones visuoespaciales si sospecha hemisférica.'),
+                bullet('No forzar la marcha si existe debilidad importante, vértigo intenso o riesgo de caída.'),
+              ],
+            ),
+          ),
+          section(
+            title: 'Ejemplo de reporte',
+            icon: Icons.description_outlined,
+            color: navy,
+            child: const Text(
+              'Paciente alerta, orientado, Glasgow 15. Pupilas isocóricas y reactivas. Desviación de mirada ausente. '
+              'Campos visuales sin defecto grosero por confrontación. Paresia facial central derecha. '
+              'Lenguaje no fluente con dificultad para denominación y repetición, comprensión parcialmente conservada. '
+              'Fuerza MSD 2/5, MID 3/5, hemicuerpo izquierdo 5/5. Hipoestesia derecha. '
+              'Coordinación no valorable en lado derecho por paresia; izquierda conservada. '
+              'Marcha no valorada por seguridad. Inicio de síntomas 09:20 h / última vez visto bien 09:15 h.',
+              style: TextStyle(height: 1.45),
             ),
           ),
         ],
@@ -2000,236 +1812,164 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
         padding: const EdgeInsets.all(14),
         children: [
           header(
-            'TC CRANEAL SIN CONTRASTE',
-            'Primera pregunta urgente: ¿hay hemorragia? Un TC inicialmente normal NO excluye un ictus isquémico hiperagudo.',
-            color: navy,
-          ),
-          ctCard(
-            title: 'Ictus isquémico · cambios precoces',
-            pattern: StrokeCtPattern.earlyIschemia,
-            findings: 'Pérdida de diferenciación sustancia gris-blanca, borramiento de la cinta insular y discreto borramiento de surcos.',
-            key: 'En las primeras horas los cambios pueden ser muy sutiles o el TC puede parecer normal.',
-          ),
-          ctCard(
-            title: 'Ictus isquémico · hipodensidad establecida',
-            pattern: StrokeCtPattern.establishedIschemia,
-            findings: 'Área hipodensa en un territorio vascular, con edema/borramiento de surcos según evolución.',
-            key: 'ISQUEMIA establecida suele verse más OSCURA (hipodensa).',
-          ),
-          ctCard(
-            title: 'Signo de ACM hiperdensa',
-            pattern: StrokeCtPattern.hyperdenseMca,
-            findings: 'Trayecto arterial focalmente hiperdenso, compatible con trombo en la arteria cerebral media en el contexto adecuado.',
-            key: 'Es un signo indirecto de oclusión; requiere correlación con angio-TC/neuroimagen.',
-          ),
-          ctCard(
-            title: 'Hemorragia intraparenquimatosa',
-            pattern: StrokeCtPattern.intraparenchymalHemorrhage,
-            findings: 'Colección espontáneamente hiperdensa (blanca) dentro del parénquima, a veces con edema periférico y efecto masa.',
-            key: 'HEMORRAGIA AGUDA suele verse BLANCA (hiperdensa).',
-            color: red,
-          ),
-          ctCard(
-            title: 'Hemorragia subaracnoidea',
-            pattern: StrokeCtPattern.subarachnoidHemorrhage,
-            findings: 'Hiperdensidad en cisternas basales, cisuras y/o surcos; la distribución depende del sangrado.',
-            key: 'Cefalea en trueno ± vómitos, rigidez cervical o síncope → emergencia aunque no haya focalidad típica.',
-            color: red,
+            'TC CRANEAL · QUÉ BUSCAR',
+            'La TC sin contraste distingue principalmente hemorragia y puede mostrar signos precoces de isquemia.',
           ),
           section(
-            title: 'Lectura práctica para AP',
-            icon: Icons.lightbulb_outline,
-            color: orange,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                bullet('No necesitas distinguir isquémico de hemorrágico clínicamente antes de trasladar.'),
-                bullet('No administres antiagregantes/anticoagulantes hasta excluir hemorragia mediante neuroimagen.', color: red),
-                bullet('La TC sin contraste descarta rápidamente una hemorragia relevante y permite buscar signos precoces de isquemia.'),
-                bullet('Angio-TC/TC de perfusión ayudan a localizar oclusión de gran vaso y seleccionar trombectomía; se realizan en el circuito hospitalario según protocolo.'),
-              ],
-            ),
-          ),
-        ],
-      );
-
-  Widget ischemicPage() => ListView(
-        padding: const EdgeInsets.all(14),
-        children: [
-          header(
-            'ICTUS ISQUÉMICO',
-            'El objetivo definitivo es reperfundir tejido viable lo antes posible. Desde AP: reconocer y acelerar acceso a neuroimagen/unidad de ictus.',
-            color: blue,
-          ),
-          section(
-            title: 'Clínica orientativa',
-            icon: Icons.psychology_alt_outlined,
+            title: 'Ictus isquémico',
+            icon: Icons.image_search_outlined,
             color: blue,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('Déficit focal súbito: hemiparesia/hemihipoestesia, afasia, disartria, hemianopsia, desviación de mirada o negligencia.'),
-                bullet('La ausencia de cefalea no descarta ictus; la clínica por sí sola no permite excluir hemorragia.'),
-                bullet('Disminución de conciencia puede aparecer en ictus extenso, tronco o circulación posterior.'),
+                const StrokeCtDiagram(pattern: StrokeCtPattern.ischemic),
+                const SizedBox(height: 12),
+                bullet('En las primeras horas la TC puede ser normal.'),
+                bullet('Signos precoces: pérdida de diferenciación sustancia gris-blanca, borramiento de surcos, pérdida del “ribete insular” e hipodensidad territorial.'),
+                bullet('Puede observarse arteria cerebral media hiperdensa por trombo.'),
+                bullet('La extensión del daño temprano puede estimarse con ASPECTS en territorio de ACM.'),
               ],
             ),
           ),
           section(
-            title: 'Reperfusión hospitalaria',
+            title: 'Ictus hemorrágico',
             icon: Icons.bloodtype_outlined,
             color: red,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('Trombólisis IV: requiere neuroimagen previa y valoración por equipo/unidad de ictus.'),
-                bullet('Trombectomía mecánica: indicada en oclusiones de gran vaso seleccionadas; algunos pacientes se benefician incluso con tiempo de inicio desconocido o ventanas ampliadas según neuroimagen.'),
-                bullet('Desde AP no descartes a un paciente por “haber pasado varias horas”: activa el circuito y deja la selección definitiva al centro de ictus.', color: red),
+                const StrokeCtDiagram(pattern: StrokeCtPattern.hemorrhagic),
+                const SizedBox(height: 12),
+                bullet('La sangre aguda suele verse hiperdensa (blanca) en TC sin contraste.', color: red),
+                bullet('Describir localización, tamaño aproximado, edema, efecto masa, desviación de línea media y extensión intraventricular.', color: red),
+                bullet('Una hemorragia excluye trombólisis y cambia por completo el manejo antitrombótico.', color: red),
               ],
             ),
           ),
           section(
-            title: 'Sospecha de oclusión de gran vaso',
-            icon: Icons.warning_amber_rounded,
+            title: 'Importante',
+            icon: Icons.info_outline,
             color: orange,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('Hemiplejia/paresia intensa.'),
-                bullet('Afasia grave o mutismo.'),
-                bullet('Desviación conjugada de mirada.'),
-                bullet('Negligencia marcada.'),
-                bullet('Déficit neurológico severo o combinación de signos corticales.'),
+                bullet('Estas imágenes son esquemas educativos integrados en la app; no sustituyen TC diagnósticas reales.'),
+                bullet('En AP la prioridad es Código Ictus y traslado; la neuroimagen se realiza en el centro receptor según circuito.'),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget medsPage() => ListView(
+        padding: const EdgeInsets.all(14),
+        children: [
+          header(
+            'TRATAMIENTO Y DOSIS',
+            'Distingue medidas prehospitalarias de tratamientos de reperfusión hospitalarios.',
+          ),
+          drug(
+            name: 'Glucosa en hipoglucemia',
+            dose: 'Si consciente: 15–20 g de glucosa oral y reevaluar a los 15 min. Si alteración de conciencia o no puede tragar: glucosa IV según disponibilidad/protocolo o glucagón 1 mg IM/SC.',
+            when: 'Glucemia baja que pueda explicar o agravar el déficit neurológico.',
+            warning: 'No retrasar Código Ictus si persiste déficit focal tras corregir la glucemia. Nada VO si disfagia o bajo nivel de conciencia.',
+            color: green,
+          ),
+          drug(
+            name: 'Oxígeno',
+            dose: 'Titular para mantener una oxigenación adecuada; no usar de rutina si el paciente está normoxémico.',
+            when: 'Hipoxemia o insuficiencia respiratoria.',
+            warning: 'Evitar hiperoxia innecesaria.',
+            color: blue,
+          ),
+          section(
+            title: 'Presión arterial',
+            icon: Icons.monitor_heart_outlined,
+            color: orange,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('En ictus agudo NO se recomienda reducir la PA de forma agresiva de rutina antes de conocer el contexto de reperfusión.'),
+                bullet('Si es candidato a trombólisis, el objetivo hospitalario habitual es PA <185/110 mmHg antes del tratamiento y <180/105 mmHg después.'),
+                bullet('Labetalol IV puede utilizarse en entorno monitorizado/protocolizado; no convertirlo en una intervención rutinaria del centro de salud.'),
               ],
             ),
           ),
           section(
-            title: 'Antitrombóticos',
+            title: 'Reperfusión · hospital / unidad de ictus',
+            icon: Icons.bolt_outlined,
+            color: purple,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                rich('Alteplasa IV', '0,9 mg/kg (máx. 90 mg): 10% en bolo y el resto en 60 min, en pacientes seleccionados según ventana/criterios.', color: purple),
+                rich('Tenecteplasa IV', '0,25 mg/kg (máx. 25 mg) en bolo único en pacientes seleccionados según protocolo de ictus/reperfusión.', color: purple),
+                bullet('Trombectomía mecánica: pacientes seleccionados con oclusión de gran vaso; la ventana puede ampliarse hasta 24 h según neuroimagen y criterios.', color: purple),
+                bullet('Estas terapias se deciden en hospital/SEM coordinado; el trabajo de AP es acortar tiempos y evitar tratamientos que interfieran.', color: purple),
+              ],
+            ),
+          ),
+          section(
+            title: 'Antiagregación',
             icon: Icons.medication_outlined,
             color: red,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('No iniciar AAS/clopidogrel en AP antes de excluir hemorragia.', color: red),
-                bullet('La anticoagulación empírica en la fase hiperaguda no es tratamiento rutinario del ictus isquémico.', color: red),
-                bullet('La antiagregación se decide tras neuroimagen y según si recibió trombólisis y el subtipo clínico.', color: red),
+                bullet('NO administrar AAS en AP antes de excluir hemorragia mediante TC.', color: red),
+                bullet('En ictus isquémico no trombolizado, la antiagregación se inicia tras neuroimagen según protocolo hospitalario.', color: red),
               ],
             ),
           ),
         ],
       );
 
-  Widget hemorrhagicPage() => ListView(
+  Widget transferPage() => ListView(
         padding: const EdgeInsets.all(14),
         children: [
           header(
-            'ICTUS HEMORRÁGICO',
-            'Sospecharlo especialmente si hay cefalea intensa, vómitos, convulsiones o disminución de conciencia, pero confirmarlo siempre con neuroimagen.',
-            color: red,
+            'CÓDIGO ICTUS Y TRASLADO',
+            'Objetivo: llegar al centro adecuado lo antes posible, aportando una historia temporal y neurológica clara.',
           ),
           section(
-            title: 'Hemorragia intraparenquimatosa',
-            icon: Icons.warning_outlined,
-            color: red,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                bullet('TC sin contraste: sangre aguda hiperdensa. Puede existir edema, efecto masa o extensión ventricular.'),
-                bullet('En AP: ABCDE, glucemia, evitar hipotensión, monitorizar y traslado inmediato.'),
-                bullet('Registrar anticoagulantes y hora de última dosis: condiciona la reversión urgente en hospital.'),
-                bullet('No administrar antiagregantes ni anticoagulantes.', color: red),
-              ],
-            ),
-          ),
-          section(
-            title: 'Hipertensión intracraneal / deterioro',
-            icon: Icons.crisis_alert_outlined,
-            color: red,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                bullet('Deterioro de conciencia, vómitos repetidos, anisocoria, alteración respiratoria o postura anormal → emergencia vital.'),
-                bullet('Si no protege vía aérea: solicitar SVA y soporte ventilatorio; la intubación debe realizarla personal entrenado cuando sea posible.'),
-                bullet('Manitol/suero hipertónico y neurocirugía pertenecen al manejo hospitalario según situación; los corticoides no son tratamiento del edema por hemorragia intracerebral.'),
-              ],
-            ),
-          ),
-          section(
-            title: 'Hemorragia subaracnoidea (HSA)',
-            icon: Icons.flash_on_outlined,
-            color: purple,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                rich('Clásico', 'cefalea en trueno, máxima desde el inicio, “peor cefalea de su vida”.', color: purple),
-                bullet('Puede acompañarse de vómitos, rigidez de nuca, fotofobia, síncope, convulsiones o disminución de conciencia.'),
-                bullet('TC sin contraste urgente. Si la sospecha sigue siendo alta con TC no diagnóstico, el estudio continúa en hospital según tiempo y protocolo.'),
-              ],
-            ),
-          ),
-        ],
-      );
-
-  Widget aitPage() => ListView(
-        padding: const EdgeInsets.all(14),
-        children: [
-          header(
-            'AIT · NO ES “ALGO LEVE”',
-            'Déficit neurológico focal transitorio ya resuelto = riesgo precoz de ictus. Requiere valoración urgente y prevención secundaria.',
-            color: orange,
-          ),
-          section(
-            title: 'Qué hacer desde AP',
+            title: 'Comunicar al 112 / equipo receptor',
             icon: Icons.local_hospital_outlined,
             color: red,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('Confirmar que fue focal y de inicio brusco: paresia, trastorno del lenguaje, pérdida visual monocular, etc.'),
-                bullet('Registrar duración, hora, anticoagulantes, antecedentes y realizar glucemia/ECG si está disponible sin retrasar derivación.'),
-                bullet('Derivación urgente para neuroimagen y estudio vascular/cardiaco. Un examen normal ahora no descarta un AIT.', color: red),
-                bullet('No usar una puntuación de riesgo baja como motivo para retrasar una evaluación urgente.', color: red),
+                bullet('Hora de inicio o última vez visto bien.', color: red),
+                bullet('Déficit: cara/brazo/pierna, lenguaje, mirada, campo visual, sensibilidad, coordinación, nivel de conciencia.', color: red),
+                bullet('Glucemia, TA, SatO₂ y evolución durante la asistencia.', color: red),
+                bullet('Anticoagulantes: nombre, última dosis y motivo; antiagregantes y antecedentes de hemorragia/ictus.', color: red),
+                bullet('Situación funcional previa y comorbilidad relevante.', color: red),
               ],
             ),
           ),
           section(
-            title: 'ABCD²: recordatorio educativo',
-            icon: Icons.calculate_outlined,
-            color: purple,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                rich('A', 'Age ≥60 años = 1.'),
-                rich('B', 'Blood pressure ≥140/90 = 1.'),
-                rich('C', 'Clinical: debilidad unilateral = 2; alteración del habla sin debilidad = 1.'),
-                rich('D', 'Duration ≥60 min = 2; 10–59 min = 1.'),
-                rich('D', 'Diabetes = 1.'),
-                bullet('Sirve para contextualizar riesgo, pero no sustituye la valoración clínica ni el estudio urgente.'),
-              ],
-            ),
-          ),
-          section(
-            title: 'Prevención secundaria',
-            icon: Icons.shield_outlined,
+            title: 'Mientras llega el recurso',
+            icon: Icons.medical_services_outlined,
             color: green,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('Antiagregación o anticoagulación se decide tras excluir hemorragia y según etiología (p. ej., fibrilación auricular).'),
-                bullet('Control de HTA, diabetes, lípidos, tabaquismo y causa vascular/cardiaca.'),
-                bullet('Doble antiagregación puede indicarse en pacientes seleccionados de alto riesgo/ictus menor durante un periodo corto, pero no debe iniciarse a ciegas antes de valoración/neuroimagen.'),
+                bullet('Monitorizar y reevaluar ABCDE y estado neurológico.'),
+                bullet('Cabeza elevada aproximadamente 30° si tolera y no hay hipotensión, vómitos o necesidad de maniobras de vía aérea.'),
+                bullet('Vía IV si no retrasa el traslado. Suero isotónico si precisa; evitar soluciones hipotónicas.'),
+                bullet('Tratar fiebre, hipoglucemia, convulsiones o compromiso de vía aérea según situación y recursos.'),
+                bullet('Nada por boca hasta cribado de disfagia.'),
               ],
             ),
           ),
           section(
-            title: 'Perlas de guardia',
-            icon: Icons.lightbulb_outline,
-            color: green,
+            title: 'AIT también es urgente',
+            icon: Icons.warning_amber_outlined,
+            color: orange,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('“Se le pasó” no significa que pueda irse a casa sin estudio.'),
-                bullet('Déficit focal transitorio + FA = alto interés cardioembólico.'),
-                bullet('Amaurosis fugaz también puede ser un AIT carotídeo.'),
+                bullet('La desaparición del déficit no convierte el episodio en banal.'),
+                bullet('AIT de reciente comienzo requiere valoración urgente y prevención secundaria precoz según circuito asistencial.'),
               ],
             ),
           ),
@@ -2240,17 +1980,24 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ICTUS · URGENCIAS AP'),
+        title: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Ictus',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.5',
+                style: TextStyle(fontSize: 11)),
+          ],
+        ),
         bottom: TabBar(
           controller: _tabs,
           isScrollable: true,
           tabs: const [
-            Tab(icon: Icon(Icons.timer_outlined), text: '0–10 min'),
+            Tab(icon: Icon(Icons.emergency_outlined), text: 'Actuación'),
             Tab(icon: Icon(Icons.psychology_outlined), text: 'Neurológico'),
             Tab(icon: Icon(Icons.image_search_outlined), text: 'TC'),
-            Tab(icon: Icon(Icons.water_drop_outlined), text: 'Isquémico'),
-            Tab(icon: Icon(Icons.emergency_outlined), text: 'Hemorrágico'),
-            Tab(icon: Icon(Icons.hourglass_bottom_outlined), text: 'AIT'),
+            Tab(icon: Icon(Icons.medication_outlined), text: 'Tratamiento'),
+            Tab(icon: Icon(Icons.local_hospital_outlined), text: 'Traslado'),
           ],
         ),
       ),
@@ -2260,9 +2007,8 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
           quickPage(),
           neuroPage(),
           ctPage(),
-          ischemicPage(),
-          hemorrhagicPage(),
-          aitPage(),
+          medsPage(),
+          transferPage(),
         ],
       ),
     );
@@ -2287,7 +2033,7 @@ class _TopicListPageState extends State<TopicListPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('URAPMIR', style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('ATENCIÓN PRIMARIA · v1.3', style: TextStyle(fontSize: 12)),
+            Text('ATENCIÓN PRIMARIA · v1.5', style: TextStyle(fontSize: 12)),
           ],
         ),
       ),

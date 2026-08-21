@@ -30,13 +30,18 @@ jobs:
       - name: Comprobar Flutter
         run: flutter --version
 
+      - name: Crear estructura Android si falta
+        run: |
+          if [ ! -d "android" ]; then
+            flutter create . --platforms=android --project-name urapmir
+          fi
+
       - name: Limpiar proyecto
         run: flutter clean
 
       - name: Instalar dependencias
         run: |
           rm -rf .dart_tool
-          rm -f pubspec.lock
           flutter pub get
           flutter pub deps | grep -E "sqflite|path" || true
 

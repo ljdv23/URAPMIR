@@ -422,7 +422,167 @@ class UrapMirApp extends StatelessWidget {
           centerTitle: false,
         ),
       ),
-      home: const TopicListPage(),
+      home: const MainModulesPage(),
+    );
+  }
+}
+
+
+class MainModulesPage extends StatelessWidget {
+  const MainModulesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('URAPMIR'), centerTitle: true),
+      body: ListView(
+        padding: const EdgeInsets.all(18),
+        children: [
+          const Text('Estudio clínico y preparación MIR',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          const Text('Selecciona un módulo',
+              style: TextStyle(fontSize: 16, color: Colors.black54)),
+          const SizedBox(height: 22),
+          _ModuleCard(
+            icon: Icons.quiz_outlined,
+            title: 'EXAMEN MIR',
+            subtitle: 'Preguntas aleatorias · Simulacro 200 · Especialidades · Temas',
+            color: Color(0xFF0C56A0),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const MirModulePage())),
+          ),
+          const SizedBox(height: 14),
+          _ModuleCard(
+            icon: Icons.local_hospital_outlined,
+            title: 'ATENCIÓN PRIMARIA',
+            subtitle: 'Temas clínicos · Algoritmos · Tratamiento · Derivación',
+            color: Color(0xFF147A72),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const TopicListPage())),
+          ),
+          const SizedBox(height: 14),
+          _ModuleCard(
+            icon: Icons.emergency_outlined,
+            title: 'URGENCIAS MÉDICAS',
+            subtitle: 'SCA · Ictus · Sepsis · Paciente politraumatizado',
+            color: Color(0xFFC64A3B),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const EmergencyModulePage())),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ModuleCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color color;
+  final VoidCallback onTap;
+  const _ModuleCard({
+    required this.icon, required this.title, required this.subtitle,
+    required this.color, required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(children: [
+            Container(
+              width: 58, height: 58,
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.10),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Icon(icon, size: 32, color: color),
+            ),
+            const SizedBox(width: 16),
+            Expanded(child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.bold, color: color)),
+                const SizedBox(height: 5),
+                Text(subtitle),
+              ],
+            )),
+            const Icon(Icons.chevron_right),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+class MirModulePage extends StatelessWidget {
+  const MirModulePage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    const options = [
+      'Preguntas aleatorias',
+      'Simulacro de 200 preguntas',
+      'Por especialidad',
+      'Por tema',
+    ];
+    return Scaffold(
+      appBar: AppBar(title: const Text('EXAMEN MIR')),
+      body: ListView.separated(
+        padding: const EdgeInsets.all(18),
+        itemCount: options.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 10),
+        itemBuilder: (context, i) => Card(
+          child: ListTile(
+            leading: const Icon(Icons.quiz_outlined),
+            title: Text(options[i]),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('${options[i]}: banco MIR pendiente de incorporar.')),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class EmergencyModulePage extends StatelessWidget {
+  const EmergencyModulePage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    const names = [
+      'Síndrome coronario agudo',
+      'Ictus',
+      'Sepsis',
+      'Paciente politraumatizado',
+    ];
+    return Scaffold(
+      appBar: AppBar(title: const Text('URGENCIAS MÉDICAS')),
+      body: ListView.separated(
+        padding: const EdgeInsets.all(18),
+        itemCount: names.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 10),
+        itemBuilder: (context, i) => Card(
+          child: ListTile(
+            leading: const Icon(Icons.emergency_outlined),
+            title: Text(names[i]),
+            subtitle: const Text('Algoritmo de actuación en Atención Primaria'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('${names[i]}: contenido clínico pendiente de incorporar.')),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

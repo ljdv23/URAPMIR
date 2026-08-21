@@ -646,12 +646,732 @@ class _TopicListPageState extends State<TopicListPage> {
                     title: Text(t.title, style: const TextStyle(fontWeight: FontWeight.bold)),
                     subtitle: const Text('Algoritmo completo · diagnóstico · tratamiento · derivación'),
                     trailing: const Icon(Icons.chevron_right),
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => TopicDetailPage(topic: t))),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => t.title == 'Hipertensión arterial'
+                            ? const HtaInteractivePage()
+                            : TopicDetailPage(topic: t),
+                      ),
+                    ),
                   ),
                 );
               },
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class HtaInteractivePage extends StatefulWidget {
+  const HtaInteractivePage({super.key});
+
+  @override
+  State<HtaInteractivePage> createState() => _HtaInteractivePageState();
+}
+
+class _HtaInteractivePageState extends State<HtaInteractivePage>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+
+  static const navy = Color(0xFF0C356A);
+  static const blue = Color(0xFF0C56A0);
+  static const green = Color(0xFF1E7A5C);
+  static const orange = Color(0xFFC77700);
+  static const purple = Color(0xFF67469A);
+  static const red = Color(0xFFB52C2C);
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  Widget _sectionCard({
+    required String number,
+    required String title,
+    required IconData icon,
+    required Color color,
+    required Widget child,
+    bool initiallyExpanded = false,
+  }) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: color.withOpacity(0.35)),
+      ),
+      child: ExpansionTile(
+        initiallyExpanded: initiallyExpanded,
+        leading: CircleAvatar(
+          backgroundColor: color,
+          foregroundColor: Colors.white,
+          child: Text(number, style: const TextStyle(fontWeight: FontWeight.bold)),
+        ),
+        title: Row(
+          children: [
+            Icon(icon, color: color),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.bold, color: color),
+              ),
+            ),
+          ],
+        ),
+        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        children: [child],
+      ),
+    );
+  }
+
+  Widget _plainSection({
+    required String number,
+    required String title,
+    required IconData icon,
+    required Color color,
+    required Widget child,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.35)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: color,
+                foregroundColor: Colors.white,
+                child: Text(number, style: const TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(width: 10),
+              Icon(icon, color: color),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          child,
+        ],
+      ),
+    );
+  }
+
+  Widget _bullet(String text, {IconData icon = Icons.circle, Color? color}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: icon == Icons.circle ? 7 : 18, color: color ?? navy),
+          const SizedBox(width: 9),
+          Expanded(child: Text(text, style: const TextStyle(height: 1.38))),
+        ],
+      ),
+    );
+  }
+
+  Widget _rich(String label, String text, {Color color = navy}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: RichText(
+        text: TextSpan(
+          style: const TextStyle(color: Colors.black87, height: 1.42),
+          children: [
+            TextSpan(
+              text: '$label: ',
+              style: TextStyle(fontWeight: FontWeight.bold, color: color),
+            ),
+            TextSpan(text: text),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _drugCard({
+    required String name,
+    required String brand,
+    required String group,
+    required String dose,
+    required String role,
+    required String adverse,
+    required String controls,
+    required String warnings,
+    Color color = green,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.045),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: color.withOpacity(0.45)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('$name — $brand',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color)),
+          const SizedBox(height: 3),
+          Text(group, style: const TextStyle(fontWeight: FontWeight.w600)),
+          const Divider(height: 20),
+          _rich('Pauta', dose, color: color),
+          _rich('Cuándo usarlo', role, color: color),
+          _rich('RAM', adverse, color: color),
+          _rich('Control', controls, color: color),
+          _rich('Precauciones', warnings, color: color),
+        ],
+      ),
+    );
+  }
+
+  Widget _quickSummary() {
+    return ListView(
+      padding: const EdgeInsets.all(14),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: navy,
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('HTA · RESUMEN RÁPIDO',
+                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+              SizedBox(height: 6),
+              Text('Consulta rápida · diagnóstico · tratamiento · alarmas',
+                  style: TextStyle(color: Colors.white70)),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        _plainSection(
+          number: '1',
+          title: 'Diagnóstico',
+          icon: Icons.monitor_heart_outlined,
+          color: blue,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _bullet('Consulta ≥140/90 mmHg.'),
+              _bullet('AMPA/MAPA diurna ≥135/85 mmHg.'),
+              _bullet('MAPA 24 h ≥130/80 mmHg.'),
+              _bullet('Confirmar generalmente en ≥2 visitas y, si es posible, con AMPA/MAPA.'),
+            ],
+          ),
+        ),
+        _plainSection(
+          number: '2',
+          title: 'Estudio inicial',
+          icon: Icons.science_outlined,
+          color: purple,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _bullet('Creatinina/FG · Na/K · glucemia · ácido úrico · perfil lipídico.'),
+              _bullet('Sedimento y cociente albúmina/creatinina.'),
+              _bullet('ECG; valorar fondo de ojo, ecocardiograma o ecografía renal según el caso.'),
+            ],
+          ),
+        ),
+        _plainSection(
+          number: '3',
+          title: 'Tratamiento',
+          icon: Icons.medication_outlined,
+          color: green,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _bullet('Medidas no farmacológicas en todos: ↓ sal, peso si procede, ejercicio, dieta saludable, moderar alcohol y dejar tabaco.'),
+              _bullet('Esquema habitual: IECA/ARA-II + calcioantagonista → añadir diurético si precisa.'),
+              _bullet('Ramipril (Acovil®): 2,5 mg/24 h → máx. 10 mg/día.'),
+              _bullet('Amlodipino (Norvas®): 5 mg/24 h → 10 mg/24 h.'),
+              _bullet('Indapamida (Tertensif Retard®): 1,5 mg/24 h.'),
+              _bullet('Carduran Neo® (doxazosina): 4 mg/24 h → máx. 8 mg/día. No es primera línea; útil sobre todo si HTA + HBP.'),
+              _bullet('HTA resistente: confirmar adherencia/MAPA/secundaria → valorar espironolactona si función renal y K lo permiten.'),
+            ],
+          ),
+        ),
+        _plainSection(
+          number: '4',
+          title: 'Alarmas y derivación',
+          icon: Icons.warning_amber_rounded,
+          color: red,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _bullet('PA muy elevada + daño agudo de órgano diana = emergencia hipertensiva → hospital.', icon: Icons.emergency, color: red),
+              _bullet('Derivar si HTA secundaria sospechada, deterioro renal relevante/progresivo, embarazo o HTA resistente confirmada.'),
+            ],
+          ),
+        ),
+        _plainSection(
+          number: '5',
+          title: 'Complicaciones',
+          icon: Icons.favorite_outline,
+          color: orange,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _bullet('❤️ Corazón: HVI, cardiopatía isquémica, IAM, IC, FA.'),
+              _bullet('🧠 Cerebro: AIT, ictus, enfermedad de pequeño vaso, deterioro cognitivo vascular.'),
+              _bullet('🫘 Riñón: albuminuria/proteinuria → ↓FG → ERC.'),
+              _bullet('👁️ Retina: retinopatía, hemorragias, exudados, edema de papila en formas graves.'),
+              _bullet('🩸 Vasos: aterosclerosis, EAP y mayor riesgo de enfermedad aórtica.'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _topicSections({required bool expandable}) {
+    final sections = <Widget>[];
+
+    Widget add({
+      required String number,
+      required String title,
+      required IconData icon,
+      required Color color,
+      required Widget child,
+    }) {
+      return expandable
+          ? _sectionCard(number: number, title: title, icon: icon, color: color, child: child)
+          : _plainSection(number: number, title: title, icon: icon, color: color, child: child);
+    }
+
+    sections.add(add(
+      number: '1',
+      title: 'Definición y diagnóstico',
+      icon: Icons.monitor_heart_outlined,
+      color: blue,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('HTA = elevación mantenida de la PA.'),
+          _bullet('Consulta: ≥140/90 mmHg.'),
+          _bullet('AMPA/MAPA diurna: ≥135/85 mmHg.'),
+          _bullet('MAPA 24 h: ≥130/80 mmHg.'),
+          _bullet('Confirmar generalmente en ≥2 visitas; hacer al menos dos mediciones separadas >1 min y usar el promedio.'),
+          _bullet('Siempre que sea posible, confirmar mediante AMPA o MAPA.'),
+          _rich('Bata blanca', 'PA elevada en consulta y normal fuera.'),
+          _rich('Enmascarada', 'PA normal en consulta y elevada fuera.'),
+          _rich('Resistente', 'PA ≥140/90 pese a ≥3 fármacos adecuados, incluido un diurético; comprobar adherencia, sustancias presoras y confirmar con MAPA.'),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '2',
+      title: 'Fisiopatología práctica',
+      icon: Icons.psychology_alt_outlined,
+      color: purple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'PA ≈ gasto cardíaco × resistencia vascular periférica',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          ),
+          const SizedBox(height: 10),
+          _bullet('↑ actividad simpática + activación SRAA + retención renal de Na/agua + disfunción endotelial + rigidez/remodelado arterial.'),
+          _bullet('Resultado: ↑ resistencia vascular y/o volumen circulante → HTA mantenida.'),
+          const SizedBox(height: 8),
+          _rich('IECA/ARA-II', '↓ SRAA.'),
+          _rich('Calcioantagonistas', '↓ resistencia vascular.'),
+          _rich('Diuréticos', '↓ Na⁺ y volumen.'),
+          _bullet('Combinar mecanismos diferentes suele mejorar el control de la PA.', icon: Icons.lightbulb_outline, color: orange),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '3',
+      title: 'Causas y factores asociados',
+      icon: Icons.hub_outlined,
+      color: orange,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('Más del 90% corresponde a HTA esencial.'),
+          _bullet('Pensar en HTA secundaria ante presentación sugestiva, comienzo atípico, HTA resistente/refractaria o deterioro renal.'),
+          _bullet('Revisar sustancias presoras: AINE, corticoides, determinados antidepresivos, anticonceptivos/hormonas, regaliz, entre otros.'),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '4',
+      title: 'Evaluación inicial en Atención Primaria',
+      icon: Icons.person_search_outlined,
+      color: green,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _rich('Anamnesis', 'antecedentes familiares, estilo de vida, FRCV, comorbilidades, medicación, causas secundarias, enfermedad cardiovascular y lesión de órgano diana.'),
+          _rich('Exploración', 'PA inicialmente en ambos brazos, FC, peso/talla/IMC, cardiovascular, pulsos, edemas, respiratorio, abdomen y tiroides.'),
+          _bullet('Exploración neurológica cuando la clínica lo indique.'),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '5',
+      title: 'Pruebas iniciales',
+      icon: Icons.science_outlined,
+      color: blue,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _rich('Analítica', 'hemograma, creatinina/FG, Na, K, glucemia, ácido úrico, colesterol total/LDL/HDL y TG.'),
+          _rich('Orina', 'sedimento + cociente albúmina/creatinina.'),
+          _rich('ECG', 'especialmente para detectar HVI.'),
+          _rich('AMPA/MAPA', 'confirmación diagnóstica, bata blanca, HTA enmascarada, variabilidad, HTA resistente y valoración del control.'),
+          _bullet('Según el caso: fondo de ojo, ecocardiograma, ecografía renal y estudio dirigido de HTA secundaria.'),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '6',
+      title: 'Complicaciones',
+      icon: Icons.warning_amber_rounded,
+      color: red,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('❤️ Corazón: HVI, cardiopatía isquémica, IAM, insuficiencia cardiaca y FA.'),
+          _bullet('🧠 Cerebro: AIT, ictus isquémico/hemorrágico, enfermedad de pequeño vaso y deterioro cognitivo vascular.'),
+          _bullet('🫘 Riñón: albuminuria/proteinuria → ↓ FG → ERC.'),
+          _bullet('👁️ Retina: retinopatía; en formas graves hemorragias, exudados y edema de papila.'),
+          _bullet('🩸 Vasos: aterosclerosis, enfermedad arterial periférica y mayor riesgo de enfermedad aórtica.'),
+          const SizedBox(height: 6),
+          const Text('HTA → daño vascular → corazón + cerebro + riñón + retina + vasos',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '7',
+      title: 'Objetivos de PA',
+      icon: Icons.flag_outlined,
+      color: green,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('Objetivo inicial general: <140/90 mmHg.'),
+          _bullet('Si se tolera, intentar alrededor de ≤130/80 mmHg para la mayoría.'),
+          _bullet('≤65 años: PAS 120–129 mmHg si se tolera.'),
+          _bullet('>65 años: PAS 130–139 mmHg y PAD <80 mmHg.'),
+          _bullet('Individualizar en ERC, ancianos y pacientes frágiles.'),
+          _bullet('Evitar generalmente PA <120/70 mmHg.'),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '8',
+      title: 'Tratamiento no farmacológico',
+      icon: Icons.directions_walk_outlined,
+      color: green,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('Reducir sal.'),
+          _bullet('Pérdida de peso si procede.'),
+          _bullet('Ejercicio regular.'),
+          _bullet('Moderar alcohol.'),
+          _bullet('Dieta saludable.'),
+          _bullet('Abandono del tabaco.'),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '9',
+      title: 'Tratamiento farmacológico',
+      icon: Icons.medication_outlined,
+      color: green,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('Iniciar inmediatamente si PA ≥160/100 mmHg o PA ≥140/90 + RCV alto/muy alto.'),
+          _bullet('Familias fundamentales: IECA, ARA-II, calcioantagonistas y diuréticos tiazídicos/tiazida-like.'),
+          _bullet('Los betabloqueantes no son primera línea salvo indicación específica.'),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFEAF4FF),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Text(
+              'ALGORITMO\nIECA/ARA-II + calcioantagonista\n↓ no controla\nIECA/ARA-II + calcioantagonista + diurético\n↓ no controla\nAdherencia + AMPA/MAPA + sustancias presoras + causas secundarias\n↓\nHTA resistente confirmada\n↓\nConsiderar 4.º fármaco',
+              style: TextStyle(fontWeight: FontWeight.w700, height: 1.5),
+            ),
+          ),
+          const SizedBox(height: 14),
+          _drugCard(
+            name: 'Ramipril',
+            brand: 'Acovil®',
+            group: 'IECA',
+            dose: 'Inicio habitual 2,5 mg/24 h; titular según respuesta hasta 10 mg/día.',
+            role: 'Especialmente útil cuando existe indicación cardiovascular o renal/albuminuria.',
+            adverse: 'Tos, hiperpotasemia, hipotensión, deterioro renal y raramente angioedema.',
+            controls: 'PA + creatinina/FG + K.',
+            warnings: 'No combinar IECA + ARA-II. Contraindicado en embarazo.',
+            color: blue,
+          ),
+          _drugCard(
+            name: 'Amlodipino',
+            brand: 'Norvas®',
+            group: 'Calcioantagonista dihidropiridínico',
+            dose: '5 mg/24 h → 10 mg/24 h según respuesta.',
+            role: 'Muy útil asociado a IECA/ARA-II.',
+            adverse: 'Edema maleolar, cefalea, rubefacción, mareo y palpitaciones.',
+            controls: 'PA y tolerancia clínica.',
+            warnings: 'Valorar edema y síntomas de hipotensión.',
+            color: orange,
+          ),
+          _drugCard(
+            name: 'Indapamida',
+            brand: 'Tertensif Retard®',
+            group: 'Diurético tiazida-like',
+            dose: '1,5 mg/24 h, habitualmente por la mañana.',
+            role: 'Puede utilizarse como tercer componente: IECA/ARA-II + amlodipino + indapamida.',
+            adverse: 'Hiponatremia, hipopotasemia, hipotensión e hiperuricemia.',
+            controls: 'Na + K + función renal ± ácido úrico.',
+            warnings: 'Especial precaución si alteraciones hidroelectrolíticas o renales.',
+            color: green,
+          ),
+          const SizedBox(height: 8),
+          _bullet('HTA resistente: el texto aportado sitúa espironolactona como 4.º fármaco si función renal y K lo permiten.', icon: Icons.star_outline, color: purple),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '10',
+      title: 'Doxazosina / Carduran Neo®',
+      icon: Icons.star_rounded,
+      color: purple,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _rich('Grupo', 'alfabloqueante α1.', color: purple),
+          _rich('Pauta', 'Carduran Neo 4 mg cada 24 h; si es necesario y se tolera, 8 mg/24 h (máximo).', color: purple),
+          _rich('Lugar', 'NO es tratamiento inicial habitual. Se reserva como tratamiento añadido en pacientes seleccionados.', color: purple),
+          _rich('Especial interés', 'HTA de difícil control + HBP con síntomas urinarios.', color: purple),
+          _rich('Combinaciones', 'puede asociarse a IECA/ARA-II, calcioantagonista, diurético o añadirse a una combinación previa.', color: purple),
+          const SizedBox(height: 6),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: purple.withOpacity(0.07),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Text(
+              'IECA/ARA-II + calcioantagonista + diurético\n↓ sigue elevada\nConfirmar verdadera HTA resistente\n↓\nEspironolactona si función renal/K permiten\n↓\nSi no es apropiada/no se tolera o hay perfil favorable\n↓\nValorar doxazosina, especialmente HTA + HBP',
+              style: TextStyle(fontWeight: FontWeight.w700, height: 1.5),
+            ),
+          ),
+          const SizedBox(height: 10),
+          _rich('RAM', 'hipotensión ortostática, mareo, debilidad ± síncope.', color: red),
+          _rich('Interacción importante', 'doxazosina + inhibidores PDE-5 (sildenafilo/tadalafilo) → mayor riesgo de hipotensión sintomática.', color: red),
+          _bullet('Perla AP: varón con HTA + síntomas de HBP → puede ser especialmente útil, pero no sustituye automáticamente el esquema antihipertensivo de primera línea.', icon: Icons.lightbulb_outline, color: orange),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '11',
+      title: 'Precauciones farmacológicas',
+      icon: Icons.shield_outlined,
+      color: orange,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('IECA/ARA-II: controlar creatinina y K; evitar embarazo y combinación IECA + ARA-II.'),
+          _bullet('Diuréticos: controlar Na/K, función renal y considerar ácido úrico.'),
+          _bullet('AINE: disminuyen el efecto de muchos antihipertensivos.'),
+          _bullet('IECA/ARA-II + diurético + AINE → ↑ riesgo de lesión renal aguda.', icon: Icons.warning_amber_rounded, color: red),
+          _bullet('Betabloqueante + verapamilo/diltiazem → riesgo de bradicardia, bloqueo AV e IC.', icon: Icons.warning_amber_rounded, color: red),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '12',
+      title: 'PA muy elevada en el centro de salud',
+      icon: Icons.emergency_outlined,
+      color: red,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _rich('Pseudourgencia', 'elevación relacionada con dolor, ansiedad u otro desencadenante → reposo, tratar causa y repetir PA.', color: red),
+          _rich('Urgencia hipertensiva', 'elevación importante sin afectación grave aguda de órgano diana → tratamiento oral cuando corresponda, reducción gradual y seguimiento estrecho.', color: red),
+          _bullet('No utilizar nifedipino de acción rápida.', icon: Icons.close, color: red),
+          _rich('Emergencia hipertensiva', 'PA muy elevada + daño agudo de órgano diana/síntomas graves neurológicos o cardiovasculares → estabilización inicial + traslado hospitalario inmediato.', color: red),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '13',
+      title: 'Derivación',
+      icon: Icons.route_outlined,
+      color: red,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('Sospecha de HTA secundaria.'),
+          _bullet('Deterioro renal importante/progresivo o proteinuria relevante.'),
+          _bullet('HTA en embarazo.'),
+          _bullet('HTA resistente confirmada.'),
+          _bullet('Necesidad de estudios no disponibles en AP.'),
+          _bullet('Emergencia hipertensiva → derivación hospitalaria urgente.', icon: Icons.emergency, color: red),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '14',
+      title: 'Seguimiento',
+      icon: Icons.calendar_month_outlined,
+      color: blue,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('Tras diagnóstico/inicio/modificación: revisión aproximadamente en 15 días–1 mes.'),
+          _bullet('Valorar PA, adherencia, RAM y función renal/electrolitos cuando corresponda.'),
+          _bullet('Una vez controlado: enfermería cada 3–6 meses y revisión médica programada anual, individualizando según situación clínica.'),
+        ],
+      ),
+    ));
+
+    sections.add(add(
+      number: '15',
+      title: 'Errores frecuentes',
+      icon: Icons.error_outline,
+      color: orange,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _bullet('Manguito incorrecto.'),
+          _bullet('Técnica incorrecta de PA.'),
+          _bullet('No intensificar pese a mal control.'),
+          _bullet('No valorar el riesgo cardiovascular global.'),
+          _bullet('No comprobar adherencia.'),
+          _bullet('Diagnosticar HTA resistente sin confirmación adecuada.'),
+        ],
+      ),
+    ));
+
+    return sections;
+  }
+
+  Widget _accordionView() {
+    return ListView(
+      padding: const EdgeInsets.all(14),
+      children: [
+        const Text(
+          'Pulsa cada apartado para abrirlo o cerrarlo.',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(height: 12),
+        ..._topicSections(expandable: true),
+      ],
+    );
+  }
+
+  Widget _fullTopicView() {
+    return ListView(
+      padding: const EdgeInsets.all(14),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: navy,
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'HIPERTENSIÓN ARTERIAL',
+                style: TextStyle(color: Colors.white, fontSize: 23, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 5),
+              Text(
+                'Tema completo · Atención Primaria',
+                style: TextStyle(color: Colors.white70),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
+        ..._topicSections(expandable: false),
+        const Card(
+          child: Padding(
+            padding: EdgeInsets.all(14),
+            child: Text(
+              'SEGURIDAD: contenido educativo. Antes de prescribir, comprobar ficha técnica vigente, alergias, embarazo, función renal/hepática, interacciones y protocolos locales.',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Hipertensión arterial'),
+        bottom: TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          tabs: const [
+            Tab(icon: Icon(Icons.bolt), text: 'Resumen rápido'),
+            Tab(icon: Icon(Icons.touch_app_outlined), text: 'Por apartados'),
+            Tab(icon: Icon(Icons.menu_book_outlined), text: 'Tema completo'),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          _quickSummary(),
+          _accordionView(),
+          _fullTopicView(),
         ],
       ),
     );

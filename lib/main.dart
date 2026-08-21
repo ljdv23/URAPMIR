@@ -755,13 +755,36 @@ class MirTopicsPage extends StatelessWidget{
       future:UrapDatabase.instance.topicsForSpecialty(specialtyId),
       builder:(context,snap){
         if(!snap.hasData)return const Center(child:CircularProgressIndicator());
-        return ListView.separated(padding:const EdgeInsets.all(14),itemCount:snap.data!.length,separatorBuilder:(_,__)=>const SizedBox(height:8),
-          itemBuilder:(context,i){final t=snap.data![i];return Card(child:ListTile(
-            title:Text('${t['name']}',style:const TextStyle(fontWeight:FontWeight.bold)),
-            subtitle:Text('${t['question_count']} preguntas'),trailing:const Icon(Icons.chevron_right),
-            onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>MirQuizPage(title:'${t['name']}',topicId:t['id'] as int))));
-          });}
-      }));
+        return ListView.separated(
+          padding: const EdgeInsets.all(14),
+          itemCount: snap.data!.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          itemBuilder: (context, i) {
+            final t = snap.data![i];
+            return Card(
+              child: ListTile(
+                title: Text(
+                  '${t['name']}',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text('${t['question_count']} preguntas'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => MirQuizPage(
+                      title: '${t['name']}',
+                      topicId: t['id'] as int,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    ),
+  );
 }
 
 class MirQuizPage extends StatefulWidget{

@@ -1,0 +1,7 @@
+URAPMIR v1.8 - imágenes clínicas reales
+1. 12 Lead EKG ST Elevation tracing only.jpg — Displaced — Public Domain — Wikimedia Commons.
+2. ECG 001.jpg — Glenlarson/Patho — CC BY-SA 3.0 / GFDL — Wikimedia Commons.
+3. CT Brain MCA Infarct.jpg — Lucien Monfils — CC BY-SA 4.0 — Wikimedia Commons.
+4. Intracerebral hemorrage (CT scan).jpg — Glitzy queen00 — Public Domain — Wikimedia Commons.
+
+La app carga estas imágenes desde Wikimedia Commons y conserva los esquemas previos como fallback si no hay conexión.

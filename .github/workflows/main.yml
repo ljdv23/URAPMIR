@@ -36,6 +36,15 @@ jobs:
             flutter create . --platforms=android --project-name urapmir
           fi
 
+      - name: Permitir Internet para imágenes clínicas
+        run: |
+          MANIFEST="android/app/src/main/AndroidManifest.xml"
+          if ! grep -q "android.permission.INTERNET" "$MANIFEST"; then
+            sed -i '/<manifest/a\    <uses-permission android:name="android.permission.INTERNET"/>' "$MANIFEST"
+          fi
+          echo "AndroidManifest final:"
+          cat "$MANIFEST"
+
       - name: Limpiar proyecto
         run: flutter clean
 
@@ -51,5 +60,5 @@ jobs:
       - name: Guardar APK
         uses: actions/upload-artifact@v4
         with:
-          name: URAPMIR-v1.8-APK
+          name: URAPMIR-v1.8-IMAGENES-REALES
           path: build/app/outputs/flutter-apk/app-release.apk

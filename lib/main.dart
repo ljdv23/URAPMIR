@@ -1,286 +1,4 @@
-¿DE QUÉ HABLAMOS?
-Introducción
-La diabetes mellitus (DM) comprende una serie de enfermedades metabólicas que se caracterizan por una elevación de la concentración de glucosa en sangre, en unos casos por falta total de secreción de insulina (DM tipo 1) o, en otros, por una combinación de resistencia a la acción de la insulina y deficiencia en su secreción (DM tipo 2).
-
-Su importancia viene dada por el carácter de «epidemia» que representa la DM, en palabras de la Organización Mundial de la Salud (OMS), y por su influencia en la pérdida de salud de la población, en la mortalidad prematura que ocasiona y porque no solo afecta a la persona y a su familia, sino también a los sistemas sanitarios, ya que es una enfermedad costosa por las complicaciones a largo plazo. Así, nos encontramos que la DM es la cuarta causa de muerte prematura en mujeres y la octava en hombres. Es la primera causa de inclusión de pacientes en programas de tratamiento sustitutivo renal, de ceguera en la población adulta joven (40-60 años) y de amputaciones no traumáticas de miembros inferiores; además, aumenta de dos a cuatro veces la probabilidad de cardiopatía isquémica e ictus.
-
-Después de 10 años de evolución, se estima que más del 20% de las personas con DM habrán tenido un evento cardiovascular, un 5% desarrollarán ceguera y menos del 2% tendrán insuficiencia renal o sufrirán alguna amputación.
-
-A todo esto hay que añadirle el preocupante incremento, en algunos países, de la DM tipo 2 en niños y adolescentes.
-
-Epidemiología
-La Federación Internacional de Diabetes Mellitus ha estimado que la prevalencia mundial de esta enfermedad en 2019 era del 9,3% (463 millones de personas), y que aumentará hasta el 10,2% (578 millones) en 2030 y hasta el 10,9% (700 millones) en 2045. Además, la prevalencia mundial de intolerancia a la glucosa era del 7,5% (374 millones) en 2019 y se prevé que alcance el 8% (454 millones) en 2030 y el 8,6% (548 millones) en 2045.
-
-En España, aparecen alrededor de 386.000 nuevos casos de DM anualmente en la población adulta, con lo cual la incidencia de la DM (a partir de los datos del estudio de cohorte nacional di@bet.es, ajustado por edad, sexo y forma de detección de la DM) es de 11,6 casos/1.000 personas al año; esto quiere decir que, en un cupo medio de 1.500 personas, cada año habrá más de 17 nuevas personas con DM. La incidencia de DM conocida se ha estimado en 3,7 casos/1.000 personas al año. Por lo tanto, la incidencia de DM no conocida e identificada fue de 7,9 casos/1.000 personas al año. La incidencia de la DM aumenta con la edad y es mayor entre los hombres (13,4 casos/1.000 personas al año) que entre las mujeres (9,9 casos/1.000 personas al año). Sin embargo, entre las personas mayores de 75 años no existe diferencia entre sexos.
-
-La prevalencia de la DM gestacional es variable según los distintos estudios, poblaciones y criterios diagnósticos utilizados, y afecta a entre un 3 y un 10% de las mujeres embarazadas. Aumenta el riesgo de diversas complicaciones obstétricas, como el sufrimiento fetal, la macrosomía, la muerte intrauterina, los partos por cesárea y los problemas neonatales, además de provocar un ligero incremento de malformaciones fetales.
-
-¿QUÉ LO PUEDE OCASIONAR?
-La patogénesis de los diferentes tipos de DM está relacionada con una compleja y desconocida interacción entre factores genéticos, medioambientales y de estilos de vida (tabla 1).
-
-Los dos grandes grupos, la DM tipo 1 (DM 1) y la DM tipo 2 (DM 2) son enfermedades heterogéneas cuya presentación clínica y progresión varía considerablemente. Ambas pueden acarrear la pérdida progresiva de masa o función de células β, que se manifiesta clínicamente como hiperglucemia. Recordemos que, a pesar de que la patogénesis es muy diferente, diagnosticar al inicio cuál es el tipo de DM en algunos casos puede no resultar sencillo (p. ej., persona con DM de inicio en la madurez, DM en jóvenes [MODY] diagnosticados erróneamente como DM 1, etc.).
-
-Tabla 1
-Con respecto a la DM 1, supone menos del 10% de los casos de DM y su incidencia en España es de 10-17 casos por cada 100.000 habitantes y año, y es la forma más habitual de DM en la infancia y la adolescencia, aunque puede presentarse a otras edades o en personas obesas. La destrucción autoinmunitaria de las células β tiene predisposición genética y también está relacionada con factores ambientales que aún no están bien definidos. Son pacientes propensos a otros trastornos autoinmunes: tiroiditis de Hashimoto, enfermedad de Graves, enfermedad celíaca, enfermedad de Addison, vitíligo, hepatitis autoinmune, miastenia gravis y anemia perniciosa. No todas las DM 1 tienen evidencia de autoinmunidad de células β.
-
-Con el término LADA, tenemos un perfil de población de inicio en la edad adulta de una DM autoinmune lentamente progresiva que es probable que desarrolle una destrucción manifiesta de células β, acelerando así el inicio de la insulina.
-
-En la DM 2 (90-95% del total de casos de DM), aunque se desconocen las etiologías específicas, no se produce la destrucción autoinmune de las células β, pero se produce una disfunción de estas y una deficiencia de insulina relativa (en lugar de absoluta) en el contexto de una resistencia periférica a la insulina. El riesgo de desarrollar DM 2 aumenta con la edad, la obesidad y la falta de actividad física.
-
-Los defectos monogénicos que causan la disfunción de las células β, como la diabetes neonatal y la MODY, representan un pequeño porcentaje de los pacientes con diabetes (< 5%). Esta última se caracteriza con frecuencia por la aparición de hiperglucemia a una edad temprana (normalmente antes de los 25 años, aunque el diagnóstico puede producirse a edades más avanzadas). La MODY se caracteriza por una secreción deficiente de insulina, aunque la acción de la insulina es normal (en ausencia de obesidad coexistente). Se hereda con un patrón autosómico dominante, es una diabetes atípica y hay antecedentes familiares de diabetes no característica de tipo 1 ni tipo 2 (diagnosticados antes de los 25 años). Las implicaciones del tratamiento son considerables. La combinación de la proporción de péptido C/creatinina en orina y la detección de anticuerpos pueden ayudar a determinar quién debe someterse a pruebas genéticas para detectar la MODY. En el 80-85% de los niños con DM en los primeros 6 meses de vida puede encontrarse una causa monogénica subyacente. Los adultos y niños con DM no identificada como de tipo 1 o 2 también deben someterse a pruebas genéticas.
-
-La diabetes gestacional (DMG) siempre se había definido como cualquier grado de intolerancia a la glucosa que se detecta por primera vez durante el embarazo, independientemente del grado de hiperglucemia. Se está cuestionando esta definición, así como su diagnóstico, con las dos recomendaciones contradictorias de los grupos de expertos: la primera con una carga de glucosa de 75 g de «un solo paso» derivado de los criterios de IADPSG, o el enfoque más tradicional de «dos pasos», con una primera carga de 50 g de glucosa sin necesidad de ayuno denominada Test de O’Sullivan, seguida, en caso de positividad, de un test de tolerancia a la glucosa con 100 g y cuatro puntos de lectura (Carpenter y Coustan).
-
-¿QUÉ TENEMOS QUE HACER?
-Para empezar, llegar al diagnóstico de DM (tabla 2) y saber de qué tipo de DM se trata. La DM 2 suele aparecer en personas > 30 años, con antecedentes familiares de DM 2, antecedentes personales de DMG, sobrepeso u obesidad, aparición insidiosa y ausencia de cetonemia y cetonuria. En caso contrario, se pueden considerar inicialmente otros tipos de diabetes, que podrían ser clasificadas como DM 1 o diabetes por trastorno específico (diabetes monogénicas, por enfermedades pancreáticas o por fármacos). En Atención Primaria (AP), nuestras actividades irán básicamente enfocadas a la DM 2 y a la prediabetes para identificar y tratar otros factores de riesgo de enfermedad cardiovascular, por lo que desarrollaremos, en base a esta consideración, los restantes apartados de esta unidad. Así, comenzaremos realizando una evaluación médica integral y una valoración de las comorbilidades.
-
-Tabla 2
-
-Anamnesis
-Se debe investigar sobre:
-
-Antecedentes familiares de DM y enfermedades cardiovasculares.
-Características de inicio de la DM: edad, hospitalización.
-Hábitos de vida.
-Hábitos tóxicos: tabaco, alcohol, sustancias tóxicas.
-Comorbilidades: hipertensión arterial (HTA), dislipemia, obesidad.
-Síntomas de hiper o hipoglucemia.
-Complicaciones macro o microvasculares: cambios en la agudeza visual, dolor torácico con esfuerzo y en reposo, claudicación intermitente, ortostatismo, alteraciones del ritmo intestinal, impotencia, parestesias, dolores o calambres en piernas o brazos.
-Tratamiento previo y actual: cumplimiento, respuesta, efectos secundarios.
-Estado de vacunaciones (neumococo, gripe, vacuna COVID).
-Exploración física
-Se realizará una exploración física completa haciendo énfasis en:
-
-Peso, índice de masa corporal (IMC), circunferencia de cintura, presión arterial (PA), frecuencia cardíaca.
-Examen de los pies (descartar pie de riesgo o pie diabético).
-Examen ocular (fundamentalmente para descartar retinopatía).
-Exploraciones  complementarias
-Glucemia, hemoglobina glicosilada, perfil lipídico, cociente de albúmina creatinina, albuminuria, estimación del filtrado glomerular (CKD-EPI), electrocardiograma, cálculo del riesgo cardiovascular (REGICOR).
-
-Ante la duda de si el paciente presenta DM 2 o DM 1 de presentación en el adulto (p. ej. LADA), preferentemente se solicitará péptido C y, si se considera necesario, marcadores autoinmunes (autoanticuerpos de células de los islotes y autoanticuerpos contra GAD), a veces complementada con la determinación de otros marcadores (insulina, tirosina fosfatasas IA-2 e IA-2β etc.).
-
-La frecuencia y el tipo de actividades en el seguimiento del paciente con DM se muestran en la tabla 3.
-
-Tabla 3
-
-¿QUÉ PROPUESTA HAREMOS?
-Primero, estableceremos de forma integral e individualizada los objetivos de control (tabla 4), que no se van a limitar exclusivamente a los metabólicos.
-En segundo lugar, estableceremos un plan de tratamiento, también individualizado y compartido con el paciente, en función de la edad, la esperanza de vida y las comorbilidades.
-Y, finalmente, estableceremos un plan de educación terapéutica. Será un proceso continuo, sistemático, centrado en las necesidades del paciente y adaptado a sus capacidades y habilidades, todo ello con el objetivo de que la persona con DM adquiera los conocimientos, técnicas y habilidades necesarios para el autocuidado de su enfermedad.
-Los contenidos educativos incluyen:
-Conocimientos básicos sobre la DM.
-Objetivos de control: glucemias pre y posprandiales, hemoglobina glicosilada (HbA1c) y cetonemia en DM 1 y DM gestacional.
-Alimentación, ejercicio, cuidado de los pies, consejo antitabaco.
-Adherencia al tratamiento.
-Hipoglucemia y autoanálisis.
-Insulina, tipos de insulina, técnicas de inyección y modificación de las dosis.
-Objetivos de control y tratamiento (tabla 4)
-En cuanto a la HbA1c, el objetivo debe individualizarse en cada paciente en función de su actitud, las dificultades esperadas en el tratamiento, el equilibrio entre el beneficio demostrado de un control estricto de la glucemia en la prevención y el retraso de las complicaciones microvasculares y el riesgo asociado de hipoglucemia. Un objetivo razonable podría ser una HbA1c < 7% para la mayoría de los pacientes. Se acepta un control más relajado de la HbA1c, del < 8%-8,5% en pacientes muy ancianos, frágiles, con comorbilidades, con antecedentes de hipoglucemia grave, polimedicados o con esperanza de vida limitada. Se debe buscar un control más estricto, HbA1c < 6,5% en pacientes jóvenes, sin complicaciones, en los que pueda conseguirse sin hipoglucemias significativas u otros efectos adversos del trata miento. En este grupo pueden considerarse los pacientes en estadios iniciales, con expectativa de vida larga y con riesgo vascular no elevado.
-
-Alcanzar el objetivo glucémico, especialmente durante los primeros años tras el diagnóstico de la DM, reduce la incidencia y la progresión de las complicaciones microvasculares y, a largo plazo (más de 10 años), mejora los resultados cardiovasculares. En pacientes con DM y enfermedad cardiovascular arteriosclerótica o múltiples factores de riesgo de enfermedad arterioesclerótica, se recomienda ampliar el objetivo glucocéntrico hacia una protección cardiovascular, incluyendo en el tratamiento fármacos que disminuyan el riesgo cardiorrenal, independientemente del valor de la HbA1C.
-
-Tabla 4
-
-Plan terapéutico
-Medidas no farmacológicas
-Comenzaremos con recomendaciones sobre el estilo de vida (alimentación, actividad física, estrés, tabaco, alcohol, etc.) y autocuidados adtados a las características individuales del paciente y de su entorno. En esta tarea, el papel de la unidad básica asistencial (enfermería/medicina) es fundamental, junto con el apoyo de otras unidades del equipo de AP, como los trabajadores sociales.
-
-Aunque el diagnóstico de DM al principio puede ser una potente motivación para cambiar de estilo de vida, es recomendable averiguar en qué momento del cambio se encuentra el paciente, es decir, hasta qué punto está dispuesto a cambiar cada uno de los hábitos de su estilo de vida. Para ello hay varios métodos; el más conocido es el Modelo de Estado de Cambio de Prochaska y Diclemente, ya que cada etapa tiene una actitud mental y un tipo de motivación diferentes y, por tanto, un abordaje diferente.
-
-Alimentación
-
-Es esencial tener un buen y completo historial dietético. Como herramientas, podemos utilizar la encuesta de 24 horas y una encuesta por grupos de alimentos para establecer recomendaciones según las habilidades y el estilo de vida del paciente y seguir los pasos de la figura 1.
-
-Se debe promover una pérdida de peso realista y alcanzable en personas con DM 2 que tengan sobrepeso u obesidad, estableciendo de inicio un objetivo ponderal, idealmente una pérdida de peso sostenida de entre el 5 y el 10%.
-
-Se recomienda un patrón de alimentación mediterránea, caracterizada por alimentos frescos y de temporada, poco procesados, como cereales integrales, legumbres, almendras, nueces, frutas, verduras, productos lácteos (leche, yogur), huevos, pescado, carnes (sobre todo aves) y aceite de oliva.
-
-Se deben evitar las grasas trans (alimentos procesados, bollería industrial) y saturadas, el consumo de alcohol y las bebidas azucaradas, así como reducir el consumo de alimentos con azúcar añadido. Se debe fomentar la ingesta de fibra y la reducción de la sal.
-
-Existen plataformas digitales que permiten calcular la cantidad de hidratos de carbono, así como elaborar menús variados y adaptados a las necesidades de la persona. Por ejemplo, se puede elaborar un menú principal a partir de la idea de un plato de tamaño normal de 23 cm de diámetro dividido en cuatro partes, en cada una de las cuales se incluirán distintos tipos de alimentos: verduras, harinas y proteicos. También permite añadir una bebida, el pan y el postre.
-
-Figura 1
-
-Ejercicio físico
-
-El ejercicio físico mejora el metabolismo hidrocarbonado aumentando la sensibilidad a la insulina y reduciendo la glucemia basal y la posprandial. Antes de prescribir cualquier tipo de ejercicio, realizamos una triple valoración (individual, condiciones físicas previas y preferencias del paciente). La primera, a través de la historia clínica y la exploración física, con especial atención a la identificación de complicaciones crónicas macro y microvasculares y otras posibles comorbilidades.
-
-La valoración de las condiciones físicas implica medir la resistencia, la fuerza, la flexibilidad y la velocidad, aunque para el tratamiento de la DM 2 lo más importante es conocer la resistencia aeróbica y muscular y la actividad física previa, tanto la habitual (laboral o doméstica) como la que se practica durante el tiempo libre. Por último, todo esfuerzo es inútil si no conseguimos que el paciente siga las recomendaciones, de manera que debemos negociar y valorar qué tipo de ejercicio se ajustaría a sus necesidades y a sus preferencias. Se recomienda que no pase más de dos días consecutivos sin hacer ejercicio. En ausencia de contraindicaciones (p. ej., retinopatía proliferativa de moderada a grave, enfermedad arterial coronaria grave), se debe alentar a las personas con DM 2 a realizar entrenamiento de resistencia (ejercicio con pesas libres o máquinas de pesas) al menos dos veces a la semana. El ejercicio intensivo de corta duración puede ser apropiado para personas en buena forma física y jóvenes.
-
-Reducción del estrés
-
-La época actual, que demanda un continuo aumento de la actividad productiva, actúa de manera adversa sobre los sistemas de salud. Existen muchas técnicas para reducir el estrés, como el mindfulness, que puede comportar beneficios en el bienestar emocional y el control glucémico de los pacientes con DM 2.
-
-Tratamiento farmacológico
-¿Cuándo se tiene que empezar?
-
-No existe consenso sobre el momento de inicio del tratamiento farmacológico, salvo en pacientes con hiperglucemia sintomática (pérdida de peso, polidipsia, poliuria, etc.) con o sin cetonemia, donde la insulina está indicada como tratamiento inicial.
-
-En aquellos pacientes con factores dietéticos claramente modificables, comprometidos y motivados para el cambio, se puede retrasar el inicio del tratamiento farmacológico entre 3 y 6 meses. En la mayoría de los pacientes que presenten una HbA1c > 7,5 o el 8%, el tratamiento debe iniciarse con fármacos y cambios en el estilo de vida. La elección del tratamiento inicial debe personalizarse en función de la eficacia hipoglucemiante, el perfil de seguridad, la tolerabilidad y el coste (tabla 5).
-
-Metformina
-
-En ausencia de contraindicación (filtrado glomerular estimado [FGe] < 30 mL/minuto/1,73m2) o intolerancia, la metformina se considera el fármaco de primera elección, debido a su eficacia, su perfil de seguridad, su tolerabilidad general y su bajo coste. Ha demostrado disminuir la mortalidad cardiovascular y no produce aumento de peso ni hipoglucemia.
-
-Los efectos indeseables gastrointestinales son frecuentes, pero pueden reducirse si se inicia el tratamiento a dosis bajas, de 425-500 mg/día en la cena y, si se tolera, tras 2 semanas, hay que aumentar la dosis de forma lenta y progresiva hasta alcanzar la dosis habitual (1.700-2.000 mgr/día en dos o tres tomas). Los síntomas gastrointestinales suelen ser leves, transitorios y reversibles tras la reducción o suspensión del fármaco.
-
-La metformina reduce la absorción intestinal de vitamina B12 y su concentración sérica entre un 5% y un 10% en pacientes que llevan 5 años tomándola, aunque en raras ocasiones causa anemia megaloblástica. Se debe valorar la determinación anual de los niveles séricos de B12 en personas con ingesta o absorción deficiente (dieta vegetariana, cirugía bariátrica, etc.).
-
-La metformina está contraindicada en pacientes con factores que predisponen a la acidosis láctica: enfermedad hepática grave, alcoholismo, insuficiencia cardíaca (IC) inestable, hipoperfusión tisular o inestabilidad hemodinámica. Se debe suspender en caso de enfermedad infecciosa o febril grave, cirugía mayor y cuando se realicen exploraciones radiológicas con contraste iv (en este caso, hay que suspender la metformina 48 horas antes y después de la administración del contraste).
-
-La metformina está contraindicada en pacientes con un FGe < 30 mL/minuto/1,73 m2 , y no se recomienda su inicio en pacientes con un FGe entre 30 y 45 mL/minuto/1,73 m2. Si la función renal cae por debajo de los 45 mL/minuto/1,73 m2 se debe reducir la dosis a la mitad, evaluando los riesgos y beneficios, e informar al paciente sobre las situaciones que predisponen a la acidosis láctica. Hay que suspender la administración cuando el FGe sea <30 mL/minuto/1,73 m2.
-
-Intensificación del tratamiento
-
-En pacientes que no toleran la metformina, o que les está contraindicada, o que no alcanzan el objetivo en monoterapia, se recomienda una estrategia terapéutica personalizada basada en las comorbilidades del paciente y sobre todo en la presencia de enfermedad cardiovascular aterosclerótica o enfermedad renal crónica (figura 2).
-
-En presencia de síntomas de hiperglucemia, cetosis o pérdida de peso no intencional, se recomienda el tratamiento con insulina. En caso de pacientes asintomáticos con hiperglucemias muy elevadas (cuando la HbA1c está por encima del 1,5% del objetivo recomendado), se puede considerar el inicio con una terapia combinada. En pacientes sin enfermedad cardiovascular o renal, las sulfonilureas, y en particular la gliclazida, se consideran de elección para combinar con la metformina e iniciar un doble tratamiento.
-
-En pacientes con enfermedad renal crónica (ERC), IC con fracción de eyección reducida o pacientes con enfermedad cardiovascular aterosclerótica establecida, se puede considerar el inicio con una terapia combinada. Si el riesgo cardiovascular es alto o muy alto, se recomienda el uso de agonistas del receptor Glucagon-Like-Peptide-1 (arGLP1) o inhibidores del cotransportador sodio-glucosa (ISLGT2):
-
-Los arGLP1 y los ISLGT2 reducen la mortalidad cardiovascular, la mortalidad por cualquier causa y los eventos cardiovasculares adversos mayores (MACE).
-Los ISLGT2 reducen el riesgo de hospitalización por IC, y una variable combinada, compuesta por la disminución significativa del FGe la progresión a una enfermedad renal terminal o la muerte por enfermedad renal.
-Los arGLP1 disminuyen el riesgo de ictus no mortal. Estos beneficios cardiovasculares son independientes de la presencia de metformina en el tratamiento.
-Sulfonilureas
-
-Las sulfonilureas reducen la HbA1c entre un 1,5 y un 2% y han demostrado disminuir el riesgo de complicaciones micro y macrovasculares. Deben administrarse 30 minutos antes de la comida (excepto la gliclazida, que es una sola toma con el desayuno), ya sea combinadas con la metformina o en monoterapia, cuando esta no se tolera o está contraindicada. Aunque es poco frecuente, pueden producir hipoglucemias prolongadas y graves, sobre todo en pacientes de edad avanzada y con enfermedad renal crónica.
-
-Entre las sulfonilureas, la gliclazida presenta el mejor perfil de seguridad en cuanto a menor incidencia de hipoglucemias, menor incremento de riesgo de muerte por cualquier causa y por causa vascular. La glipizida se metaboliza en el hígado, y puede elegirse en caso de insuficiencia renal moderada. La gliclazida también puede utilizarse, se para la insuficiencia renal leve a moderada con la misma pauta posológica que en pacientes con función renal normal, controlando muy bien al paciente. El aumento de peso moderado es el efecto secundario más habitual. Deben utilizarse con precaución si existe hipotiroidismo y en pacientes con alergia a las sulfonamidas. No deben utilizarse durante el embarazo y la lactancia. Son muy económicas.
-
-Glinidas
-
-Los secretagogos de acción rápida (repaglinida) disminuyen la HbA1c entre un 1 y un 1,5%. Mejoran la glucemia posprandial y son útiles en pacientes con un patrón irregular en las comidas. Se debe empezar con la dosis mínima al comenzar a comer, e ir ajustándola. Pueden producir hipoglucemia y aumento de peso y están contraindicadas en caso de embarazo, lactancia, insuficiencia hepática y uso concomitante de gemfibrozilo. Los inhibidores potentes de CYP2C8 (ej., clopidogrel) pueden disminuir el aclaramiento de repaglinida, provocando hipoglucemia.
-
-Glitazonas
-
-La pioglitazona reduce la HbA1c entre un 0,5 y un 1,4%; sus propiedades como insulino-sensibilizador las enmarcan en los cuadros de insulinorresistencia. Puede estar indicada en pacientes con mal control glucémico, que no toleran el tratamiento con insulina y la asociación metformina/sulfonilurea sea insuficiente, o que presenten intolerancia o contraindicación a alguno de ellos. El riesgo de hipoglucemias es bajo. Aumenta el riesgo de IC, de fracturas distales en mujeres, de edema periférico, de edema de mácula y de cáncer de vejiga. Puede producir aumento de peso. Está contraindicada en caso de IC, embarazo, lactancia e insuficiencia hepática. Su precio es más elevado que las anteriores.
-
-Figura 2
-IDPP-4
-
-Los IDPP-4, inhibidores de la dipeptildilpeptidasa 4 (sitagliptina, vildagliptina, linagliptina, alogliptina, saxagliptina) reducen la HbA1c entre un 0,5 y un 0,9%. Están indicados en pacientes con factores de riesgo de hipoglucemia: edad avanzada, insuficiencia renal/hepática, deterioro cognitivo o demencia y antecedentes de hipoglucemia reciente.
-
-Están autorizados en monoterapia o combinados con metformina, sulfonilureas o pioglitazona. Según estudios de seguridad cardiovascular llevados a cabo en poblaciones de muy alto riesgo cardiovascular, no han aumentado ni reducido los eventos cardiovasculares ni se ha producido el desarrollo o la progresión de enfermedades renales, aunque con la saxagliptina se observó un ligero incremento de los ingresos por IC. Requieren ajuste de dosis en caso de insuficiencia renal, excepto la linagliptina. En general, son bien tolerados, no tienen efecto sobre el peso corporal ni riesgo de hipoglucemias (salvo cuando se combinan con sulfonilureas). Se han asociado a un ligero aumento de las infecciones del tracto superior y se han notificado casos de pancreatitis aguda y de enfermedad inflamatoria intestinal. En 2015, la FDA alertó de que los iDPP4 pueden causar artralgias graves, aunque esta reacción adversa es poco frecuente y puede aparecer inmediatamente o tras años de tratamiento. Su precio es elevado. Están contraindicados durante el embarazo y la lactancia, y la vildagliptina en caso de insuficiencia hepática.
-
-Tabla 6
-ISGLT2 o glizofinas
-
-Los ISLGT2, inhibidores del cotransportador sodio-glucosa (dapaglifozina, canaglifozina, empaglifozina, ertuglifozina) reducen la HbA1c entre un 0,5 y un 0,7%. Presentan bajo riesgo de hipoglucemias y producen una pérdida de peso y una disminución de la presión arterial.
-
-Las glifozinas son seguras desde el punto de vista cardiovascular. Además, la empaglifozina y la canaglifozina han mostrado beneficios en los MACE, en la variable combinada compuesta por muerte de origen cardiovascular o en el infarto agudo de miocardio no fatal (IAM) o ictus no fatal en pacientes con enfermedad cardiovascular establecida o con alto riesgo cardiovascular, pero sin beneficio en los pacientes que no la presentan.
-
-Se ha visto que las gliflozinas reducen las hospitalizaciones por IC en pacientes con DM 2 de alto riesgo cardiovascular, independientemente de los antecedentes de IC. En pacientes con IC y fracción de eyección reducida (< 40%), las gliflozinas disminuyen la mortalidad por cualquier causa y la mortalidad cardiovascular, la hospitalización por IC y una variable combinada compuesta por la disminución significativa del FGe, la progresión a la enfermedad renal terminal o la muerte por enfermedad renal. En pacientes con IC y fracción de eyección preservada (> 40%), las glifozinas reducen la hospitalización por IC.
-
-Las gliflozinas han demostrado que reducen el deterioro renal en pacientes con DM 2 y alto riesgo cardiovascular. En pacientes con ERC, con o sin DM 2, las gliflozinas retrasan el empeoramiento a enfermedad renal terminal.
-
-En casos de insuficiencia renal, las fichas técnicas recomiendan personalizar el tratamiento según el fármaco y la morbilidad (tabla 6).
-
-Se cree que este efecto es multifactorial, renovascular directo y no debido a la reducción de la glucemia. Al inicio del tratamiento se puede producir una disminución modesta del FGe, que no se considera motivo para suspender el tratamiento.
-
-En cuanto a los efectos adversos, pueden producirse infecciones genitourinarias, sobre todo en mujeres. Se han notificado casos de fascitis necrotizante del periné (gangrena de Fournier). Pueden causar hipotensión sintomática, sobre todo en pacientes que toman diuréticos, inhibidores de la enzima de conversión de angiotensión (IECA) o antagonistas del receptor angiotensina II (ARA II). También se han notificado casos de daño renal agudo. La canaglifozina se ha asociado a un mayor riesgo de amputaciones, ya que reduce la densidad mineral ósea (DMO). Se han notificado casos graves de cetoacidosis diabética. Antes de iniciar un tratamiento, o durante el mismo, se deben tener en cuenta las situaciones que pueden predisponer a la cetoacidosis diabética, como la deshidratación, la restricción de ingesta calórica, la reducción de peso, las infecciones, las cirugías, los vómitos, la reducción de la dosis de insulina, el mal control de la DM o la ingesta de alcohol.
-
-Su precio es elevado.
-
-En el momento de valorar su balance beneficio-riesgo sobre la IC y a nivel renal, además de sus beneficios a nivel cardiovascular, hay que tener en cuenta la incertidumbre acerca de la seguridad a largo plazo, los efectos adversos graves, como cetoacidosis o amputaciones, y el coste.
-
-Agonistas del receptor Glucagon-Like-Peptide-1 (arGLP1)
-
-Oral: la Agencia Europea de Medicamentos (EMA) ha aprobado recientemente la comercialización de semaglutida oral (Rybelsus®) para el tratamiento de la DM 2 en pacientes adultos, y actualmente es el único análogo del péptido similar al glucagón tipo 1 de toma oral.
-
-Parenteral: se administran mediante inyección subcutánea. Se diferencian por la duración de la acción: la exenatida diaria y la lixisenatida son arGLP-1 de acción corta (más efecto sobre la glucemia posprandial, vaciado gástrico y náuseas), mientras que la exenatida semanal, la liraglutida, la semaglutida y la dulaglutida son de acción larga (más efecto sobre la glucemia basal, reducción de peso y menor efecto sobre el vaciado gástrico y menos episodios de náuseas). Para su financiación se requiere un visado de inspección, y su uso queda restringido al tratamiento combinado en pacientes con un IMC > 30 kg/m2 .
-
-Tienen una eficacia hipoglucemiante alta; reducen la HbA1c entorno al 1-1,5%, con variaciones entre ellos. El efecto hipoglucemiante es mayor para los arGLP-1 de larga duración y, entre estos, la semaglutida semanal reduce la HbA1c más que la dulaglutida y la exenatida semanal. Todos producen una reducción de peso, entre 0,7 y 4,3 kg, más acentuada con la semaglutida. Presentan bajo riesgo de hipoglucemia, pero pueden aumentar la capacidad hipoglucemiante de las sulfonilureas y de la insulina en combinación. También producen una pequeña disminución de la PAS y un aumento de la frecuencia cardíaca. Algunas guías de práctica clínica proponen su uso en pacientes con un IMC > 35 kg/m2 cuando las demás opciones están contraindicadas, no se toleran o no han sido eficaces.
-
-Los estudios de seguridad cardiovascular muestran que todos los arGLP-1 son seguros desde el punto de vista cardiovascular. Además, la liraglutida y la dulaglutida, añadidas a otros hipoglucemiantes (principalmente metformina), han demostrado efectos beneficiosos a la hora de disminuir los eventos cardiovasculares en pacientes con DM 2 de muy alto riesgo cardiovascular, incluyendo pacientes con ERC.
-
-Los arGLP-1 (con la excepción de la lixisenatida) se asocian a una reducción significativa del riesgo de MACE entre los pacientes con DM 2 y enfermedad cardiovascular aterosclerótica (ECVA). Las pruebas más fiables del beneficio cardiovascular de los ensayos clínicos individuales corresponden a la liraglutida, la dulaglutida y la semaglutida.
-
-La semaglutida y la dulaglutida han demostrado que reducen la frecuencia del ictus no mortal. Asimismo, existen pruebas que sugieren que los arGLP1, en particular la dulaglutida, pueden reducir el riesgo de MACE en personas sin ECVA establecida. Estas pruebas han llevado a recomendar que se considere un arGLP1 con un beneficio comprobado de los resultados cardiovasculares en pacientes de 60 años o más con al menos dos factores de riesgo cardiovascular (FRCV), con mayor evidencia para la dulaglutida, seguida de la liraglutida y la semaglutida subcutánea.
-
-Por lo que respecta a los efectos secundarios, las alteraciones gastrointestinales (náuseas, vómitos, diarrea) son frecuentes al inicio del tratamiento y generalmente mejoran con el tiempo. Se han descrito casos de pancreatitis, cáncer de páncreas y colelitiasis. Están contraindicados durante el embarazo y la lactancia y en caso de sufrir pancreatitis o enfermedad renal severa (FG < 30 mL/minuto). Se ha observado un riesgo mayor de desarrollar complicaciones de retinopatía diabética (RD) en el caso de los pacientes con dicha enfermedad tratados con insulina y semaglutida.
-
-Se deben suspender los IDPP-4 cuando se agrega un arGLP-1, ya que ambos tratamientos se basan en el efecto incretina.
-
-Dado su elevado coste, se recomienda suspender el tratamiento con arGLP-1 si no existe una reducción de al menos un 1% en la HbA1C y una pérdida de al menos un 3% del peso inicial a los 6 meses.
-
-Insulina
-
-La insulinoterapia es el tratamiento más efectivo, ya que reduce la HbA1C entre un 1,5 y un 3%. Es el único tratamiento para la DM 1. En la DM 2 es el tratamiento de elección en pacientes sintomáticos (pérdida de peso, poliuria, polidipsia), con glucemia en ayunas (> 300 mg/dL o HbA1c > 10%) o con complicaciones macro o microvasculares graves. Puede utilizarse en monoterapia o combinada con cualquier otro antidiabético. Se recomienda suspender los secretagogos de insulina (sulfonilureas o glinidas). La insulina no tiene contraindicaciones. Provoca aumento de peso. Hay situaciones que determinan un aumento de las necesidades de insulina: tratamiento con corticoides, fiebre, deshidratación o aumento de peso. Asimismo, las necesidades de insulina disminuyen en caso de insuficiencia renal, abuso de alcohol, ayuno, ejercicio físico o hipotiroidismo.
-
-Según su origen, las insulinas se clasifican en humanas y análogos de insulina; y según la rapidez de acción, en ultrarrápidas, rápidas, intermedias y lentas. En general, los análogos de insulina tienen menor riesgo de hipoglucemias y su coste es más elevado (tabla 7).
-
-Insulinas prandiales
-
-Se administran antes de las comidas y su función es replicar el pico de secreción de insulina que se produce tras la ingesta de alimentos. En este grupo se encuentran la insulina regular o soluble y los análogos aspart, glulisina y lispro. Los análogos tienen un inicio de acción más precoz (10-15 minutos, en comparación con los 30 minutos de las insulinas rápidas humanas) y una duración de acción más corta.
-
-Insulinas basales
-
-Insulina NPH. Es una insulina humana de acción intermedia con un pico de acción entre las cuatro y las seis horas y una duración efectiva de doce horas. Se puede administrar en una o dos do sis (en dosis superiores a 25-30 unidades), en combinación con fármacos orales. Generalmente, se inicia su administración a la hora de dormir para reducir el riesgo de hipoglucemia nocturna. Aunque no replica adecuadamente el patrón fisiológico basal, gracias a su menor coste constituye la opción más económica, por lo que en algunas guías se sigue recomendando su uso como pauta de insulinización inicial. Es una suspensión, por lo que hay que agitarla antes de su administración para garantizar su homogeneización y así evitar variaciones en las unidades administra das y en su absorción.
-Insulina detemir. Su acción dura menos de 24 horas. Su coste es más elevado que la anterior. Los datos de los ensayos en pacientes con DM 1 y DM 2 sugieren que en la mayoría de los pacientes son necesarias dos dosis para alcanzar una cobertura basal aceptable y un buen control glucémico. En comparación con la NPH, presenta una eficacia similar, con menor incidencia de hipoglucemias leves, pero sin diferencias en las graves ni en el total.
-Tabla 7
-Insulina glargina. Su eficacia en la reducción de la HbA1c, administrada una vez al día, es similar a la de la insulina NPH administrada una o dos veces al día. La incidencia de hipoglucemias sintomáticas y nocturnas es menor en los pacientes tratados con glargina, en comparación con los tratados con NPH. Por tanto, es de utilidad para pacientes con antecedentes de hipoglucemias nocturnas o en los que la pauta terapéutica cada 24 horas aporte beneficios en el cumplimiento. Si se cambia de insulina NPH a glargina, se aconseja mantener la misma dosis y hora de inyección. Si se administraban dos dosis, hay que reducir la dosis total en un 20%.
-Insulina glargina biosimilar. Es similar en eficacia y seguridad que la glargina U-100, pero más económica.
-Insulina glargina de alta concentración (Toujeo®). Es una insulina glargina a una concentración de 300 U/mL. Permite administrar una dosis mayor en un volumen más pequeño, lo cual es una ventaja en pacientes que presentan resistencia a la insulina y que requieren altas dosis de insulina basal. El perfil de seguridad y eficacia es similar a la glargina 100 U/mL, pero no son equivalentes ni intercambiables sin ajuste de dosis.
-Insulina degludec. Su acción dura más de 40 horas. Reduce la variabilidad plasmática intraindividual con una única dosis diaria, lo que permite una administración más flexible (cuando no es posible la administración a la misma hora del día, asegurando siempre que pasen un mínimo de 8 horas entre las inyecciones). Produce menos hipoglucemias sintomáticas e hipoglucemias nocturnas que la insulina glargina, tanto en pacientes con DM 1 como con DM 2. Requiere visado de inspección. Su coste es elevado.
-Estrategia de insulinización en la DM 2
-
-Insulina basal. La situación más habitual es un paciente que no alcanza los objetivos terapéuticos con fármacos orales o no insulínicos. Se aconseja iniciar el tratamiento con un régimen de insulina basal añadido a los antidiabéticos no insulínicos (ADNI). Se comenzará con una dosis de 10 U o 0,2 U/kg antes de acostarse si se trata de insulina NPH o detemir, y a cualquier hora del día en caso de insulina glargina o degludec. Para el ajuste, se añadirán cada 3-5 días 2 U de insulina hasta conseguir que la glucemia basal sea < 130 mg/dL. Si se producen hipoglucemias, se disminuirá la dosis en 4 U. Si la glucemia basal es < 80 mg/dL, hay que disminuirla en 2 U.
-En general, se recomienda mantener los ADNI, excepto las sulfonilureas o la repaglinida, valorando el riesgo de hipoglucemias, el peso, los efectos secundarios y el coste.
-
-En caso de no alcanzar los objetivos de HbA1c, se debe intensificar el tratamiento. Si la glucemia basal se encuentra en rango, valorar añadir una o más dosis de insulina prandial hasta optimizar el control de la glucemia posprandial.
-
-Basal plus. Agregar un bolo de insulina prandial (regular o análogos de acción rápida) antes de la comida con mayor glucemia postprandial. Comenzar con 4 U de insulina rápida antes de la comida e ir añadiendo 1-2 U hasta obtener glucemias postprandiales < 180 mg/dL.
-Bolo basal. Administrar una dosis de insulina basal complementada con bolos de insulina prandial antes de las comidas principales. Las pautas de múltiples dosis de insulina permiten un control más estricto, son más flexibles y, por tanto, adaptables a estilos de vida cambiantes, pero implican más inyecciones y mayor complejidad.
-Mezclas. Se trata de mezclas de insulina rápida o ultrarrápida con NPH o análogos intermedios. Son útiles en pacientes con horarios fijos de comidas y en aquellos en los que el autoajuste del tratamiento no es posible. Si se pasa de una dosis de insulina basal a dos dosis de insulina premezclada, en general se mantendrá la dosis total, repartiendo en 2/3 y 1/3, que se administrarían antes del desayuno y la cena, y se irían ajustando posteriormente. Las pautas con insulinas premezcladas son menos flexibles para el ajuste, pero no se requieren tantas inyecciones como con la pauta bolo-basal.
-El tratamiento y seguimiento de la persona con DM es una labor de equipo. La unidad básica asistencial, la medicina y la enfermería deben participar de forma coordinada en la formulación de objetivos y organización de actividades. Las visitas de seguimiento se programarán en función del tiempo de evolución, las necesidades del proceso educativo, el grado de control metabólico, los cambios en el tratamiento y la presencia de complicaciones diabéticas u otras condiciones médicas. En el momento del diagnóstico se recomendará que sean quincenales o más frecuentes, hasta que se haya completado el programa básico de educación y se hayan establecido los objetivos y el tratamiento adecuado. Posteriormente, en personas con DM estables o sin cambios en el tratamiento, se harán una o dos visitas médicas al año y tres o cuatro visitas de enfermería que incluyan intervención educativa; es aconsejable hacer al menos una visita conjunta médico-enfermera (tabla 3). En el inicio de la insulinización, la frecuencia de las visitas será diaria durante la primera semana. El contenido de las visitas de enfermería se recoge en la tabla 8.
-
-Hay que establecer unos criterios de derivación a atención hospitalaria (protocolos consensuados si es posible) y de urgencias (tabla 9).
-
-Tabla 8
-
-Consejos prácticos
-
-Aunque en esta unidad nos hemos centrado más en el control metabólico de la DM, el abordaje debe ser integral en pacientes con prediabetes y DM 2, identificando y tratando otros FRCV (HTA, dislipemia, consumo de tabaco, sobrepeso, ERC, etc.), pues la ECV es la principal causa de muerte en personas con DM.
-El ácido acetilsalicílico (AAS) no está recomendado para la prevención primaria de la enfermedad cardiovascular en personas diabéticas. Algunas guías clínicas indican que se puede utilizar la aspirina (75-162 mg/d) en personas con DM y alto RCV, después de hablar con el paciente sobre los beneficios cardiovasculares frente al hecho de aumentar el riesgo de sangrado (ADA 2021). En prevención secundaria, en personas con DM y enfermedad cardiovascular previa debe utilizarse AAS a dosis de 100 mg/d y estatinas. En caso de alergia a la aspirina o cuando esta no es apropiada, el clopidogrel (75 mg/d) es una alternativa adecuada.
-En una enfermedad crónica como la DM, la persona no puede tener un papel pasivo y depender totalmente del equipo sanitario. «Empoderar» al paciente o al familiar cuidador mediante la información y la formación debería ser un deber ineludible en el que se deben implicar las asociaciones.
-Potenciar el uso de la telemedicina como herramienta que puede facilitar la comunicación entre profesionales sanitarios y pacientes. La metformina sigue siendo el fármaco de elección (en monoterapia y en terapia combinada). Cuando concurre una ECV, IC y ERC (si el FGe es >30 ml/min/1,73m 2 ), la opción preferente como terapia añadida a la metformina son las gliflozinas, ya que han demostrado efectos beneficiosos en esas poblaciones. Los arGLP-1 también se indican en pacientes con ECV o enfermedad renal, cuando las gliflozinas están contraindicadas o desaconsejadas, sobre todo si el componente asociado predominante es la obesidad.
-Tabla 9
-Errores más frecuentes
-
-No existe una DM «buena» o «mala». Todas las formas de diabetes comportan un riesgo de desarrollar las mismas complicaciones crónicas, aunque las tasas de progresión puedan diferir.
-Los paradigmas tradicionales de que la DM 2 se produce solo en adultos y la DM 1 solo en niños ya no son tan precisos, ya que ambas enfermedades ocurren en ambos grupos de edad.
-Retrasar el paso a una nueva fase de tratamiento (combinación de fármacos, insulinoterapia) a pesar de un mal control metabólico (inercia terapéutica).
-No replantearse periódicamente el tratamiento farmacológico si es necesario (bajar dosis, cambiar o retirar fármaco), especialmente en personas mayores y en situaciones en las que están contraindicados determinados antihiperglucemiantes (insuficiencia renal, hepática, IC, etc.).
-No investigar los posibles episodios de hipoglucemia en pacientes susceptibles de presentarla, preguntar cómo se resuelve y analizar las causas.
-Llamar a la persona con diabetes «diabético/a», ya que en algunos casos se la estigmatiza.
-¿Se ha resuelto del todo?
-Complicaciones
-En el seguimiento de la DM, es imprescindible tener en cuenta las complicaciones que influirán en la calidad de vida del paciente y el pronóstico de la enfermedad.
-
-Complicaciones agudas
-Hipoglucemia: es la más frecuente.
-Hiperglucemia/cetosis: en ausencia de complicación aguda grave, es más frecuente en la DM 1 por insulinopenia. En personas con DM 2, obliga a buscar la causa: proceso febril, omisión de dosis de insulina, uso de corticoides, cardiopatía isquémica, etc. El tratamiento se basa en insulina rápida subcutánea más hidratación oral.
-Cetoacidosis: se debe sospechar ante la aparición de náuseas, vómitos, anorexia, dolor abdominal (puede parecer un abdomen agudo), poliuria, polifagia y polidipsia, deshidratación, hipotensión, taquicardia, taquipnea, fetor cetonémico (aliento afrutado) y grado variable de disminución de la conciencia, junto con alteraciones analíticas como hiperglucemia > 250 mg/dL (hasta 600 mg/dL), cetonemia > 3 mmol/L y cetonuria. A veces, los vómitos son en poso de café por gastritis hemorrágica. La hipotermia (debida a la vasodilatación) es un signo de mal pronóstico. Suele acontecer en la DM 1, y a veces en la DM 2. Se instaura en horas y la mortalidad es del 5%. Hay que derivar a atención hospitalaria e iniciar hidratación con suero salino iv e insulina rápida iv o intramuscular. Inicialmente, se administra un bolo iv de insulina rápida en dosis de 0,15 UI/kg (habitualmente 10 UI en adultos), seguido de una infusión iv continua de insulina.
-Descompensación hiperosmolar: se debe sospechar en un paciente diabético tipo 2 con deterioro rápidamente progresivo del estado general. A veces es la primera manifestación de una DM 2. Hay que pensar en esta complicación sobre todo cuando haya un mal control metabólico previo, una enfermedad intercurrente (infecciones respiratorias o urinarias, ictus, quemaduras, etc.), toma de fármacos (corticoides, diuréticos, inmunosupresores, etc.), una escasa ingesta de líquidos, transgresiones dietéticas u omisión en la administración de insulina. Cursa con poliuria, polidipsia, déficit neurológico, sequedad mucocutánea, obnubilación, deshidratación y a veces insuficiencia renal. La glucosa en sangre capilar habitualmente es superior a los 500 mg/dl con cetonemia/cetonuria negativa o indicios. Se debe derivar al paciente a atención hospitalaria (la mortalidad es del 15-45%). Se inicia la hidratación con suero salino iv e insulina rápida iv o intramuscular en función de la glucemia. Si es >300 mg/dL, se pautan 6 UI/hora de insulina rápida si el K+ está por encima de 3,3 mEq/L. Si la glucemia es < 300 mg/dL, la dosis de insulina rápida se reduce a la mitad.
-Complicaciones crónicas
-RD: la patología ocular en el paciente con DM puede ser muy variada, aunque la retinopatía, el edema y la isquemia macular son las más importantes, ya que pueden llevar a la ceguera irreversible si no se interviene precozmente. Se recomienda el cribado de RD mediante cámara no midriática a todos los pacientes identificados como personas con DM. El cribado se inicia en la DM 1, a los cinco años del diagnóstico de la enfermedad o en mayores de 15 años. En la DM 2, en el momento del diagnóstico o cercano a este. La frecuencia depende del grado de control de la glucemia, la PA y la situación clínica del paciente. En caso de DM 1 se recomienda una vez al año. En pacientes con DM 2 sin lesiones de RD y buen control metabólico, la frecuencia puede ser cada 2 años. En pacientes con mal control metabólico, sin signos de RD o más de 10 años de evolución, debe realizarse de forma anual. En casos de RD no proliferativa leve o moderada, cada 6-9 meses. En la RD no proliferativa grave o en la proliferativa los controles, deben realizarse cada 4-6 meses. Hay una estrecha relación entre la presencia y la gravedad de la retinopatía diabética con el grado de control glucémico, los años de evolución de la DM y la presencia de microalbuminuria. Los factores que más empeoran su evolución son el mal control glucémico, la HTA y el tabaquismo.
-Nefropatía diabética: la DM es la primera causa de enfermedad renal terminal. Se recomienda en cribado mediante el cociente albúmina/creatinina (mg/g) en la primera orina de la mañana y una estimación del filtrado glomerular (FG). Dada la variabilidad biológica en la excreción urinaria de albúmina, para confirmar el diagnóstico se necesita que al menos dos de tres muestras en un período de entre 3 y 6 meses den positivo en albuminuria. El ejercicio intenso en las 24 horas previas, la fiebre, las infecciones, la IC congestiva, la hiperglucemia marcada o la hipertensión no controlada pueden dar albuminuria > 30 mg/g sin que exista daño renal. Si la albuminuria es < 30 mg/g y el FG > 60 mL/minuto, se monitorizarán una vez al año. Si la albuminuria es > 30 mg/g o el FG <60 mL/minuto, se monitorizarán cada 3-6 meses. Cuando el FG sea < 30 mL/minuto o la albuminuria > 300 mg/g, se debe valorar la posibilidad de derivación a nefrología. Un adecuado control glucémico y de la PA retrasan el inicio, la progresión de la albuminuria y la caída del FG. De forma general, se establecen objetivos de PA < 140/90 mmHg, aunque en personas con DM con albuminuria > 30 mg/g se pueden considerar objetivos más estrictos: PA < 130/80 mmHg, aunque sin bajar de 6070 mmHg la presión arterial dastólica (PAD) y de 110 mmHg la presión arterial sistólica (PAS). Los IECA son de elección en presencia de microalbuminuria. Si hay intolerancia a los IECA, se valorará un ARA II. En pacientes con ERC (albuminuria y FG ≥ 25 mL/min), añadir ISLGT2 al tratamiento estándar ha demostrado reducir de forma significativa el FG, la progresión a enfermedad renal terminal o la muerte por enfermedad renal, la mortalidad por cualquier causa y la mortalidad cardiovascular, el infarto de miocardio no mortal y la hospitalización por IC.
-Neuropatía diabética: la afectación del sistema nervioso periférico, tanto motora, sensitiva como autónoma, se considera la complicación más común de la DM, llegando a alcanzar al 50-60% de los pacientes. En la DM 2, la presencia de neuropatía debe investigarse en el momento del diagnóstico y una vez al año. Un buen control de la HbA1c previene modestamente su progresión. La forma de presentación más frecuente es la polineuropatía sensitiva diabética, que se caracteriza por una afectación distal y simétrica de las extremidades inferiores. Cursa con parestesias y dolor nocturno que suele mejorar al deambular. Otras formas son la neuropatía autonómica (diarrea, hipotensión postural, gastroparesia, disfunción eréctil) y las mononeuropatías (nervio mediano). El dolor es uno de los síntomas más incapacitantes. En su control, los fármacos tienen una eficacia moderada. Se debe empezar con 10-25 mg/día de amitriptilina al acostarse. En pacientes mayores tiene riesgo de sedación e hipotensión ortostática. Está contraindicada en caso de infarto de miocardio reciente, bloqueo cardíaco, hepatopatía grave o uso concomitante con inhibidores de la monoaminooxidasa (IMAO). Si no hay mejoría o no se tolera, se puede cambiar por duloxetina 60 mg/día o gabapentina, empezando con 300 mg/noche y aumentar 300 mg cada uno o dos días en función de la tolerancia, hasta llegar a los 300 mg/8 horas. Otra posibilidad es el tramadol, que se debe iniciar con 50-100 mg/día e ir aumentando paulatinamente hasta los 50-100 mg/6-8 horas (máx. 400 mg/día). No se recomienda utilizar mórficos para la neuropatía diabética dolorosa, debido a la falta de evidencia de efectividad a largo plazo. Si no se puede tolerar ninguno de estos fármacos por vía oral, se puede probar la capsaicina tópica 0,075% cada 6-8 horas. Si el dolor es severo o limitante para realizar las actividades diarias, hay derivar al paciente a la unidad del dolor.
-Pie diabético: la DM es la primera causa de amputación menor o mayor no traumática de las extremidades. El cribado debe realizarse en todos los pacientes en el momento del diagnóstico y al menos con una periodicidad anual. Hay que hacer una inspección visual en busca de anomalías cutáneo-ungueales, deformidades, alteraciones en las uñas, callosidades o alteraciones biomecánicas. Se debe realizar una exploración de la sensibilidad superficial y profunda (barra térmica, monofilamento 5.07 y diapasón de 128 Hz, reflejo aquíleo). La exploración con monofilamento es la más recomendada, ya que presenta mayor sensibilidad y especificidad de predicción de aparición de úlceras y amputaciones, y se trata de una exploración fácil de hacer, rápida, barata y aceptable para el paciente (figura 3). No existe consenso acerca del número de puntos a explorar y el umbral para afirmar que existe una alteración de la sensibilidad. Se ha descrito que una forma práctica y útil por su alta sensibilidad es valorar el extremo distal del primer dedo y la superficie plantar del primer y quinto dedo a nivel de la cabeza de los metatarsianos (figura 3). Si en los tres puntos referidos la sensibilidad es positiva, se describe el pie como normal.
-Se tiene que llevar a cabo una evaluación de arteriopatía e integrar en las revisiones una anamnesis dirigida y la palpación de pulsos pedios y tibiales posteriores. En pacientes sintomáticos, se debe explorar en índice tobillo-brazo (ITB).
-Se recomienda revisar al paciente y clasificarlo en función del perfil de riesgo (tabla 10).
-
-Figura 3
-Tabla 10
-Macroangiopatía: cardiopatía isquémica, enfermedad cerebrovascular. Las enfermedades cardíacas relacionadas con la diabetes son la enfermedad coronaria, la IC, la miocardiopatía diabética y la neuropatía cardiovascular autonómica. La enfermedad coronaria se sitúa dentro de las complicaciones «clásicas» macrovasculares de la diabetes y es la primera causa de morbimortalidad en estos pacientes. No debemos olvidar que en ocasiones se presentan con síntomas y signos atípicos (molestia epigástrica, dolor en mandíbula, dolor cervical, etc.). Clínicamente, la IC se presenta en fases más avanzadas, sobre todo por los eventos coronarios y la HTA. Hay que hacer una estimación del riesgo cardiovascular en todos los pacientes diabéticos sin enfermedad cardiovascular clínica. En nuestro entorno se utilizan las tablas de riesgo del proyecto REGICOR con un punto de corte > 10%. Existen aplicaciones online que permiten estratificar el riesgo. La aparición de microalbuminuria, aparte de ser un marcador precoz de daño renal en la DM, implica un incremento del riesgo de enfermedad cardiovascular (cardiopatía isquémica y mortalidad cardiovascular).
-¿Podemos hacer alguna cosa más?
-Establecer estrategias de cribado de la DM (diagnósti co precoz y minimizar la DM desconocida) y la prediabetes (riesgo aumentado de DM 2 y de enfermedad cardiovascular). Mantener el cribado oportunista dentro del contexto de la valoración del riesgo cardiovascular (tablas 11 y 12).
-Implementar un modelo de cuidados crónicos en la diabetes, sobre todo en personas con multimorbilidad. Se ha comprobado que el uso de este modelo reduce la incidencia acumulada de complicaciones relacionadas con la diabetes y la mortalidad por cualquier causa. Este modelo plantea pasar de una atención reactiva a una proactiva: identificar o desarrollar recursos en la comunidad para fomentar estilos de vida saludables, redefinir las funciones y empoderar a los pacientes, trabajar en equipo de forma coordinada. Una de las estrategias es utilizar metas explícitas y colaborativas con los pacientes.
-Tabla 11
-Tabla 12
-A nivel institucional, se necesitan campañas de prevención centradas en una dieta adecuada, la práctica de ejercicio regular moderado y la prevención del sobrepeso y la obesidad. Se deberá promover un mayor consumo de fruta, verduras y cereales integrales en toda la población. En los niños, hay que estimular la práctica de deporte diario y reducir el tiempo que pasan delante del televisor, el ordenador o los videojuegos.
-Es aconsejable desarrollar una educación terapéuti ca en diabetes programada, tanto a nivel individual como grupal. Se busca el autocontrol (control del peso, autocuidado de los pies, medición periódica de la PA en personas hipertensas, un registro adecuado en la libreta de autocontrol de cualquier incidencia que pueda afectar a la estabilidad metabólica, etc.) y el autoanálisis en las personas que utilizan insulina y las que son tratadas con secretagogos (tabla 13). Todo esto se completará con información por escrito (p.ej. Guía práctica de la salud. Disponible en: https://www.semfyc.es/formacion-y-recursos/guias/guiapractica-de-la-salud/.
-Tabla 13import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(const UrapMirApp());
 
@@ -888,13 +606,769 @@ class EmergencyModulePage extends StatelessWidget {
           child: ListTile(
             leading: const Icon(Icons.emergency_outlined),
             title: Text(names[i]),
-            subtitle: const Text('Algoritmo de actuación en Atención Primaria'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${names[i]}: contenido clínico pendiente de incorporar.')),
+            subtitle: Text(
+              i == 0
+                  ? 'Actuación rápida · ECG · medicación · traslado'
+                  : 'Algoritmo de actuación en Atención Primaria',
             ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              if (i == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AcsEmergencyPage()),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${names[i]}: contenido clínico pendiente de incorporar.')),
+                );
+              }
+            },
           ),
         ),
+      ),
+    );
+  }
+}
+
+enum AcsEcgPattern {
+  inferiorStemi,
+  anteriorStemi,
+  posteriorMi,
+  nsteIschemia,
+  deWinter,
+  pericarditis,
+}
+
+class AcsEcgTrace extends StatelessWidget {
+  final AcsEcgPattern pattern;
+  final String lead;
+  const AcsEcgTrace({super.key, required this.pattern, required this.lead});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 118,
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFBFB),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE8CACA)),
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: CustomPaint(painter: _AcsEcgPainter(pattern)),
+          ),
+          Positioned(
+            top: 7,
+            left: 9,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                lead,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AcsEcgPainter extends CustomPainter {
+  final AcsEcgPattern pattern;
+  _AcsEcgPainter(this.pattern);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final minor = Paint()
+      ..color = const Color(0xFFF3DCDC)
+      ..strokeWidth = 0.5;
+    final major = Paint()
+      ..color = const Color(0xFFE8BDBD)
+      ..strokeWidth = 0.8;
+
+    const small = 8.0;
+    for (double x = 0; x <= size.width; x += small) {
+      canvas.drawLine(Offset(x, 0), Offset(x, size.height),
+          ((x / small).round() % 5 == 0) ? major : minor);
+    }
+    for (double y = 0; y <= size.height; y += small) {
+      canvas.drawLine(Offset(0, y), Offset(size.width, y),
+          ((y / small).round() % 5 == 0) ? major : minor);
+    }
+
+    final trace = Paint()
+      ..color = const Color(0xFF161616)
+      ..strokeWidth = 2.0
+      ..style = PaintingStyle.stroke
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round;
+
+    final p = Path();
+    final base = size.height * 0.58;
+    final beats = 3;
+    final beatW = size.width / beats;
+
+    for (int b = 0; b < beats; b++) {
+      final x = b * beatW;
+      if (b == 0) p.moveTo(x, base);
+
+      // P wave
+      p.lineTo(x + beatW * 0.08, base);
+      p.cubicTo(
+        x + beatW * 0.12, base,
+        x + beatW * 0.14, base - 7,
+        x + beatW * 0.18, base,
+      );
+
+      // PR segment and QRS
+      p.lineTo(x + beatW * 0.30, base);
+      p.lineTo(x + beatW * 0.34, base + 5);
+      p.lineTo(x + beatW * 0.38, base - 35);
+      p.lineTo(x + beatW * 0.43, base + 18);
+      p.lineTo(x + beatW * 0.47, base);
+
+      switch (pattern) {
+        case AcsEcgPattern.inferiorStemi:
+        case AcsEcgPattern.anteriorStemi:
+          // Elevated ST plateau with prominent T wave.
+          p.lineTo(x + beatW * 0.53, base - 15);
+          p.lineTo(x + beatW * 0.66, base - 15);
+          p.cubicTo(
+            x + beatW * 0.72, base - 16,
+            x + beatW * 0.77, base - 38,
+            x + beatW * 0.84, base - 15,
+          );
+          p.cubicTo(
+            x + beatW * 0.89, base,
+            x + beatW * 0.92, base,
+            x + beatW * 0.98, base,
+          );
+          break;
+        case AcsEcgPattern.posteriorMi:
+          // Reciprocal anterior pattern: horizontal ST depression, tall R.
+          p.lineTo(x + beatW * 0.53, base + 12);
+          p.lineTo(x + beatW * 0.70, base + 12);
+          p.cubicTo(
+            x + beatW * 0.76, base + 10,
+            x + beatW * 0.80, base - 16,
+            x + beatW * 0.86, base + 2,
+          );
+          p.lineTo(x + beatW * 0.98, base);
+          break;
+        case AcsEcgPattern.nsteIschemia:
+          // Horizontal ST depression + inverted T wave.
+          p.lineTo(x + beatW * 0.54, base + 12);
+          p.lineTo(x + beatW * 0.70, base + 12);
+          p.cubicTo(
+            x + beatW * 0.76, base + 13,
+            x + beatW * 0.80, base + 32,
+            x + beatW * 0.86, base + 12,
+          );
+          p.lineTo(x + beatW * 0.98, base);
+          break;
+        case AcsEcgPattern.deWinter:
+          // Upsloping ST depression followed by tall symmetric T.
+          p.lineTo(x + beatW * 0.52, base + 14);
+          p.lineTo(x + beatW * 0.64, base + 8);
+          p.cubicTo(
+            x + beatW * 0.70, base,
+            x + beatW * 0.75, base - 45,
+            x + beatW * 0.82, base - 2,
+          );
+          p.cubicTo(
+            x + beatW * 0.88, base + 10,
+            x + beatW * 0.92, base,
+            x + beatW * 0.98, base,
+          );
+          break;
+        case AcsEcgPattern.pericarditis:
+          // Diffuse concave ST elevation.
+          p.cubicTo(
+            x + beatW * 0.54, base - 5,
+            x + beatW * 0.62, base - 18,
+            x + beatW * 0.72, base - 15,
+          );
+          p.cubicTo(
+            x + beatW * 0.78, base - 13,
+            x + beatW * 0.82, base - 24,
+            x + beatW * 0.87, base - 12,
+          );
+          p.cubicTo(
+            x + beatW * 0.91, base - 2,
+            x + beatW * 0.95, base,
+            x + beatW * 0.98, base,
+          );
+          break;
+      }
+    }
+    canvas.drawPath(p, trace);
+  }
+
+  @override
+  bool shouldRepaint(covariant _AcsEcgPainter oldDelegate) =>
+      oldDelegate.pattern != pattern;
+}
+
+class AcsEmergencyPage extends StatefulWidget {
+  const AcsEmergencyPage({super.key});
+  @override
+  State<AcsEmergencyPage> createState() => _AcsEmergencyPageState();
+}
+
+class _AcsEmergencyPageState extends State<AcsEmergencyPage>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabs;
+
+  static const navy = Color(0xFF0C356A);
+  static const red = Color(0xFFB52C2C);
+  static const orange = Color(0xFFC77700);
+  static const green = Color(0xFF147A72);
+  static const blue = Color(0xFF0C56A0);
+  static const purple = Color(0xFF67469A);
+
+  @override
+  void initState() {
+    super.initState();
+    _tabs = TabController(length: 5, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabs.dispose();
+    super.dispose();
+  }
+
+  Widget bullet(String text, {Color color = navy, IconData icon = Icons.circle}) =>
+      Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, size: icon == Icons.circle ? 7 : 18, color: color),
+            const SizedBox(width: 9),
+            Expanded(child: Text(text, style: const TextStyle(height: 1.42))),
+          ],
+        ),
+      );
+
+  Widget rich(String label, String text, {Color color = navy}) => Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: RichText(
+          text: TextSpan(
+            style: const TextStyle(color: Colors.black87, height: 1.42),
+            children: [
+              TextSpan(
+                text: '$label: ',
+                style: TextStyle(fontWeight: FontWeight.bold, color: color),
+              ),
+              TextSpan(text: text),
+            ],
+          ),
+        ),
+      );
+
+  Widget section({
+    required String title,
+    required IconData icon,
+    required Color color,
+    required Widget child,
+  }) =>
+      Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.withOpacity(0.34)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(children: [
+              Icon(icon, color: color),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: color,
+                  ),
+                ),
+              ),
+            ]),
+            const SizedBox(height: 12),
+            child,
+          ],
+        ),
+      );
+
+  Widget emergencyHeader(String title, String subtitle) => Container(
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: red,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22)),
+            const SizedBox(height: 5),
+            Text(subtitle,
+                style: const TextStyle(color: Colors.white70, height: 1.35)),
+          ],
+        ),
+      );
+
+  Widget drug({
+    required String name,
+    required String dose,
+    required String when,
+    required String avoid,
+    String? notes,
+    Color color = green,
+  }) =>
+      Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: color.withOpacity(0.45)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(name,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 18, color: color)),
+            const Divider(height: 20),
+            rich('Dosis', dose, color: color),
+            rich('Cuándo', when, color: color),
+            rich('Evitar / precaución', avoid, color: color),
+            if (notes != null) rich('Notas', notes, color: color),
+          ],
+        ),
+      );
+
+  Widget ecgCard({
+    required String title,
+    required String leads,
+    required String key,
+    required AcsEcgPattern pattern,
+    required String lead,
+    String? action,
+  }) =>
+      section(
+        title: title,
+        icon: Icons.monitor_heart_outlined,
+        color: red,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AcsEcgTrace(pattern: pattern, lead: lead),
+            const SizedBox(height: 10),
+            rich('Derivaciones', leads, color: red),
+            rich('Clave', key, color: red),
+            if (action != null) rich('Conducta', action, color: red),
+            const Text(
+              'Trazado esquemático educativo: confirmar siempre con ECG real de 12 derivaciones y contexto clínico.',
+              style: TextStyle(fontSize: 12, color: Colors.black54),
+            ),
+          ],
+        ),
+      );
+
+  Widget quickPage() => ListView(
+        padding: const EdgeInsets.all(14),
+        children: [
+          emergencyHeader(
+            'SCA · ACTUACIÓN RÁPIDA EN AP',
+            'Objetivo: reconocer, estabilizar lo imprescindible y activar traslado/reperfusión sin demoras evitables.',
+          ),
+          section(
+            title: '0–10 minutos',
+            icon: Icons.timer_outlined,
+            color: red,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('ABCDE + aspecto general + nivel de conciencia.', color: red),
+                bullet('TA, FC, FR, SatO₂ y glucemia capilar.', color: red),
+                bullet('Reposo. Monitorización si disponible y desfibrilador preparado.', color: red),
+                bullet('Canalizar vía IV; una segunda vía si cuadro grave/inestable.', color: red),
+                bullet('ECG de 12 derivaciones lo antes posible, objetivo ≤10 min.', color: red),
+                bullet('Si IAM inferior: registrar V3R–V4R. Si sospecha posterior: V7–V9.', color: red),
+                bullet('Activar 112/UVI y circuito de reperfusión ante SCACEST o paciente inestable. No esperar troponina para activar traslado.', color: red),
+              ],
+            ),
+          ),
+          section(
+            title: 'Síntomas que deben hacer pensar en SCA',
+            icon: Icons.favorite_outline,
+            color: orange,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('Dolor/opresión retroesternal, habitualmente mal localizado, con irradiación a brazo(s), mandíbula, espalda o epigastrio.'),
+                bullet('Disnea, sudoración fría, náuseas/vómitos, síncope o presíncope pueden acompañar.'),
+                bullet('En mujeres, personas mayores y diabetes puede predominar disnea, debilidad, náuseas o malestar sin dolor torácico típico.'),
+              ],
+            ),
+          ),
+          section(
+            title: 'Antes de antiagregar: piensa en diagnósticos alternativos letales',
+            icon: Icons.warning_amber_rounded,
+            color: red,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('Disección aórtica: dolor súbito máximo desde el inicio, irradiado a espalda, asimetría de pulsos/TA, déficit neurológico o nuevo soplo aórtico.', color: red),
+                bullet('TEP: disnea brusca, dolor pleurítico, hipoxemia, taquicardia y factores de riesgo tromboembólico.', color: red),
+                bullet('Neumotórax a tensión: deterioro brusco, hipoventilación unilateral, hipotensión.', color: red),
+              ],
+            ),
+          ),
+          section(
+            title: 'No hacer',
+            icon: Icons.block_outlined,
+            color: red,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('No descartar SCA por un primer ECG normal.', color: red),
+                bullet('No retrasar el traslado esperando analítica o troponina si la sospecha clínica/ECG es alta.', color: red),
+                bullet('No administrar oxígeno de rutina si no hay hipoxemia.', color: red),
+                bullet('No dar nitratos si hay hipotensión o sospecha de infarto de ventrículo derecho.', color: red),
+                bullet('No banalizar presentaciones atípicas en mayores, mujeres o diabetes.', color: red),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget ecgPage() => ListView(
+        padding: const EdgeInsets.all(14),
+        children: [
+          emergencyHeader(
+            'ECG PATOLÓGICO EN SCA',
+            'Ejemplos visuales esquemáticos para entrenar reconocimiento rápido. El diagnóstico se hace con el ECG real y el contexto clínico.',
+          ),
+          ecgCard(
+            title: 'SCACEST inferior',
+            leads: 'Elevación del ST en II, III y aVF; pueden existir cambios recíprocos en I/aVL.',
+            key: 'Si III > II o hay hipotensión, bradicardia o pulmones limpios, sospecha afectación de VD.',
+            pattern: AcsEcgPattern.inferiorStemi,
+            lead: 'II / III / aVF',
+            action: 'Añadir V3R–V4R. Si VD afectado, evitar nitratos y valorar precarga con prudencia.',
+          ),
+          ecgCard(
+            title: 'SCACEST anterior',
+            leads: 'Elevación del ST predominante en V1–V4; puede extenderse a V5–V6/I/aVL.',
+            key: 'Territorio amplio = alto riesgo de disfunción ventricular, arritmias y shock.',
+            pattern: AcsEcgPattern.anteriorStemi,
+            lead: 'V2–V4',
+            action: 'Activación inmediata de código infarto/reperfusión.',
+          ),
+          ecgCard(
+            title: 'IAM posterior',
+            leads: 'Descenso del ST en V1–V3, R altas y T positivas pueden ser imagen especular.',
+            key: 'No confundir automáticamente con SCASEST anterior.',
+            pattern: AcsEcgPattern.posteriorMi,
+            lead: 'V1–V3',
+            action: 'Registrar V7–V9 para buscar elevación posterior.',
+          ),
+          ecgCard(
+            title: 'SCASEST / isquemia subendocárdica',
+            leads: 'Descenso horizontal/descendente del ST y/o inversión dinámica de T.',
+            key: 'Un ECG puede ser normal; los cambios dinámicos aumentan la sospecha.',
+            pattern: AcsEcgPattern.nsteIschemia,
+            lead: 'V4–V6',
+            action: 'Traslado urgente y estratificación hospitalaria.',
+          ),
+          ecgCard(
+            title: 'Patrón de De Winter',
+            leads: 'Depresión ascendente del ST en precordiales con ondas T altas y simétricas; a menudo ascenso en aVR.',
+            key: 'Equivalente de oclusión coronaria de alto riesgo.',
+            pattern: AcsEcgPattern.deWinter,
+            lead: 'V2–V5',
+            action: 'Tratar como patrón de oclusión coronaria y activar evaluación urgente para reperfusión.',
+          ),
+          ecgCard(
+            title: 'Pericarditis: diferencial',
+            leads: 'Elevación difusa y habitualmente cóncava del ST, a menudo con descenso PR; no respeta un único territorio coronario.',
+            key: 'El SCACEST suele localizar un territorio y puede mostrar cambios recíprocos.',
+            pattern: AcsEcgPattern.pericarditis,
+            lead: 'II (esquema)',
+          ),
+          section(
+            title: 'BRI y oclusión coronaria',
+            icon: Icons.electrical_services_outlined,
+            color: purple,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('El BRI dificulta interpretar el ST; un BRI nuevo por sí solo no debe sustituir la valoración clínica completa.'),
+                bullet('Buscar criterios de Sgarbossa/modificados: elevación ST concordante, descenso ST concordante en V1–V3 o discordancia desproporcionada.'),
+                bullet('Si clínica muy sugestiva + inestabilidad o criterios de oclusión: activar circuito urgente.'),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget medsPage() => ListView(
+        padding: const EdgeInsets.all(14),
+        children: [
+          emergencyHeader(
+            'MEDICACIÓN · DOSIS PRÁCTICAS',
+            'Separado en lo que puede ser útil en el centro de salud y lo que debe coordinarse con UVI/hemodinámica/protocolo regional.',
+          ),
+          drug(
+            name: 'Ácido acetilsalicílico (AAS)',
+            dose: '150–300 mg VO de carga, preferiblemente masticado (en semFYC se usa con frecuencia 250 mg VO).',
+            when: 'Sospecha de SCA cuando no existe contraindicación y no hay una alternativa peligrosa como disección aórtica.',
+            avoid: 'Alergia grave, hemorragia activa significativa o sospecha clínica importante de disección aórtica. Individualizar si anticoagulación/sangrado.',
+            notes: 'No esperar confirmación de troponina si el cuadro es claramente compatible.',
+            color: green,
+          ),
+          drug(
+            name: 'Nitroglicerina sublingual',
+            dose: '0,4 mg SL; puede repetirse cada 5 min hasta 3 dosis si persiste dolor y la hemodinámica lo permite.',
+            when: 'Dolor isquémico persistente en paciente hemodinámicamente estable.',
+            avoid: 'TAS <90 mmHg o caída marcada respecto a basal, sospecha de IAM de VD, estenosis aórtica grave, shock o uso reciente de inhibidores PDE-5 (p. ej., sildenafilo/vardenafilo ~24 h; tadalafilo ~48 h).',
+            notes: 'Reevaluar TA y síntomas tras cada dosis.',
+            color: orange,
+          ),
+          drug(
+            name: 'Oxígeno',
+            dose: 'Titular para corregir hipoxemia; no administrar de rutina al paciente normoxémico.',
+            when: 'SatO₂ <90%, insuficiencia respiratoria o hipoxemia clínicamente relevante.',
+            avoid: 'Evitar hiperoxia innecesaria.',
+            notes: 'El material base también reserva oxígeno para hipoxemia.',
+            color: blue,
+          ),
+          drug(
+            name: 'Morfina IV',
+            dose: '2–4 mg IV lenta, titulando en dosis pequeñas según respuesta; repetir con cautela si persiste dolor intenso.',
+            when: 'Dolor intenso refractario pese a medidas antiisquémicas apropiadas.',
+            avoid: 'Hipotensión, depresión respiratoria, disminución del nivel de conciencia o alto riesgo de complicaciones. No usar de rutina.',
+            notes: 'Puede producir náuseas, hipotensión y depresión respiratoria; vigilar estrechamente.',
+            color: purple,
+          ),
+          section(
+            title: 'Antiplaquetarios P2Y12: estudio / UVI-hemodinámica',
+            icon: Icons.medication_liquid_outlined,
+            color: purple,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                rich('Ticagrelor', '180 mg VO de carga → 90 mg cada 12 h.', color: purple),
+                rich('Prasugrel', '60 mg VO de carga → 10 mg/día; 5 mg/día en perfiles seleccionados. Contraindicado si ictus/AIT previo.', color: purple),
+                rich('Clopidogrel', '300–600 mg VO de carga → 75 mg/día; la estrategia depende de reperfusión, anticoagulación y protocolo.', color: purple),
+                bullet('En SCASEST no debe banalizarse el “pretratamiento” antes de conocer la estrategia invasiva. Coordinar con SEM/UVI/hemodinámica.', color: purple),
+              ],
+            ),
+          ),
+          section(
+            title: 'Fibrinólisis',
+            icon: Icons.bloodtype_outlined,
+            color: red,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('No es una medicación para iniciar de forma rutinaria en un centro de salud sin coordinación.', color: red),
+                bullet('Si un SCACEST no puede acceder a angioplastia primaria dentro del tiempo recomendado, el SEM/UVI puede indicar fibrinólisis según tiempos, contraindicaciones y protocolo regional.', color: red),
+                bullet('Antes de fibrinólisis hay que excluir contraindicaciones mayores, especialmente hemorragia intracraneal previa y sospecha de disección aórtica.', color: red),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget topicPage() => ListView(
+        padding: const EdgeInsets.all(14),
+        children: [
+          emergencyHeader(
+            'SÍNDROME CORONARIO AGUDO',
+            'Enfoque de urgencias extrahospitalarias y Atención Primaria.',
+          ),
+          section(
+            title: 'Concepto',
+            icon: Icons.menu_book_outlined,
+            color: navy,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('El SCA agrupa cuadros de isquemia miocárdica aguda por reducción brusca del flujo coronario.'),
+                bullet('En la práctica urgente se divide en SCA con elevación persistente del ST (SCACEST) y sin elevación persistente (SCASEST).'),
+                bullet('El diagnóstico integra clínica, ECG y biomarcadores; en AP la prioridad es no retrasar reperfusión/traslado esperando pruebas no disponibles.'),
+              ],
+            ),
+          ),
+          section(
+            title: 'Anamnesis rápida: ALICIA',
+            icon: Icons.question_answer_outlined,
+            color: blue,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                rich('Aparición', 'súbita/progresiva, reposo/esfuerzo, duración, primer episodio o cambio respecto a angina previa.', color: blue),
+                rich('Localización', 'retrosternal/precordial; puede ser epigástrica, mandibular o en brazos.', color: blue),
+                rich('Irradiación', 'brazo izquierdo o ambos brazos, mandíbula, espalda, epigastrio.', color: blue),
+                rich('Características', 'opresivo, peso, quemazón o “falta de aire”; no exigir una descripción clásica.', color: blue),
+                rich('Intensidad', 'la intensidad no determina por sí sola gravedad.', color: blue),
+                rich('Acompañantes/alivio', 'sudoración, náuseas, disnea, síncope; preguntar por relación con esfuerzo y reposo.', color: blue),
+              ],
+            ),
+          ),
+          section(
+            title: 'ECG por territorios',
+            icon: Icons.monitor_heart,
+            color: red,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                rich('Septal', 'V1–V2', color: red),
+                rich('Anterior', 'V3–V4', color: red),
+                rich('Lateral alta', 'I, aVL', color: red),
+                rich('Lateral baja', 'V5–V6', color: red),
+                rich('Inferior', 'II, III, aVF', color: red),
+                rich('Ventrículo derecho', 'V3R–V4R', color: red),
+                rich('Posterior', 'V7–V9; sospechar por descenso ST V1–V3.', color: red),
+              ],
+            ),
+          ),
+          section(
+            title: 'Complicaciones a detectar antes del traslado',
+            icon: Icons.warning_amber,
+            color: red,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('FV/TV, bradicardia sintomática, bloqueo AV avanzado.', color: red),
+                bullet('Edema agudo de pulmón e insuficiencia cardiaca aguda.', color: red),
+                bullet('Shock cardiogénico: hipotensión + signos de hipoperfusión.', color: red),
+                bullet('Complicación mecánica: deterioro brusco, nuevo soplo, congestión o shock.', color: red),
+              ],
+            ),
+          ),
+          section(
+            title: 'Killip práctico',
+            icon: Icons.speed_outlined,
+            color: orange,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                rich('I', 'sin signos de insuficiencia cardiaca.', color: orange),
+                rich('II', 'crepitantes limitados, tercer tono u otros signos de IC leve.', color: orange),
+                rich('III', 'edema agudo de pulmón.', color: orange),
+                rich('IV', 'shock cardiogénico.', color: orange),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget transferPage() => ListView(
+        padding: const EdgeInsets.all(14),
+        children: [
+          emergencyHeader(
+            'TRASLADO Y COORDINACIÓN',
+            'El centro de salud no debe convertirse en una “sala de espera” cuando la sospecha de SCA es relevante.',
+          ),
+          section(
+            title: 'Activar 112/UVI de forma inmediata si',
+            icon: Icons.local_ambulance_outlined,
+            color: red,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('SCACEST o equivalente de oclusión coronaria.', color: red),
+                bullet('Dolor isquémico persistente/recurrente con cambios dinámicos de ST/T.', color: red),
+                bullet('Hipotensión, shock, edema agudo de pulmón o hipoxemia.', color: red),
+                bullet('TV/FV, bloqueo AV avanzado, síncope con sospecha isquémica o PCR recuperada.', color: red),
+              ],
+            ),
+          ),
+          section(
+            title: 'Mientras llega el recurso medicalizado',
+            icon: Icons.medical_services_outlined,
+            color: green,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('Mantener monitorización y reevaluar ABCDE, TA, FC, SatO₂ y dolor.'),
+                bullet('Desfibrilador disponible; parches colocados si riesgo arrítmico alto y el equipo lo permite.'),
+                bullet('Registrar hora de inicio de síntomas, hora del primer contacto médico y hora del ECG.'),
+                bullet('Preparar antecedentes clave: alergias, anticoagulantes/antiagregantes, función renal conocida, ictus/hemorragias previas y medicación PDE-5.'),
+                bullet('Entregar ECG y tratamientos administrados al SEM/UVI.'),
+              ],
+            ),
+          ),
+          section(
+            title: 'Paciente inestable',
+            icon: Icons.warning_outlined,
+            color: red,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                bullet('Si PCR: iniciar RCP y seguir algoritmo de soporte vital con desfibrilación precoz cuando corresponda.', color: red),
+                bullet('Si shock: decúbito, monitor, vía IV, oxígeno si hipoxemia y UVI inmediata. Evitar bolos indiscriminados de fluidos; en IAM de VD puede requerirse precarga prudente.', color: red),
+                bullet('Si EAP: posición incorporada si tolera, oxígeno si hipoxemia y soporte ventilatorio según recursos; nitratos solo si la PA lo permite y no hay contraindicaciones.', color: red),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Síndrome coronario agudo',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('URGENCIAS · ATENCIÓN PRIMARIA',
+                style: TextStyle(fontSize: 11)),
+          ],
+        ),
+        bottom: TabBar(
+          controller: _tabs,
+          isScrollable: true,
+          tabs: const [
+            Tab(icon: Icon(Icons.emergency_outlined), text: 'Actuación'),
+            Tab(icon: Icon(Icons.monitor_heart_outlined), text: 'ECG'),
+            Tab(icon: Icon(Icons.medication_outlined), text: 'Medicación'),
+            Tab(icon: Icon(Icons.menu_book_outlined), text: 'Tema'),
+            Tab(icon: Icon(Icons.local_ambulance_outlined), text: 'Traslado'),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabs,
+        children: [
+          quickPage(),
+          ecgPage(),
+          medsPage(),
+          topicPage(),
+          transferPage(),
+        ],
       ),
     );
   }

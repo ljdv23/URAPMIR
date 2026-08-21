@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as p;
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:io';
 
 void main() => runApp(const UrapMirApp());
 
@@ -434,6 +438,135 @@ const topics = <ClinicalTopic>[
   ),
 ];
 
+
+class UrapDatabase {
+  UrapDatabase._();
+  static final UrapDatabase instance = UrapDatabase._();
+  static Database? _db;
+
+  Future<Database> get database async {
+    if (_db != null) return _db!;
+    final dbPath = p.join(await getDatabasesPath(), 'urapmir.db');
+    if (!await databaseExists(dbPath)) {
+      try {
+        final data = await rootBundle.load('assets/db/urapmir_seed.db');
+        await File(dbPath).writeAsBytes(
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+          flush: true,
+        );
+      } catch (_) {}
+    }
+    _db = await openDatabase(dbPath, version: 1, onCreate: (db, v) => _schema(db));
+    await _schema(_db!);
+    return _db!;
+  }
+
+  Future<void> _schema(Database db) async {
+    const sql = [
+      'CREATE TABLE IF NOT EXISTS specialties(id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL UNIQUE,sort_order INTEGER NOT NULL DEFAULT 0)',
+      'CREATE TABLE IF NOT EXISTS topics(id INTEGER PRIMARY KEY AUTOINCREMENT,specialty_id INTEGER,name TEXT NOT NULL,slug TEXT NOT NULL UNIQUE)',
+      'CREATE TABLE IF NOT EXISTS questions(id INTEGER PRIMARY KEY AUTOINCREMENT,exam_year INTEGER NOT NULL,original_number INTEGER,specialty_id INTEGER,topic_id INTEGER,stem TEXT NOT NULL,explanation TEXT,image_asset TEXT,difficulty TEXT,source_label TEXT)',
+      'CREATE TABLE IF NOT EXISTS answers(id INTEGER PRIMARY KEY AUTOINCREMENT,question_id INTEGER NOT NULL,option_index INTEGER NOT NULL,answer_text TEXT NOT NULL,is_correct INTEGER NOT NULL DEFAULT 0)',
+      'CREATE TABLE IF NOT EXISTS clinical_topics(id INTEGER PRIMARY KEY AUTOINCREMENT,module TEXT NOT NULL,title TEXT NOT NULL,slug TEXT NOT NULL UNIQUE,summary TEXT,content_json TEXT,source_label TEXT,updated_at TEXT)',
+      'CREATE TABLE IF NOT EXISTS clinical_images(id INTEGER PRIMARY KEY AUTOINCREMENT,module TEXT NOT NULL,topic_slug TEXT,title TEXT NOT NULL,asset_path TEXT NOT NULL,caption TEXT,source_name TEXT,source_url TEXT,license TEXT,attribution TEXT)',
+      'CREATE TABLE IF NOT EXISTS exam_sessions(id INTEGER PRIMARY KEY AUTOINCREMENT,mode TEXT NOT NULL,exam_year INTEGER,started_at TEXT NOT NULL,finished_at TEXT,time_limit_seconds INTEGER,score REAL,correct_count INTEGER DEFAULT 0,wrong_count INTEGER DEFAULT 0,blank_count INTEGER DEFAULT 0)',
+      'CREATE TABLE IF NOT EXISTS user_answers(id INTEGER PRIMARY KEY AUTOINCREMENT,session_id INTEGER,question_id INTEGER NOT NULL,selected_option_index INTEGER,is_correct INTEGER,answered_at TEXT NOT NULL)',
+      'CREATE TABLE IF NOT EXISTS favorites(id INTEGER PRIMARY KEY AUTOINCREMENT,item_type TEXT NOT NULL,item_id INTEGER NOT NULL,created_at TEXT NOT NULL,UNIQUE(item_type,item_id))',
+    ];
+    for (final statement in sql) { await db.execute(statement); }
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_questions_year ON questions(exam_year)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_questions_specialty ON questions(specialty_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_questions_topic ON questions(topic_id)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_answers_question ON answers(question_id)');
+  }
+
+  Future<int> questionCount({int? year}) async {
+    final db = await database;
+    final rows = year == null
+      ? await db.rawQuery('SELECT COUNT(*) n FROM questions')
+      : await db.rawQuery('SELECT COUNT(*) n FROM questions WHERE exam_year=?', [year]);
+    return (rows.first['n'] as int?) ?? 0;
+  }
+
+  Future<List<Map<String,Object?>>> randomQuestions({int limit=20}) async {
+    final db = await database;
+    return db.rawQuery('SELECT * FROM questions ORDER BY RANDOM() LIMIT ?', [limit]);
+  }
+
+  Future<List<Map<String,Object?>>> questionsBySpecialty(int id) async {
+    final db = await database;
+    return db.query('questions', where:'specialty_id=?', whereArgs:[id], orderBy:'original_number');
+  }
+
+  Future<List<Map<String,Object?>>> questionsByTopic(int id) async {
+    final db = await database;
+    return db.query('questions', where:'topic_id=?', whereArgs:[id], orderBy:'original_number');
+  }
+
+  Future<void> saveAnswer(int questionId, int? selected, bool correct, {int? sessionId}) async {
+    final db = await database;
+    await db.insert('user_answers', {
+      'session_id': sessionId, 'question_id': questionId,
+      'selected_option_index': selected, 'is_correct': correct ? 1 : 0,
+      'answered_at': DateTime.now().toIso8601String(),
+    });
+  }
+
+
+  Future<List<Map<String,Object?>>> specialties() async {
+    final db = await database;
+    return db.rawQuery('SELECT s.*, COUNT(q.id) question_count FROM specialties s LEFT JOIN questions q ON q.specialty_id=s.id GROUP BY s.id ORDER BY s.sort_order,s.name');
+  }
+
+  Future<List<Map<String,Object?>>> topicsForSpecialty(int specialtyId) async {
+    final db = await database;
+    return db.rawQuery('SELECT t.*, COUNT(q.id) question_count FROM topics t LEFT JOIN questions q ON q.topic_id=t.id WHERE t.specialty_id=? GROUP BY t.id ORDER BY t.name',[specialtyId]);
+  }
+
+  Future<List<Map<String,Object?>>> examQuestions({int? specialtyId,int? topicId,bool random=false,int? limit}) async {
+    final db = await database;
+    final where=<String>['exam_year=2026'];
+    final args=<Object?>[];
+    if(specialtyId!=null){where.add('specialty_id=?');args.add(specialtyId);}
+    if(topicId!=null){where.add('topic_id=?');args.add(topicId);}
+    var sql='SELECT * FROM questions WHERE ${where.join(' AND ')} ORDER BY ${random ? 'RANDOM()' : 'original_number'}';
+    if(limit!=null){sql+=' LIMIT ?';args.add(limit);}
+    return db.rawQuery(sql,args);
+  }
+
+  Future<List<Map<String,Object?>>> answersForQuestion(int questionId) async {
+    final db=await database;
+    return db.query('answers',where:'question_id=?',whereArgs:[questionId],orderBy:'option_index');
+  }
+
+  Future<List<Map<String,Object?>>> wrongQuestions() async {
+    final db = await database;
+    return db.rawQuery('SELECT q.* FROM questions q JOIN user_answers u ON u.question_id=q.id WHERE u.is_correct=0 GROUP BY q.id ORDER BY MAX(u.answered_at) DESC');
+  }
+}
+
+class DatabaseStatusCard extends StatelessWidget {
+  const DatabaseStatusCard({super.key});
+  @override
+  Widget build(BuildContext context) => FutureBuilder<int>(
+    future: UrapDatabase.instance.questionCount(),
+    builder: (_, snap) => Container(
+      margin: const EdgeInsets.only(bottom: 14),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEAF2FF),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(children:[
+        const Icon(Icons.storage_outlined, color: Color(0xFF0C56A0)),
+        const SizedBox(width:8),
+        Expanded(child: Text('SQLite local activa · ${snap.data ?? 0} preguntas cargadas',
+          style: const TextStyle(fontWeight: FontWeight.w600))),
+      ]),
+    ),
+  );
+}
+
 class UrapMirApp extends StatelessWidget {
   const UrapMirApp({super.key});
 
@@ -465,7 +598,7 @@ class MainModulesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('URAPMIR · v1.5'), centerTitle: true),
+      appBar: AppBar(title: const Text('URAPMIR · v1.8'), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.all(18),
         children: [
@@ -555,35 +688,165 @@ class _ModuleCard extends StatelessWidget {
   }
 }
 
+
 class MirModulePage extends StatelessWidget {
   const MirModulePage({super.key});
+
+  void openExam(BuildContext context,{required String title,bool random=false,int? limit,int? specialtyId,int? topicId,int? seconds}) {
+    Navigator.push(context,MaterialPageRoute(builder:(_)=>MirQuizPage(
+      title:title,random:random,limit:limit,specialtyId:specialtyId,topicId:topicId,timeLimitSeconds:seconds)));
+  }
+
   @override
   Widget build(BuildContext context) {
-    const options = [
-      'Preguntas aleatorias',
-      'Simulacro de 200 preguntas',
-      'Por especialidad',
-      'Por tema',
-    ];
     return Scaffold(
-      appBar: AppBar(title: const Text('EXAMEN MIR')),
-      body: ListView.separated(
+      appBar: AppBar(title: const Text('EXAMEN MIR · 2026')),
+      body: ListView(
         padding: const EdgeInsets.all(18),
-        itemCount: options.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 10),
-        itemBuilder: (context, i) => Card(
-          child: ListTile(
-            leading: const Icon(Icons.quiz_outlined),
-            title: Text(options[i]),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${options[i]}: banco MIR pendiente de incorporar.')),
-            ),
-          ),
-        ),
+        children: [
+          const DatabaseStatusCard(),
+          _MirMenuCard(icon:Icons.shuffle,title:'Preguntas aleatorias',subtitle:'Banco MIR 2026 mezclado',onTap:()=>openExam(context,title:'Aleatorias MIR 2026',random:true,limit:50)),
+          _MirMenuCard(icon:Icons.timer_outlined,title:'Simulacro MIR 2026',subtitle:'200 preguntas · 4 h 30 min',onTap:()=>openExam(context,title:'Simulacro MIR 2026',limit:200,seconds:16200)),
+          _MirMenuCard(icon:Icons.medical_information_outlined,title:'Por especialidad',subtitle:'Cardiología, Neurología, Pediatría…',onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>const MirSpecialtiesPage()))),
+          _MirMenuCard(icon:Icons.topic_outlined,title:'Por tema',subtitle:'Elige especialidad y capítulo',onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>const MirSpecialtiesPage(openTopics:true)))),
+          _MirMenuCard(icon:Icons.replay_circle_filled_outlined,title:'Repasar falladas',subtitle:'Repite las preguntas que hayas fallado',onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>const MirWrongQuestionsPage()))),
+        ],
       ),
     );
   }
+}
+
+class _MirMenuCard extends StatelessWidget{
+  final IconData icon; final String title,subtitle; final VoidCallback onTap;
+  const _MirMenuCard({required this.icon,required this.title,required this.subtitle,required this.onTap});
+  @override Widget build(BuildContext context)=>Card(child:ListTile(
+    contentPadding:const EdgeInsets.symmetric(horizontal:16,vertical:8),
+    leading:CircleAvatar(child:Icon(icon)),title:Text(title,style:const TextStyle(fontWeight:FontWeight.bold)),
+    subtitle:Text(subtitle),trailing:const Icon(Icons.chevron_right),onTap:onTap));
+}
+
+class MirSpecialtiesPage extends StatelessWidget{
+  final bool openTopics;
+  const MirSpecialtiesPage({super.key,this.openTopics=false});
+  @override Widget build(BuildContext context)=>Scaffold(
+    appBar:AppBar(title:Text(openTopics?'MIR · POR TEMA':'MIR · ESPECIALIDADES')),
+    body:FutureBuilder<List<Map<String,Object?>>>(
+      future:UrapDatabase.instance.specialties(),
+      builder:(context,snap){
+        if(!snap.hasData)return const Center(child:CircularProgressIndicator());
+        return ListView.separated(padding:const EdgeInsets.all(14),itemCount:snap.data!.length,separatorBuilder:(_,__)=>const SizedBox(height:8),
+          itemBuilder:(context,i){final s=snap.data![i];return Card(child:ListTile(
+            title:Text('${s['name']}',style:const TextStyle(fontWeight:FontWeight.bold)),
+            subtitle:Text('${s['question_count']} preguntas MIR 2026'),trailing:const Icon(Icons.chevron_right),
+            onTap:(){
+              final id=s['id'] as int;
+              if(openTopics){Navigator.push(context,MaterialPageRoute(builder:(_)=>MirTopicsPage(specialtyId:id,specialtyName:'${s['name']}')));}
+              else{Navigator.push(context,MaterialPageRoute(builder:(_)=>MirQuizPage(title:'${s['name']}',specialtyId:id)));}
+            }));});
+      }));
+}
+
+class MirTopicsPage extends StatelessWidget{
+  final int specialtyId; final String specialtyName;
+  const MirTopicsPage({super.key,required this.specialtyId,required this.specialtyName});
+  @override Widget build(BuildContext context)=>Scaffold(
+    appBar:AppBar(title:Text(specialtyName)),
+    body:FutureBuilder<List<Map<String,Object?>>>(
+      future:UrapDatabase.instance.topicsForSpecialty(specialtyId),
+      builder:(context,snap){
+        if(!snap.hasData)return const Center(child:CircularProgressIndicator());
+        return ListView.separated(padding:const EdgeInsets.all(14),itemCount:snap.data!.length,separatorBuilder:(_,__)=>const SizedBox(height:8),
+          itemBuilder:(context,i){final t=snap.data![i];return Card(child:ListTile(
+            title:Text('${t['name']}',style:const TextStyle(fontWeight:FontWeight.bold)),
+            subtitle:Text('${t['question_count']} preguntas'),trailing:const Icon(Icons.chevron_right),
+            onTap:()=>Navigator.push(context,MaterialPageRoute(builder:(_)=>MirQuizPage(title:'${t['name']}',topicId:t['id'] as int))));
+          });}
+      }));
+}
+
+class MirQuizPage extends StatefulWidget{
+  final String title; final bool random; final int? limit,specialtyId,topicId,timeLimitSeconds;
+  const MirQuizPage({super.key,required this.title,this.random=false,this.limit,this.specialtyId,this.topicId,this.timeLimitSeconds});
+  @override State<MirQuizPage> createState()=>_MirQuizPageState();
+}
+
+class _MirQuizPageState extends State<MirQuizPage>{
+  List<Map<String,Object?>> qs=[]; List<Map<String,Object?>> answers=[];
+  int index=0; int? selected; bool checked=false; int correct=0,wrong=0;
+  DateTime? started;
+
+  @override void initState(){super.initState();started=DateTime.now();load();}
+  Future<void> load()async{
+    qs=await UrapDatabase.instance.examQuestions(specialtyId:widget.specialtyId,topicId:widget.topicId,random:widget.random,limit:widget.limit);
+    if(qs.isNotEmpty)answers=await UrapDatabase.instance.answersForQuestion(qs.first['id'] as int);
+    if(mounted)setState((){});
+  }
+  Future<void> choose(int option)async{
+    if(checked)return;
+    final q=qs[index]; final correctRows=answers.where((a)=>a['is_correct']==1).toList();
+    final annulled=correctRows.isEmpty; final ok=annulled || correctRows.any((a)=>a['option_index']==option);
+    await UrapDatabase.instance.saveAnswer(q['id'] as int,option,ok);
+    setState((){selected=option;checked=true;if(!annulled){if(ok)correct++;else wrong++;}});
+  }
+  Future<void> next()async{
+    if(index>=qs.length-1){showResult();return;}
+    index++; selected=null; checked=false;
+    answers=await UrapDatabase.instance.answersForQuestion(qs[index]['id'] as int);
+    if(mounted)setState((){});
+  }
+  void showResult()=>showDialog(context:context,builder:(c)=>AlertDialog(
+    title:const Text('Resultado'),content:Text('Correctas: $correct\nIncorrectas: $wrong\nContestadas: ${correct+wrong}\nTotal del bloque: ${qs.length}'),
+    actions:[TextButton(onPressed:()=>Navigator.pop(c),child:const Text('Seguir revisando')),FilledButton(onPressed:(){Navigator.pop(c);Navigator.pop(context);},child:const Text('Finalizar'))]));
+  String remaining(){
+    if(widget.timeLimitSeconds==null)return '';
+    final elapsed=DateTime.now().difference(started!).inSeconds;
+    final r=(widget.timeLimitSeconds!-elapsed).clamp(0,widget.timeLimitSeconds!);
+    final h=r~/3600,m=(r%3600)~/60,s=r%60;
+    return '${h.toString().padLeft(2,'0')}:${m.toString().padLeft(2,'0')}:${s.toString().padLeft(2,'0')}';
+  }
+  @override Widget build(BuildContext context){
+    if(qs.isEmpty)return Scaffold(appBar:AppBar(title:Text(widget.title)),body:const Center(child:CircularProgressIndicator()));
+    final q=qs[index]; final annulled=answers.isNotEmpty && !answers.any((a)=>a['is_correct']==1);
+    return Scaffold(
+      appBar:AppBar(title:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+        Text(widget.title,style:const TextStyle(fontSize:17,fontWeight:FontWeight.bold)),
+        Text('Pregunta ${index+1}/${qs.length}${widget.timeLimitSeconds!=null?' · ${remaining()}':''}',style:const TextStyle(fontSize:11))
+      ])),
+      body:ListView(padding:const EdgeInsets.all(16),children:[
+        LinearProgressIndicator(value:(index+1)/qs.length),
+        const SizedBox(height:16),
+        Text('MIR 2026 · Pregunta ${q['original_number']}',style:const TextStyle(fontWeight:FontWeight.bold,color:Color(0xFF0C56A0))),
+        const SizedBox(height:10),Text('${q['stem']}',style:const TextStyle(fontSize:17,height:1.45)),
+        const SizedBox(height:14),
+        ...answers.map((a){
+          final oi=a['option_index'] as int; final isCorrect=a['is_correct']==1;
+          Color? bg;
+          if(checked && isCorrect)bg=Colors.green.withOpacity(.12);
+          if(checked && selected==oi && !isCorrect && !annulled)bg=Colors.red.withOpacity(.10);
+          return Card(color:bg,child:RadioListTile<int>(value:oi,groupValue:selected,onChanged:checked?null:(v)=>choose(v!),title:Text('$oi. ${a['answer_text']}')));
+        }),
+        if(checked)...[
+          const SizedBox(height:10),
+          Container(padding:const EdgeInsets.all(14),decoration:BoxDecoration(color:annulled?Colors.orange.withOpacity(.1):Colors.blue.withOpacity(.07),borderRadius:BorderRadius.circular(14)),
+            child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+              Text(annulled?'PREGUNTA ANULADA':'EXPLICACIÓN',style:const TextStyle(fontWeight:FontWeight.bold)),
+              const SizedBox(height:6),Text('${q['explanation']}',style:const TextStyle(height:1.4))
+            ])),
+          const SizedBox(height:14),FilledButton.icon(onPressed:next,icon:const Icon(Icons.arrow_forward),label:Text(index==qs.length-1?'Ver resultado':'Siguiente pregunta'))
+        ]
+      ]));
+  }
+}
+
+class MirWrongQuestionsPage extends StatelessWidget{
+  const MirWrongQuestionsPage({super.key});
+  @override Widget build(BuildContext context)=>Scaffold(appBar:AppBar(title:const Text('PREGUNTAS FALLADAS')),
+    body:FutureBuilder<List<Map<String,Object?>>>(future:UrapDatabase.instance.wrongQuestions(),builder:(context,snap){
+      if(!snap.hasData)return const Center(child:CircularProgressIndicator());
+      if(snap.data!.isEmpty)return const Center(child:Padding(padding:EdgeInsets.all(24),child:Text('Todavía no tienes preguntas falladas.')));
+      return ListView.separated(padding:const EdgeInsets.all(14),itemCount:snap.data!.length,separatorBuilder:(_,__)=>const Divider(),
+        itemBuilder:(_,i){final q=snap.data![i];return ListTile(title:Text('MIR 2026 · ${q['original_number']}'),subtitle:Text('${q['stem']}',maxLines:3,overflow:TextOverflow.ellipsis));});
+    }));
 }
 
 class EmergencyModulePage extends StatelessWidget {
@@ -611,7 +874,9 @@ class EmergencyModulePage extends StatelessWidget {
                   ? 'Actuación rápida · ECG · medicación · traslado'
                   : i == 1
                       ? 'Código ictus · neurológico · TC · tratamiento · traslado'
-                      : 'Algoritmo de actuación en Atención Primaria',
+                      : i == 2
+                          ? 'ABCDE · qSOFA · antibióticos · fluidos · traslado'
+                          : 'ABCDE · hemorragia · inmovilización · eFAST · traslado',
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
@@ -625,10 +890,10 @@ class EmergencyModulePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (_) => const StrokeEmergencyPage()),
                 );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${names[i]}: contenido clínico pendiente de incorporar.')),
-                );
+              } else if (i == 2) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const SepsisEmergencyPage()));
+              } else if (i == 3) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const TraumaEmergencyPage()));
               }
             },
           ),
@@ -823,6 +1088,44 @@ class _AcsEcgPainter extends CustomPainter {
       oldDelegate.pattern != pattern;
 }
 
+
+class RealClinicalImage extends StatelessWidget {
+  final String url;
+  final String title;
+  final String attribution;
+  final Widget fallback;
+  const RealClinicalImage({
+    super.key,
+    required this.url,
+    required this.title,
+    required this.attribution,
+    required this.fallback,
+  });
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 180),
+          color: Colors.black12,
+          child: Image.network(
+            url,
+            width: double.infinity,
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) => fallback,
+          ),
+        ),
+      ),
+      const SizedBox(height: 6),
+      Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+      Text(attribution, style: const TextStyle(fontSize: 10, color: Colors.black54)),
+    ],
+  );
+}
+
 class AcsEmergencyPage extends StatefulWidget {
   const AcsEmergencyPage({super.key});
   @override
@@ -986,7 +1289,22 @@ class _AcsEmergencyPageState extends State<AcsEmergencyPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AcsEcgTrace(pattern: pattern, lead: lead),
+            if (pattern == AcsEcgPattern.anteriorStemi)
+              RealClinicalImage(
+                url: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/12_Lead_EKG_ST_Elevation_tracing_only.jpg',
+                title: 'ECG real: SCACEST anterior',
+                attribution: 'Displaced · dominio público · Wikimedia Commons',
+                fallback: AcsEcgTrace(pattern: pattern, lead: lead),
+              )
+            else if (pattern == AcsEcgPattern.inferiorStemi)
+              RealClinicalImage(
+                url: 'https://upload.wikimedia.org/wikipedia/commons/a/a0/ECG_001.jpg',
+                title: 'ECG real: IAM inferior (II, III, aVF)',
+                attribution: 'Glenlarson/Patho · CC BY-SA 3.0 · Wikimedia Commons',
+                fallback: AcsEcgTrace(pattern: pattern, lead: lead),
+              )
+            else
+              AcsEcgTrace(pattern: pattern, lead: lead),
             const SizedBox(height: 10),
             rich('Derivaciones', leads, color: red),
             rich('Clave', key, color: red),
@@ -1351,7 +1669,7 @@ class _AcsEmergencyPageState extends State<AcsEmergencyPage>
           children: [
             Text('Síndrome coronario agudo',
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.5',
+            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.8',
                 style: TextStyle(fontSize: 11)),
           ],
         ),
@@ -1822,7 +2140,12 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const StrokeCtDiagram(pattern: StrokeCtPattern.ischemic),
+                RealClinicalImage(
+                  url: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/CT_Brain_MCA_Infarct.jpg',
+                  title: 'TC real: infarto extenso en territorio de ACM',
+                  attribution: 'Lucien Monfils · CC BY-SA 4.0 · Wikimedia Commons',
+                  fallback: const StrokeCtDiagram(pattern: StrokeCtPattern.ischemic),
+                ),
                 const SizedBox(height: 12),
                 bullet('En las primeras horas la TC puede ser normal.'),
                 bullet('Signos precoces: pérdida de diferenciación sustancia gris-blanca, borramiento de surcos, pérdida del “ribete insular” e hipodensidad territorial.'),
@@ -1838,7 +2161,12 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const StrokeCtDiagram(pattern: StrokeCtPattern.hemorrhagic),
+                RealClinicalImage(
+                  url: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Intracerebral%20hemorrage%20%28CT%20scan%29.jpg',
+                  title: 'TC real: hemorragia intracerebral e intraventricular',
+                  attribution: 'Glitzy queen00 · dominio público · Wikimedia Commons',
+                  fallback: const StrokeCtDiagram(pattern: StrokeCtPattern.hemorrhagic),
+                ),
                 const SizedBox(height: 12),
                 bullet('La sangre aguda suele verse hiperdensa (blanca) en TC sin contraste.', color: red),
                 bullet('Describir localización, tamaño aproximado, edema, efecto masa, desviación de línea media y extensión intraventricular.', color: red),
@@ -1985,7 +2313,7 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
           children: [
             Text('Ictus',
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.5',
+            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.8',
                 style: TextStyle(fontSize: 11)),
           ],
         ),
@@ -2015,6 +2343,91 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
   }
 }
 
+
+class SepsisEmergencyPage extends StatelessWidget {
+  const SepsisEmergencyPage({super.key});
+  Widget b(String t)=>Padding(padding:const EdgeInsets.only(bottom:8),child:Text('• $t',style:const TextStyle(height:1.4)));
+  Widget card(String title,List<String> lines,{Color color=const Color(0xFF0C356A)})=>Card(
+    child:Padding(padding:const EdgeInsets.all(15),child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+      Text(title,style:TextStyle(fontSize:18,fontWeight:FontWeight.bold,color:color)),const SizedBox(height:10),
+      ...lines.map(b)
+    ])));
+  @override Widget build(BuildContext context)=>Scaffold(
+    appBar:AppBar(title:const Text('Sepsis · Urgencias AP')),
+    body:ListView(padding:const EdgeInsets.all(14),children:[
+      card('ACTUACIÓN INMEDIATA',[
+        'ABCDE, monitorización, TA, FC, FR, SatO₂, temperatura, Glasgow y glucemia.',
+        'Sospecha infección + disfunción orgánica: activar traslado medicalizado precoz.',
+        'qSOFA orienta riesgo (FR ≥22, PAS ≤100, alteración mental), pero un qSOFA negativo NO descarta sepsis.',
+        'Canalizar 1–2 vías IV si es posible sin retrasar el traslado.'
+      ],color:Colors.red),
+      card('FLUIDOS',[
+        'Cristaloide isotónico en bolos pequeños con reevaluación frecuente.',
+        'En hipotensión/hipoperfusión puede requerirse reanimación más intensiva; individualizar en IC/ERC.',
+        'Evitar sobrecarga: reevaluar TA, perfusión, crepitantes, trabajo respiratorio y respuesta clínica.'
+      ],color:Colors.blue),
+      card('ANTIBIÓTICOS',[
+        'En shock séptico o alta sospecha de sepsis grave: antibiótico IV precoz si está disponible y NO retrasa el traslado.',
+        'La elección depende del foco, alergias, epidemiología y protocolo local; tomar cultivos antes solo si no demora el tratamiento.',
+        'No usar una pauta única para todos los focos: neumonía, urinario, abdominal, piel y SNC requieren estrategias distintas.'
+      ],color:Colors.green),
+      card('VASOPRESORES / UVI',[
+        'Noradrenalina es el vasopresor de primera línea en shock séptico, pero requiere entorno monitorizado y protocolo de emergencias/UVI.',
+        'En un centro de salud rural: prioridad a ABCDE, fluidos prudentes, antibiótico indicado y evacuación medicalizada.'
+      ],color:Colors.deepPurple),
+      card('NO OLVIDAR',[
+        'Oxígeno si hipoxemia; controlar glucemia; tratar fiebre/dolor cuando proceda.',
+        'Buscar foco y signos de alarma: meningismo, púrpura, abdomen agudo, obstrucción urinaria, infección necrotizante.',
+        'Registrar tiempos: reconocimiento, antibiótico, fluidos y activación del SEM.'
+      ],color:Colors.orange),
+    ]));
+}
+
+class TraumaEmergencyPage extends StatelessWidget {
+  const TraumaEmergencyPage({super.key});
+  Widget b(String t)=>Padding(padding:const EdgeInsets.only(bottom:8),child:Text('• $t',style:const TextStyle(height:1.4)));
+  Widget card(String title,List<String> lines,{Color color=const Color(0xFF0C356A)})=>Card(
+    child:Padding(padding:const EdgeInsets.all(15),child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[
+      Text(title,style:TextStyle(fontSize:18,fontWeight:FontWeight.bold,color:color)),const SizedBox(height:10),...lines.map(b)
+    ])));
+  @override Widget build(BuildContext context)=>Scaffold(
+    appBar:AppBar(title:const Text('Politraumatizado · Urgencias AP')),
+    body:ListView(padding:const EdgeInsets.all(14),children:[
+      card('X · HEMORRAGIA CATASTRÓFICA',[
+        'Antes de ABCDE, controlar hemorragia externa masiva: compresión directa, vendaje compresivo y torniquete cuando esté indicado.',
+        'Anotar hora de colocación del torniquete.'
+      ],color:Colors.red),
+      card('A · AIRWAY + CERVICAL',[
+        'Valorar si habla, cuerpos extraños, sangre/vómito y signos de obstrucción.',
+        'Aspiración, maniobras básicas y cánulas según nivel de conciencia/competencia.',
+        'Protección cervical manual y collarín cuando corresponda. Si no tienes experiencia en intubación, prioriza ventilación eficaz con bolsa-mascarilla y ayuda medicalizada.'
+      ],color:Colors.blue),
+      card('B · BREATHING',[
+        'Inspección, palpación y auscultación; SatO₂ y FR.',
+        'Buscar neumotórax a tensión, neumotórax abierto, tórax inestable y hemotórax masivo.',
+        'Oxígeno en hipoxemia/trauma grave. Lesión torácica vital requiere tratamiento inmediato según capacitación y recursos.'
+      ],color:Colors.teal),
+      card('C · CIRCULATION',[
+        'Pulso, TA, piel, relleno capilar y hemorragias ocultas.',
+        'Dos vías periféricas gruesas si es posible; evitar retrasar traslado.',
+        'Cristaloides con estrategia restrictiva cuando no hay TCE grave; sospechar hemorragia interna ante shock sin sangrado externo.'
+      ],color:Colors.orange),
+      card('D · DISABILITY',[
+        'Glasgow, pupilas, lateralidad y glucemia.',
+        'En TCE evitar hipoxia e hipotensión: ambas empeoran el pronóstico.'
+      ],color:Colors.deepPurple),
+      card('E · EXPOSURE / eFAST',[
+        'Exponer lo necesario buscando lesiones y prevenir hipotermia.',
+        'eFAST, si dispones de ecógrafo y entrenamiento, busca líquido libre pericárdico/intraperitoneal y neumotórax/hemotórax.',
+        'Un eFAST negativo NO excluye lesión grave ni debe retrasar el traslado.'
+      ],color:Colors.green),
+      card('TRASLADO',[
+        'Activar 112/UVI precozmente en mecanismo de alta energía, inestabilidad, deterioro neurológico o lesión potencialmente vital.',
+        'Reevaluar ABCDE repetidamente y documentar intervenciones, tiempos y evolución.'
+      ],color:Colors.red),
+    ]));
+}
+
 class TopicListPage extends StatefulWidget {
   const TopicListPage({super.key});
   @override
@@ -2033,7 +2446,7 @@ class _TopicListPageState extends State<TopicListPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('URAPMIR', style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('ATENCIÓN PRIMARIA · v1.5', style: TextStyle(fontSize: 12)),
+            Text('ATENCIÓN PRIMARIA · v1.8', style: TextStyle(fontSize: 12)),
           ],
         ),
       ),

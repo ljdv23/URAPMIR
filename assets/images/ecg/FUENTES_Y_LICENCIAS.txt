@@ -1,0 +1,6 @@
+ECG clínicos usados con fines docentes dentro de URAPMIR.
+
+- 12 Lead EKG ST Elevation tracing only.jpg — Displaced — dominio público — Wikimedia Commons.
+- ECG 001.jpg — Glenlarson / Patho — CC BY-SA 3.0 / GFDL — Wikimedia Commons. Descrito por la fuente como IAM inferior con elevación ST en II, III y aVF.
+
+Los archivos *_hallazgos son versiones derivadas con anotaciones docentes URAPMIR.

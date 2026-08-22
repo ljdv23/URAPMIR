@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show rootBundle, Clipboard, ClipboardData;
+import 'package:url_launcher/url_launcher.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdfrx/pdfrx.dart';
 import 'dart:io';
 
 void main() => runApp(const UrapMirApp());
@@ -458,6 +467,7 @@ class UrapDatabase {
     }
     _db = await openDatabase(dbPath, version: 1, onCreate: (db, v) => _schema(db));
     await _schema(_db!);
+    await _syncMirImageAssets(_db!);
     return _db!;
   }
 
@@ -478,6 +488,23 @@ class UrapDatabase {
     await db.execute('CREATE INDEX IF NOT EXISTS idx_questions_specialty ON questions(specialty_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_questions_topic ON questions(topic_id)');
     await db.execute('CREATE INDEX IF NOT EXISTS idx_answers_question ON answers(question_id)');
+  }
+
+  Future<void> _syncMirImageAssets(Database db) async {
+    const ext = <int, String>{
+      1:'jpg',2:'jpg',3:'png',4:'jpg',5:'jpg',6:'jpg',7:'jpg',8:'jpg',9:'jpg',
+      10:'jpg',11:'jpg',12:'png',13:'jpg',14:'jpg',15:'jpg',16:'jpg',17:'jpg',
+      18:'jpg',19:'jpg',20:'jpg',21:'jpg',22:'jpg',23:'png',24:'jpg',25:'jpg',
+    };
+    for (final e in ext.entries) {
+      final n = e.key.toString().padLeft(3, '0');
+      await db.update(
+        'questions',
+        {'image_asset':'assets/images/mir/mir2026_q$n.${e.value}'},
+        where:'exam_year=? AND original_number=?',
+        whereArgs:[2026,e.key],
+      );
+    }
   }
 
   Future<int> questionCount({int? year}) async {
@@ -598,7 +625,7 @@ class MainModulesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('URAPMIR · v1.9 MIR-IMG'), centerTitle: true),
+      appBar: AppBar(title: const Text('URAPMIR · v2.1'), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.all(18),
         children: [
@@ -633,6 +660,24 @@ class MainModulesPage extends StatelessWidget {
             color: Color(0xFFC64A3B),
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (_) => const EmergencyModulePage())),
+          ),
+          const SizedBox(height: 14),
+          _ModuleCard(
+            icon: Icons.document_scanner_outlined,
+            title: 'ESCÁNER IA',
+            subtitle: 'Escanear texto/QR · voz · ChatGPT · búsqueda web',
+            color: Color(0xFF6A3FA0),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const AiScannerPage())),
+          ),
+          const SizedBox(height: 14),
+          _ModuleCard(
+            icon: Icons.library_books_outlined,
+            title: 'MANUALES MIR',
+            subtitle: 'Importa tus PDF una vez y léelos directamente dentro de URAPMIR',
+            color: Color(0xFF9A641C),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const MirManualsPage())),
           ),
         ],
       ),
@@ -1225,6 +1270,110 @@ class RealClinicalImage extends StatelessWidget {
   );
 }
 
+
+class TeachingImagePair extends StatefulWidget {
+  final String originalAsset;
+  final String annotatedAsset;
+  final String title;
+  final String finding;
+  final String attribution;
+  const TeachingImagePair({
+    super.key,
+    required this.originalAsset,
+    required this.annotatedAsset,
+    required this.title,
+    required this.finding,
+    required this.attribution,
+  });
+
+  @override
+  State<TeachingImagePair> createState() => _TeachingImagePairState();
+}
+
+class _TeachingImagePairState extends State<TeachingImagePair> {
+  bool showAnnotated = false;
+
+  void _zoom(BuildContext context) {
+    final asset = showAnnotated ? widget.annotatedAsset : widget.originalAsset;
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        insetPadding: const EdgeInsets.all(10),
+        child: Stack(
+          children: [
+            Container(
+              color: Colors.black,
+              child: InteractiveViewer(
+                minScale: 0.7,
+                maxScale: 6,
+                child: Center(child: Image.asset(asset, fit: BoxFit.contain)),
+              ),
+            ),
+            Positioned(
+              top: 8, right: 8,
+              child: IconButton.filled(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.close),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final asset = showAnnotated ? widget.annotatedAsset : widget.originalAsset;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onTap: () => _zoom(context),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              width: double.infinity,
+              color: Colors.black12,
+              child: Image.asset(
+                asset,
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => const Padding(
+                  padding: EdgeInsets.all(18),
+                  child: Text('No se pudo cargar esta imagen clínica.'),
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(widget.finding, style: const TextStyle(fontSize: 12, height: 1.35)),
+        const SizedBox(height: 4),
+        Text(widget.attribution, style: const TextStyle(fontSize: 10, color: Colors.black54)),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 6,
+          children: [
+            OutlinedButton.icon(
+              onPressed: () => setState(() => showAnnotated = !showAnnotated),
+              icon: Icon(showAnnotated ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+              label: Text(showAnnotated ? 'Ver imagen original' : 'Mostrar hallazgos'),
+            ),
+            TextButton.icon(
+              onPressed: () => _zoom(context),
+              icon: const Icon(Icons.zoom_in),
+              label: const Text('Ampliar'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 class AcsEmergencyPage extends StatefulWidget {
   const AcsEmergencyPage({super.key});
   @override
@@ -1389,18 +1538,20 @@ class _AcsEmergencyPageState extends State<AcsEmergencyPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (pattern == AcsEcgPattern.anteriorStemi)
-              RealClinicalImage(
-                url: 'https://upload.wikimedia.org/wikipedia/commons/8/8d/12_Lead_EKG_ST_Elevation_tracing_only.jpg',
-                title: 'ECG real: SCACEST anterior',
-                attribution: 'Displaced · dominio público · Wikimedia Commons',
-                fallback: AcsEcgTrace(pattern: pattern, lead: lead),
+              const TeachingImagePair(
+                originalAsset: 'assets/images/ecg/sca_anterior_original.jpg',
+                annotatedAsset: 'assets/images/ecg/sca_anterior_hallazgos.jpg',
+                title: 'ECG real · SCACEST anterior',
+                finding: 'Hallazgo docente: elevación del ST predominante en precordiales anteriores. Pulsa “Mostrar hallazgos” para ver las zonas señaladas.',
+                attribution: 'Displaced · dominio público · Wikimedia Commons · anotaciones docentes URAPMIR',
               )
             else if (pattern == AcsEcgPattern.inferiorStemi)
-              RealClinicalImage(
-                url: 'https://upload.wikimedia.org/wikipedia/commons/a/a0/ECG_001.jpg',
-                title: 'ECG real: IAM inferior (II, III, aVF)',
-                attribution: 'Glenlarson/Patho · CC BY-SA 3.0 · Wikimedia Commons',
-                fallback: AcsEcgTrace(pattern: pattern, lead: lead),
+              const TeachingImagePair(
+                originalAsset: 'assets/images/ecg/sca_inferior_original.jpg',
+                annotatedAsset: 'assets/images/ecg/sca_inferior_hallazgos.jpg',
+                title: 'ECG real · IAM inferior',
+                finding: 'Hallazgo docente: elevación del ST en II, III y aVF. Pulsa “Mostrar hallazgos” para localizar las derivaciones.',
+                attribution: 'Glenlarson/Patho · CC BY-SA 3.0 · Wikimedia Commons · anotaciones docentes URAPMIR',
               )
             else
               AcsEcgTrace(pattern: pattern, lead: lead),
@@ -2239,11 +2390,28 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RealClinicalImage(
-                  url: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/CT_Brain_MCA_Infarct.jpg',
-                  title: 'TC real: infarto extenso en territorio de ACM',
-                  attribution: 'Lucien Monfils · CC BY-SA 4.0 · Wikimedia Commons',
-                  fallback: const StrokeCtDiagram(pattern: StrokeCtPattern.ischemic),
+                const TeachingImagePair(
+                  originalAsset: 'assets/images/ictus/ictus_isquemico_mca_original.jpg',
+                  annotatedAsset: 'assets/images/ictus/ictus_isquemico_mca_hallazgos.jpg',
+                  title: 'TC real · infarto extenso en territorio de ACM',
+                  finding: 'Hipodensidad territorial, pérdida de diferenciación gris-blanca y borramiento de surcos.',
+                  attribution: 'Wikimedia Commons · imagen clínica con licencia abierta · anotaciones docentes URAPMIR',
+                ),
+                const SizedBox(height: 12),
+                const TeachingImagePair(
+                  originalAsset: 'assets/images/ictus/ictus_isquemico_progresion_original.jpg',
+                  annotatedAsset: 'assets/images/ictus/ictus_isquemico_progresion_hallazgos.jpg',
+                  title: 'TC real · evolución de infarto de ACM',
+                  finding: 'Comparación docente: signo arterial precoz y posterior hipodensidad territorial más evidente.',
+                  attribution: 'Hellerhoff · CC BY-SA 3.0 · Wikimedia Commons · anotaciones docentes URAPMIR',
+                ),
+                const SizedBox(height: 12),
+                const TeachingImagePair(
+                  originalAsset: 'assets/images/ictus/ictus_isquemico_acm_hiperdensa_original.jpg',
+                  annotatedAsset: 'assets/images/ictus/ictus_isquemico_acm_hiperdensa_hallazgos.jpg',
+                  title: 'TC real · signo de ACM hiperdensa',
+                  finding: 'Arteria cerebral media más hiperdensa que la contralateral, compatible con trombo como signo precoz.',
+                  attribution: 'Wikimedia Commons · licencia abierta · anotaciones docentes URAPMIR',
                 ),
                 const SizedBox(height: 12),
                 bullet('En las primeras horas la TC puede ser normal.'),
@@ -2260,11 +2428,20 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RealClinicalImage(
-                  url: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Intracerebral%20hemorrage%20%28CT%20scan%29.jpg',
-                  title: 'TC real: hemorragia intracerebral e intraventricular',
-                  attribution: 'Glitzy queen00 · dominio público · Wikimedia Commons',
-                  fallback: const StrokeCtDiagram(pattern: StrokeCtPattern.hemorrhagic),
+                const TeachingImagePair(
+                  originalAsset: 'assets/images/ictus/ictus_hemorragico_ivh_original.jpg',
+                  annotatedAsset: 'assets/images/ictus/ictus_hemorragico_ivh_hallazgos.jpg',
+                  title: 'TC real · hemorragia intracerebral e intraventricular',
+                  finding: 'La sangre aguda aparece hiperdensa; observa además la extensión al sistema ventricular.',
+                  attribution: 'Glitzy queen00 · dominio público · Wikimedia Commons · anotaciones docentes URAPMIR',
+                ),
+                const SizedBox(height: 12),
+                const TeachingImagePair(
+                  originalAsset: 'assets/images/ictus/ictus_hemorragico_shift_original.png',
+                  annotatedAsset: 'assets/images/ictus/ictus_hemorragico_shift_hallazgos.jpg',
+                  title: 'TC real · hemorragia con efecto masa',
+                  finding: 'Hematoma hiperdenso con efecto masa y desplazamiento de la línea media.',
+                  attribution: 'James Heilman, MD · CC BY-SA 3.0 · Wikimedia Commons · anotaciones docentes URAPMIR',
                 ),
                 const SizedBox(height: 12),
                 bullet('La sangre aguda suele verse hiperdensa (blanca) en TC sin contraste.', color: red),
@@ -2280,7 +2457,7 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                bullet('Estas imágenes son esquemas educativos integrados en la app; no sustituyen TC diagnósticas reales.'),
+                bullet('Estas son TC clínicas reales con licencia abierta. Las versiones señaladas son anotaciones docentes y no sustituyen la interpretación radiológica.'),
                 bullet('En AP la prioridad es Código Ictus y traslado; la neuroimagen se realiza en el centro receptor según circuito.'),
               ],
             ),
@@ -2545,7 +2722,7 @@ class _TopicListPageState extends State<TopicListPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('URAPMIR', style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('ATENCIÓN PRIMARIA · v1.9', style: TextStyle(fontSize: 12)),
+            Text('ATENCIÓN PRIMARIA · v2.1', style: TextStyle(fontSize: 12)),
           ],
         ),
       ),
@@ -2561,6 +2738,28 @@ class _TopicListPageState extends State<TopicListPage> {
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(14, 0, 14, 10),
+            child: Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: const BorderSide(color: Color(0xFFB9DAD5)),
+              ),
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                leading: const CircleAvatar(
+                  backgroundColor: Color(0xFFE5F5F2),
+                  child: Icon(Icons.public, color: Color(0xFF147A72)),
+                ),
+                title: const Text('Guía de Atención Primaria', style: TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: const Text('Acceso directo a tu portal de usuario · la URL queda guardada'),
+                trailing: const Icon(Icons.open_in_new),
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const PrimaryCareGuidePage())),
               ),
             ),
           ),
@@ -3983,6 +4182,503 @@ class TopicDetailPage extends StatelessWidget {
           const SizedBox(height: 24),
         ],
       ),
+    );
+  }
+}
+
+
+// =============================================================
+// URAPMIR v2.0 · ESCÁNER IA / VOZ / CHATGPT / BÚSQUEDA
+// =============================================================
+class AiScannerPage extends StatefulWidget {
+  const AiScannerPage({super.key});
+  @override
+  State<AiScannerPage> createState() => _AiScannerPageState();
+}
+
+class _AiScannerPageState extends State<AiScannerPage> {
+  final TextEditingController _text = TextEditingController();
+  final stt.SpeechToText _speech = stt.SpeechToText();
+  bool _listening = false;
+  bool _busy = false;
+
+  @override
+  void dispose() {
+    _speech.stop();
+    _text.dispose();
+    super.dispose();
+  }
+
+  void _show(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> _scanText() async {
+    setState(() => _busy = true);
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 92);
+      if (image == null) return;
+      final recognizer = TextRecognizer(script: TextRecognitionScript.latin);
+      try {
+        final result = await recognizer.processImage(InputImage.fromFilePath(image.path));
+        if (result.text.trim().isEmpty) {
+          _show('No se detectó texto. Prueba acercando la cámara y con buena luz.');
+        } else {
+          setState(() => _text.text = result.text.trim());
+        }
+      } finally {
+        await recognizer.close();
+      }
+    } catch (e) {
+      _show('No se pudo escanear el texto: $e');
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _toggleVoice() async {
+    if (_listening) {
+      await _speech.stop();
+      if (mounted) setState(() => _listening = false);
+      return;
+    }
+    final available = await _speech.initialize(
+      onStatus: (status) {
+        if ((status == 'done' || status == 'notListening') && mounted) {
+          setState(() => _listening = false);
+        }
+      },
+      onError: (_) {
+        if (mounted) setState(() => _listening = false);
+      },
+    );
+    if (!available) {
+      _show('El reconocimiento de voz no está disponible en este dispositivo.');
+      return;
+    }
+    setState(() => _listening = true);
+    await _speech.listen(
+      localeId: 'es_ES',
+      onResult: (r) {
+        if (!mounted) return;
+        setState(() => _text.text = r.recognizedWords);
+      },
+    );
+  }
+
+  Future<void> _openChatGPT() async {
+    final value = _text.text.trim();
+    if (value.isNotEmpty) {
+      await Clipboard.setData(ClipboardData(text: value));
+      _show('Texto copiado. Se abrirá ChatGPT para pegarlo y analizarlo.');
+    }
+    final uri = Uri.parse('https://chatgpt.com/');
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      _show('No se pudo abrir ChatGPT.');
+    }
+  }
+
+  Future<void> _searchWeb() async {
+    final value = _text.text.trim();
+    if (value.isEmpty) {
+      _show('Escribe, dicta o escanea algo primero.');
+      return;
+    }
+    final uri = Uri.https('www.google.com', '/search', {'q': value});
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      _show('No se pudo abrir la búsqueda web.');
+    }
+  }
+
+  Future<void> _openQrScanner() async {
+    final value = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(builder: (_) => const QrScannerPage()),
+    );
+    if (value == null || value.trim().isEmpty || !mounted) return;
+    setState(() => _text.text = value.trim());
+    final uri = Uri.tryParse(value.trim());
+    if (uri != null && (uri.scheme == 'http' || uri.scheme == 'https')) {
+      final open = await showDialog<bool>(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('QR detectado'),
+          content: Text(value),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Solo copiar')),
+            FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Abrir enlace')),
+          ],
+        ),
+      );
+      if (open == true) await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Escáner IA')),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          const Text('Escanea una pregunta, un documento o un QR; también puedes dictar por voz.',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 14),
+          TextField(
+            controller: _text,
+            minLines: 7,
+            maxLines: 14,
+            decoration: InputDecoration(
+              hintText: 'Aquí aparecerá el texto escaneado o dictado…',
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+              filled: true,
+              fillColor: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              FilledButton.icon(
+                onPressed: _busy ? null : _scanText,
+                icon: const Icon(Icons.document_scanner_outlined),
+                label: Text(_busy ? 'Escaneando…' : 'Escanear texto'),
+              ),
+              OutlinedButton.icon(
+                onPressed: _openQrScanner,
+                icon: const Icon(Icons.qr_code_scanner),
+                label: const Text('Escanear QR'),
+              ),
+              OutlinedButton.icon(
+                onPressed: _toggleVoice,
+                icon: Icon(_listening ? Icons.stop_circle_outlined : Icons.mic_none),
+                label: Text(_listening ? 'Detener voz' : 'Dictar por voz'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text('Usar el contenido', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  const SizedBox(height: 10),
+                  FilledButton.icon(
+                    onPressed: _openChatGPT,
+                    icon: const Icon(Icons.auto_awesome),
+                    label: const Text('Abrir con ChatGPT'),
+                  ),
+                  const SizedBox(height: 8),
+                  OutlinedButton.icon(
+                    onPressed: _searchWeb,
+                    icon: const Icon(Icons.search),
+                    label: const Text('Buscar en Internet'),
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton.icon(
+                    onPressed: () async {
+                      final value = _text.text.trim();
+                      if (value.isEmpty) return;
+                      await Clipboard.setData(ClipboardData(text: value));
+                      _show('Texto copiado.');
+                    },
+                    icon: const Icon(Icons.copy),
+                    label: const Text('Copiar texto'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Privacidad: URAPMIR no guarda tu usuario de ChatGPT ni envía el texto automáticamente. Al pulsar ChatGPT, el texto queda copiado y se abre el servicio oficial.',
+            style: TextStyle(fontSize: 12, color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class QrScannerPage extends StatefulWidget {
+  const QrScannerPage({super.key});
+  @override
+  State<QrScannerPage> createState() => _QrScannerPageState();
+}
+
+class _QrScannerPageState extends State<QrScannerPage> {
+  bool _done = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Escanear QR / código')),
+      body: MobileScanner(
+        onDetect: (capture) {
+          if (_done || capture.barcodes.isEmpty) return;
+          final value = capture.barcodes.first.rawValue;
+          if (value == null || value.trim().isEmpty) return;
+          _done = true;
+          Navigator.pop(context, value.trim());
+        },
+      ),
+    );
+  }
+}
+
+// =============================================================
+// URAPMIR v2.0 · GUÍA DE ATENCIÓN PRIMARIA
+// =============================================================
+class PrimaryCareGuidePage extends StatefulWidget {
+  const PrimaryCareGuidePage({super.key});
+  @override
+  State<PrimaryCareGuidePage> createState() => _PrimaryCareGuidePageState();
+}
+
+class _PrimaryCareGuidePageState extends State<PrimaryCareGuidePage> {
+  static const _key = 'guia_ap_login_url';
+  final TextEditingController _url = TextEditingController();
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    _url.text = prefs.getString(_key) ??
+        'https://www.guiadeactuacionap.com/login?uri_ref=%2F';
+    if (mounted) setState(() => _loading = false);
+  }
+
+  Future<void> _saveAndOpen() async {
+    var value = _url.text.trim();
+    if (value.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Pega primero la dirección del portal de acceso.')));
+      return;
+    }
+    if (!value.startsWith('http://') && !value.startsWith('https://')) value = 'https://$value';
+    final uri = Uri.tryParse(value);
+    if (uri == null || !(uri.scheme == 'http' || uri.scheme == 'https')) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('La dirección no es válida.')));
+      return;
+    }
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_key, value);
+    if (!mounted) return;
+    _url.text = value;
+    final ok = await launchUrl(uri, mode: LaunchMode.inAppBrowserView);
+    if (!ok && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No se pudo abrir el portal.')));
+    }
+  }
+
+  @override
+  void dispose() {
+    _url.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Guía de Atención Primaria')),
+      body: _loading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+              padding: const EdgeInsets.all(18),
+              children: [
+                const Icon(Icons.account_circle_outlined, size: 70, color: Color(0xFF147A72)),
+                const SizedBox(height: 12),
+                const Text('Acceso directo al portal de usuario', textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                const Text(
+                  'El acceso oficial ya está configurado. URAPMIR abre el portal de inicio de sesión; tu usuario y contraseña se introducen únicamente en la web de la guía y no se guardan en el código.',
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 18),
+                TextField(
+                  controller: _url,
+                  keyboardType: TextInputType.url,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    labelText: 'Dirección del portal',
+                    hintText: 'https://…',
+                    prefixIcon: const Icon(Icons.link),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                FilledButton.icon(
+                  onPressed: _saveAndOpen,
+                  icon: const Icon(Icons.login),
+                  label: const Text('Entrar a Guía de Atención Primaria'),
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+// =============================================================
+// URAPMIR v2.0 · MANUALES MIR PDF OFFLINE
+// =============================================================
+class MirManualsPage extends StatefulWidget {
+  const MirManualsPage({super.key});
+  @override
+  State<MirManualsPage> createState() => _MirManualsPageState();
+}
+
+class _MirManualsPageState extends State<MirManualsPage> {
+  static const _prefsKey = 'mir_manual_paths';
+  List<String> _paths = [];
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadManuals();
+  }
+
+  Future<void> _loadManuals() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getStringList(_prefsKey) ?? <String>[];
+    final existing = saved.where((x) => File(x).existsSync()).toList();
+    if (existing.length != saved.length) await prefs.setStringList(_prefsKey, existing);
+    if (mounted) setState(() { _paths = existing; _loading = false; });
+  }
+
+  Future<void> _importManuals() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: const ['pdf'],
+      allowMultiple: true,
+    );
+    if (result == null) return;
+    final root = await getApplicationDocumentsDirectory();
+    final dir = Directory(p.join(root.path, 'manuales_mir'));
+    if (!await dir.exists()) await dir.create(recursive: true);
+    final next = List<String>.from(_paths);
+    for (final picked in result.files) {
+      final source = picked.path;
+      if (source == null) continue;
+      var name = p.basename(source);
+      var destination = p.join(dir.path, name);
+      var n = 2;
+      while (File(destination).existsSync() && !next.contains(destination)) {
+        final base = p.basenameWithoutExtension(name);
+        name = '${base}_$n.pdf';
+        destination = p.join(dir.path, name);
+        n++;
+      }
+      if (!File(destination).existsSync()) await File(source).copy(destination);
+      if (!next.contains(destination)) next.add(destination);
+    }
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_prefsKey, next);
+    if (mounted) setState(() => _paths = next);
+  }
+
+  Future<void> _remove(String path) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Quitar manual'),
+        content: Text('¿Quitar “${p.basenameWithoutExtension(path)}” de URAPMIR?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancelar')),
+          FilledButton(onPressed: () => Navigator.pop(context, true), child: const Text('Quitar')),
+        ],
+      ),
+    );
+    if (ok != true) return;
+    try { if (File(path).existsSync()) await File(path).delete(); } catch (_) {}
+    final next = _paths.where((x) => x != path).toList();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_prefsKey, next);
+    if (mounted) setState(() => _paths = next);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Manuales MIR'),
+        actions: [IconButton(onPressed: _importManuals, icon: const Icon(Icons.add), tooltip: 'Añadir PDF')],
+      ),
+      body: _loading
+          ? const Center(child: CircularProgressIndicator())
+          : _paths.isEmpty
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(28),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.menu_book_outlined, size: 76, color: Color(0xFF9A641C)),
+                        const SizedBox(height: 14),
+                        const Text('Tu biblioteca MIR está lista', style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Pulsa “Añadir manuales PDF”. Selecciona todos los manuales que tengas en el dispositivo. URAPMIR hará una copia privada y después podrás abrirlos aquí sin volver a subirlos a GitHub.',
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 18),
+                        FilledButton.icon(
+                          onPressed: _importManuals,
+                          icon: const Icon(Icons.picture_as_pdf_outlined),
+                          label: const Text('Añadir manuales PDF'),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : ListView.separated(
+                  padding: const EdgeInsets.all(14),
+                  itemCount: _paths.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (_, i) {
+                    final path = _paths[i];
+                    return Card(
+                      child: ListTile(
+                        leading: const CircleAvatar(child: Icon(Icons.picture_as_pdf_outlined)),
+                        title: Text(p.basenameWithoutExtension(path), style: const TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: const Text('PDF guardado offline'),
+                        trailing: PopupMenuButton<String>(
+                          onSelected: (v) { if (v == 'remove') _remove(path); },
+                          itemBuilder: (_) => const [PopupMenuItem(value: 'remove', child: Text('Quitar manual'))],
+                        ),
+                        onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => MirPdfReaderPage(path: path, title: p.basenameWithoutExtension(path)))),
+                      ),
+                    );
+                  },
+                ),
+      floatingActionButton: _paths.isEmpty ? null : FloatingActionButton.extended(
+        onPressed: _importManuals,
+        icon: const Icon(Icons.add),
+        label: const Text('Añadir PDF'),
+      ),
+    );
+  }
+}
+
+class MirPdfReaderPage extends StatelessWidget {
+  final String path;
+  final String title;
+  const MirPdfReaderPage({super.key, required this.path, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title, overflow: TextOverflow.ellipsis)),
+      body: PdfViewer.file(path),
     );
   }
 }

@@ -30,20 +30,28 @@ jobs:
       - name: Comprobar Flutter
         run: flutter --version
 
-      - name: Crear estructura Android si falta
+      - name: Crear Android limpio
         run: |
-          if [ ! -d "android" ]; then
-            flutter create . --platforms=android --project-name urapmir
-          fi
+          rm -rf android
+          flutter create . --platforms=android --project-name urapmir
 
-      - name: Permitir Internet para imágenes clínicas
+      - name: Permitir Internet cámara y voz
         run: |
           MANIFEST="android/app/src/main/AndroidManifest.xml"
-          if ! grep -q "android.permission.INTERNET" "$MANIFEST"; then
-            sed -i '/<manifest/a\    <uses-permission android:name="android.permission.INTERNET"/>' "$MANIFEST"
+          for PERM in INTERNET CAMERA RECORD_AUDIO; do
+            if ! grep -q "android.permission.$PERM" "$MANIFEST"; then
+              sed -i "/<manifest/a\\    <uses-permission android:name=\"android.permission.$PERM\" />" "$MANIFEST"
+            fi
+          done
+
+      - name: Configurar Android minimo 24
+        run: |
+          if [ -f "android/app/build.gradle.kts" ]; then
+            sed -i 's/minSdk = flutter.minSdkVersion/minSdk = 24/' android/app/build.gradle.kts
           fi
-          echo "AndroidManifest final:"
-          cat "$MANIFEST"
+          if [ -f "android/app/build.gradle" ]; then
+            sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 24/' android/app/build.gradle
+          fi
 
       - name: Limpiar proyecto
         run: flutter clean
@@ -52,7 +60,6 @@ jobs:
         run: |
           rm -rf .dart_tool
           flutter pub get
-          flutter pub deps | grep -E "sqflite|path" || true
 
       - name: Compilar APK
         run: flutter build apk --release
@@ -60,5 +67,5 @@ jobs:
       - name: Guardar APK
         uses: actions/upload-artifact@v4
         with:
-          name: URAPMIR-v1.8-IMAGENES-REALES
+          name: URAPMIR-v2.1-FINAL-COMPLETA
           path: build/app/outputs/flutter-apk/app-release.apk

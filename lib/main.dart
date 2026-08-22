@@ -598,7 +598,7 @@ class MainModulesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('URAPMIR · v1.8'), centerTitle: true),
+      appBar: AppBar(title: const Text('URAPMIR · v1.9 MIR-IMG'), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.all(18),
         children: [
@@ -787,6 +787,80 @@ class MirTopicsPage extends StatelessWidget{
   );
 }
 
+
+class MirQuestionImage extends StatelessWidget {
+  final String assetPath;
+  const MirQuestionImage({super.key, required this.assetPath});
+
+  void _zoom(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        insetPadding: const EdgeInsets.all(10),
+        child: Stack(
+          children: [
+            Container(
+              color: Colors.black,
+              child: InteractiveViewer(
+                minScale: 0.8,
+                maxScale: 5.0,
+                child: Center(
+                  child: Image.asset(assetPath, fit: BoxFit.contain),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: IconButton.filled(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.close),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const SizedBox(height: 12),
+      InkWell(
+        onTap: () => _zoom(context),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            width: double.infinity,
+            color: Colors.black12,
+            child: Image.asset(
+              assetPath,
+              fit: BoxFit.contain,
+              errorBuilder: (_, __, ___) => const Padding(
+                padding: EdgeInsets.all(18),
+                child: Text('No se pudo cargar la imagen de esta pregunta.'),
+              ),
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(height: 5),
+      const Row(
+        children: [
+          Icon(Icons.zoom_in, size: 16, color: Colors.black54),
+          SizedBox(width: 5),
+          Text(
+            'Imagen original MIR 2026 · toca para ampliar',
+            style: TextStyle(fontSize: 11, color: Colors.black54),
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
 class MirQuizPage extends StatefulWidget{
   final String title; final bool random; final int? limit,specialtyId,topicId,timeLimitSeconds;
   const MirQuizPage({super.key,required this.title,this.random=false,this.limit,this.specialtyId,this.topicId,this.timeLimitSeconds});
@@ -840,6 +914,8 @@ class _MirQuizPageState extends State<MirQuizPage>{
         const SizedBox(height:16),
         Text('MIR 2026 · Pregunta ${q['original_number']}',style:const TextStyle(fontWeight:FontWeight.bold,color:Color(0xFF0C56A0))),
         const SizedBox(height:10),Text('${q['stem']}',style:const TextStyle(fontSize:17,height:1.45)),
+        if (q['image_asset'] != null && '${q['image_asset']}'.isNotEmpty)
+          MirQuestionImage(assetPath: '${q['image_asset']}'),
         const SizedBox(height:14),
         ...answers.map((a){
           final oi=a['option_index'] as int; final isCorrect=a['is_correct']==1;
@@ -1692,7 +1768,7 @@ class _AcsEmergencyPageState extends State<AcsEmergencyPage>
           children: [
             Text('Síndrome coronario agudo',
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.8',
+            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.9',
                 style: TextStyle(fontSize: 11)),
           ],
         ),
@@ -2336,7 +2412,7 @@ class _StrokeEmergencyPageState extends State<StrokeEmergencyPage>
           children: [
             Text('Ictus',
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.8',
+            Text('URGENCIAS · ATENCIÓN PRIMARIA · v1.9',
                 style: TextStyle(fontSize: 11)),
           ],
         ),
@@ -2469,7 +2545,7 @@ class _TopicListPageState extends State<TopicListPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('URAPMIR', style: TextStyle(fontWeight: FontWeight.bold)),
-            Text('ATENCIÓN PRIMARIA · v1.8', style: TextStyle(fontSize: 12)),
+            Text('ATENCIÓN PRIMARIA · v1.9', style: TextStyle(fontSize: 12)),
           ],
         ),
       ),

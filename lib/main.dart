@@ -4555,7 +4555,7 @@ class _MirManualsPageState extends State<MirManualsPage> {
   }
 
   Future<void> _importManuals() async {
-    final result = await FilePicker.pickFiles(
+    final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: const ['pdf'],
       allowMultiple: true,

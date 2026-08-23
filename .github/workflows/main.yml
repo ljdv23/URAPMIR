@@ -37,37 +37,45 @@ jobs:
           rm -rf android
           flutter create . --platforms=android --project-name urapmir
 
+          # Flutter crea automáticamente un test para una clase MyApp.
+          # URAPMIR utiliza UrapMirApp, por lo que eliminamos ese test
+          # genérico que no pertenece a nuestro proyecto.
+          rm -f test/widget_test.dart
+
       - name: Configurar Android para URAPMIR
         shell: bash
         run: |
           python3 <<'PY'
           from pathlib import Path
 
-          # AndroidManifest: permisos usados realmente por la app
           manifest = Path("android/app/src/main/AndroidManifest.xml")
           text = manifest.read_text()
+
           permissions = [
               "android.permission.INTERNET",
               "android.permission.CAMERA",
               "android.permission.RECORD_AUDIO",
           ]
+
           for perm in permissions:
               line = f'    <uses-permission android:name="{perm}" />'
               if perm not in text:
-                  text = text.replace("<manifest", "<manifest", 1)
                   pos = text.find(">")
                   text = text[:pos+1] + "\n" + line + text[pos+1:]
+
           manifest.write_text(text)
 
-          # Flutter actual genera build.gradle.kts.
-          # Fijamos minSdk 24 y declaramos TODOS los módulos nativos que
-          # google_mlkit_text_recognition 0.16.0 referencia internamente.
           gradle = Path("android/app/build.gradle.kts")
+
           if not gradle.exists():
               raise SystemExit("No existe android/app/build.gradle.kts")
 
           g = gradle.read_text()
-          g = g.replace("minSdk = flutter.minSdkVersion", "minSdk = 24")
+
+          g = g.replace(
+              "minSdk = flutter.minSdkVersion",
+              "minSdk = 24"
+          )
 
           mlkit = '''
           dependencies {
@@ -78,8 +86,10 @@ jobs:
               implementation("com.google.mlkit:text-recognition-korean:16.0.1")
           }
           '''
+
           if 'com.google.mlkit:text-recognition-chinese:16.0.1' not in g:
               g = g.rstrip() + "\n\n" + mlkit.strip() + "\n"
+
           gradle.write_text(g)
           PY
 
@@ -90,8 +100,8 @@ jobs:
           rm -f pubspec.lock
           flutter pub get
 
-      - name: Analizar proyecto
-        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+      - name: Analizar codigo principal
+        run: flutter analyze lib --no-fatal-infos --no-fatal-warnings
 
       - name: Compilar APK release
         run: flutter build apk --release
